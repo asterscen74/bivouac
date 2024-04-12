@@ -1,0 +1,13 @@
+- name: Play for Bivouac deployment on remote server
+  hosts: bivouac_remote
+  roles:
+    - role: common
+      tags: common
+    - role: postgresql
+      tags: postgresql
+    - role: api
+      tags: api
+    - role: front
+      tags: front
+    - role: nginx
+      tags: nginx

@@ -1,0 +1,14 @@
+[supervisord]
+user={{ front_user }}
+nodaemon=true
+
+[program:react-bivouacfront]
+command=/bin/bash -c "set -a && source {{ path_env }} && set +a && npm run dev"
+directory={{ path_front }}
+environment=REACT_APP_API_FASTAPI_SERVER_PORT={{ api_fastapi_server_port }},REACT_APP_API_FASTAPI_SERVER_HOST={{ api_fastapi_server_host }}
+autostart=true
+autorestart=true
+stdout_logfile={{ path_logs }}/supervisor-bivouacfront-stdout.txt
+stdout_logfile_maxbytes=0
+stderr_logfile={{ path_logs }}/supervisor-bivouacfront-stderr.txt
+stderr_logfile_maxbytes=0

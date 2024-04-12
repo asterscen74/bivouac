@@ -1,0 +1,31 @@
+---
+- name: Install nginx
+  become: true
+  ansible.builtin.apt:
+    name:
+      - nginx
+    update_cache: true
+    state: present
+
+- name: Ensure nginx is started
+  become: true
+  ansible.builtin.systemd:
+    name: "nginx"
+    state: started
+
+- name: Ensure the nginx default site is installed
+  become: true
+  ansible.builtin.template:
+    src: "bivouac-nginx.conf.j2"
+    dest: "{{ path_nginx }}/sites-available/{{ nginx_conf_name }}"
+    force: true
+    mode: "0644"
+
+- name: Create a symbolic link of the default site
+  become: true
+  ansible.builtin.file:
+    src: "{{ path_nginx }}/sites-available/{{ nginx_conf_name }}"
+    dest: "{{ path_nginx }}/sites-enabled/{{ nginx_conf_name }}"
+    force: true
+    state: link
+  notify: Reload nginx

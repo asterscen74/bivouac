@@ -1,0 +1,37 @@
+---
+## PostgreSQL config
+pg_version: "15"
+postgis_version: "3"
+
+## Python config
+python_version: "3.10"
+
+## Node config
+node_version: "20"
+
+## Nginx config
+nginx_server_name: "bivouac.oslandia.io"
+nginx_conf_name: "bivouac"
+
+## Paths
+path_app: /opt/bivouac
+path_env: /opt/bivouac/.env
+path_api: /opt/bivouac/api
+path_front: /opt/bivouac/front
+path_supervisor_conf: /etc/supervisor/conf.d
+path_logs: /tmp/logs
+path_data: /opt/data
+path_node: /opt/node
+path_nginx: /etc/nginx
+
+## Users
+users:
+    - name: bivouac_api
+      uid: 1020
+    - name: bivouac_front
+      uid: 1021
+
+api_user: bivouac_api
+api_user_uid: 1020
+front_user: bivouac_front
+front_user_uid: 1021

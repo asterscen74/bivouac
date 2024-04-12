@@ -1,0 +1,7 @@
+._
+\*\*/_.toml
+**/\*.txt
+**/*.y*ml \*\_/template\_\_.md
+node_modules/
+docs/assets/
+docs/content/toc_nav_ignored/snippets/
