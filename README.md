@@ -1,92 +1,89 @@
-# cen_haute_savoie_bivouac
+# Bivouac
 
+Ce projet a pour objectif de créer une plateforme de réservation de Bivouac en Haute-Savoie.
 
+## Installation & Configuration
 
-## Getting started
+L'application s'appuie sur un certain nombre de variables d'environnement.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Vous devez créer un fichier `.env` sur la base du fichier `.env.sample`.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Dans ce fichier, sont définies les variables suivantes :
 
-## Add your files
+- `GIT_AUTHOR_NAME` : Prénom et nom de l'utilisateur Gitlab.
+- `GIT_AUTHOR_EMAIL` : Adresse e-mail de l'utilisateur Gitlab.
+- `GITLAB_REPO` : Adresse du répertoire Gitlab.
+- `GITLAB_REPO_TOKEN_USER` : Nom de l'access token qui permettra le clône du répertoire.
+- `GITLAB_REPO_TOKEN_PASSWORD` : Mot de passe associé à l'access token.
+- `POSTGRES_VERSION` : Version PostgreSQL
+- `POSTGRES_USER` : Nom d'utilisateur qui va intéragir avec la base de données
+- `POSTGRES_PASSWORD` : Mot de passé associé à l'utilisateur
+- `POSTGRES_DB` : Nom de la base de données
+- `POSTGRES_HOST` : Adresse de la base de données
+- `POSTGRES_PORT` : Port utilisé par la base de données
+- `API_FLASK_SERVER_HOST` : Adresse de l'API
+- `API_FLASK_SERVER_PORT` : Port de l'API lorsqu'elle est lancée en mode production
+- `FRONT_PORT` : Port utilisé par l'application React
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Afin de garantir une qualité entre les différentes contributions, une série de _git hooks_ (à travers l'outil [pre-commit](https://pre-commit.com/)) est disponible.
 
+Il est fortement recommandé de travailler dans un environnement virtuel :
+
+`python3 -m venv .venv`
+
+Activation de l'environnement :
+`. .venv/bin/activate`
+
+Installation des prérequis :
+`python -m pip install -U -r requirements.txt`
+
+Installation des git hooks :
+
+```bash
+pre-commit install
 ```
-cd existing_repo
-git remote add origin https://git.oslandia.net/Client-projects/cen_haute_savoie_bivouac.git
-git branch -M main
-git push -uf origin main
+
+Seront installés les hooks suivants :
+
+- [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
+- [ruff](https://github.com/charliermarsh/ruff-pre-commit)
+- [black](https://github.com/psf/black)
+- [isort](https://github.com/pycqa/isort)
+- [flake8](https://github.com/pycqa/flake8)
+- [mirrors-eslint](https://github.com/pre-commit/mirrors-eslint)
+
+## Lancement de l'application
+
+Pour lancer le backend, référez-vous au fichier [README](./api/README.md).
+
+Pour lancer le frontend, référez-vous au fichier [README](./front/README.md).
+
+## Déploiement Ansible sur un serveur distant
+
+```shell
+cd ansible
 ```
 
-## Integrate with your tools
+Le groupe `bivouac_remote` est présent dans le fichier `ansible/hosts`. Il utiliser le fichier de variables `bivouac_remote.cen74.com.yml`. Il faut également disposer d'une configuration SSH fonctionnelle nommée `bivouac_remote.cen74.com` pour pouvoir se connecter au serveur distant.
 
-- [ ] [Set up project integrations](https://git.oslandia.net/Client-projects/cen_haute_savoie_bivouac/-/settings/integrations)
+Exemple de configuration SSH (`~/.ssh/config`):
 
-## Collaborate with your team
+```ini
+Host bivouac_remote.cen74.com
+    HostName 51.75.125.103
+    Port 22
+    User ubuntu
+    IdentityFile /home/vincent/.ssh/bivouac_cen74
+```
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+Pour tester la connexion au serveur distant, on peut utiliser la commande suivante:
 
-## Test and Deploy
+```shell
+ansible bivouac_remote -m ping -i hosts
+```
 
-Use the built-in continuous integration in GitLab.
+Pour pouvoir déployer un rôle en particulier (exemple avec front. le mot de passe vault est dans le pass sous la clé **ansible_vault_password**):
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+```shell
+ansible-playbook --inventory hosts --limit bivouac_remote --tags front -v playbook.yml --ask-vault-pass
+```

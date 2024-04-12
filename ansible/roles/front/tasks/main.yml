@@ -1,0 +1,62 @@
+---
+- name: Create directory for node setup
+  become: true
+  ansible.builtin.file:
+    path: "{{ path_node }}"
+    state: directory
+    recurse: true
+    mode: "0755"
+
+- name: Download apt repository setup for nodejs
+  become: true
+  ansible.builtin.get_url:
+    url: "https://deb.nodesource.com/setup_{{ node_version }}.x"
+    dest: "{{ path_node }}/setup_{{ node_version }}.x.sh"
+    mode: "0770"
+
+- name: Install apt repository for nodejs
+  become: true
+  ansible.builtin.command:
+    cmd: "{{ path_node }}/setup_{{ node_version }}.x.sh"
+    creates: /etc/apt/sources.list.d/nodesource.list
+
+- name: Install nodejs packages
+  become: true
+  ansible.builtin.apt:
+    name:
+      - nodejs
+    state: present
+
+- name: Install npm packages
+  become: true
+  ansible.builtin.command: npm install
+  args:
+    chdir: "{{ path_front }}"
+  changed_when: false
+
+- name: Copy settings-server.js file
+  become: true
+  become_user: "{{ front_user }}"
+  ansible.builtin.copy:
+    src: "{{ path_front }}/src/settings-server.js.sample"
+    dest: "{{ path_front }}/src/settings-server.js"
+    owner: "{{ front_user }}"
+    force: true
+    remote_src: true
+    mode: "0644"
+
+- name: Copy supervisord.conf template
+  become: true
+  become_user: "{{ front_user }}"
+  ansible.builtin.template:
+    src: "bivouacfront-supervisord.conf.j2"
+    dest: "{{ path_supervisor_conf }}/bivouacfront.conf"
+    owner: "{{ front_user }}"
+    force: true
+    mode: "0644"
+
+- name: Restart react-bivouacfront supervisor service
+  become: true
+  community.general.supervisorctl:
+    name: react-bivouacfront
+    state: restarted

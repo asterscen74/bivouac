@@ -1,0 +1,13 @@
+[supervisord]
+user={{ api_user }}
+nodaemon=true
+
+[program:fastapi-bivouacapi]
+command=/bin/bash -c "set -a && source {{ path_env }} && set +a && source .venv/bin/activate && uvicorn bivouacapi.main:app --port {{ api_fastapi_server_port }}"
+directory={{ path_api }}
+autostart=true
+autorestart=true
+stdout_logfile={{ path_logs }}/supervisor-bivouacapi-stdout.txt
+stdout_logfile_maxbytes=0
+stderr_logfile={{ path_logs }}/supervisor-bivouacapi-stderr.txt
+stderr_logfile_maxbytes=0

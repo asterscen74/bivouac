@@ -1,0 +1,36 @@
+---
+- name: Install virtualenv python package
+  ansible.builtin.pip:
+    name: virtualenv
+
+- name: Create python virtualenv
+  become: true
+  become_user: "{{ api_user }}"
+  ansible.builtin.command:
+    cmd: virtualenv .venv --python=python{{ python_version }}
+    chdir: "{{ path_api }}"
+  changed_when: false
+
+- name: Install api dependencies
+  become: true
+  become_user: "{{ api_user }}"
+  ansible.builtin.shell:
+    cmd: . .venv/bin/activate && pip install -e ".[dev]"
+    chdir: "{{ path_api }}"
+  changed_when: false
+
+- name: Copy supervisord.conf template
+  become: true
+  become_user: "{{ api_user }}"
+  ansible.builtin.template:
+    src: "bivouacapi-supervisord.conf.j2"
+    dest: "{{ path_supervisor_conf }}/bivouacapi.conf"
+    owner: "{{ api_user }}"
+    force: true
+    mode: "0644"
+
+- name: Restart fastapi-bivouacapi supervisor service
+  become: true
+  community.general.supervisorctl:
+    name: fastapi-bivouacapi
+    state: restarted

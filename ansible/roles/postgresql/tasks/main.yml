@@ -1,0 +1,88 @@
+---
+- name: Install postgresql apt key
+  become: true
+  ansible.builtin.apt_key:
+    url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+    state: present
+
+- name: Install apt repository for postgresql
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb http://apt.postgresql.org/pub/repos/apt jammy-pgdg main"
+    state: present
+    update_cache: true
+
+- name: Install postgresql packages
+  become: true
+  ansible.builtin.apt:
+    name:
+      - postgresql-{{ pg_version }}
+      - postgresql-contrib-{{ pg_version }}
+      - postgresql-{{ pg_version }}-postgis-{{ postgis_version }}
+      - postgis
+      - postgresql-client-{{ pg_version }}
+    state: present
+
+- name: Start postgresql
+  become: true
+  ansible.builtin.systemd:
+    name: "postgresql"
+    state: started
+    enabled: true
+    daemon_reload: true
+
+- name: Add postgresql user {{ pg_user }}
+  become: true
+  become_user: postgres
+  community.postgresql.postgresql_user:
+    name: "{{ pg_user }}"
+    password: "{{ pg_password }}"
+    role_attr_flags: SUPERUSER
+
+- name: Add postgresql database {{ pg_db }}
+  become: true
+  become_user: postgres
+  community.postgresql.postgresql_db:
+    name: "{{ pg_db }}"
+    owner: "{{ pg_user }}"
+
+- name: Ensure extensions are activated in database {{ pg_db }}
+  become: true
+  become_user: postgres
+  community.postgresql.postgresql_ext:
+    name: postgis
+    db: "{{ pg_db }}"
+    state: present
+
+- name: Copy sql files
+  become: true
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../data/sql"
+    dest: "{{ path_data }}"
+    force: true
+    mode: "0644"
+
+- name: Run sql main script
+  community.postgresql.postgresql_script:
+    db: "{{ pg_db }}"
+    login_user: "{{ pg_user }}"
+    login_password: "{{ pg_password }}"
+    login_host: "{{ pg_host }}"
+    port: "{{ pg_port }}"
+    path: "{{ path_data }}/sql/001_init-db.sql"
+
+- name: List all data files for the Bivouac application
+  ansible.builtin.find:
+    paths: "{{ path_data }}/sql/"
+    patterns: "bivouac*.sql"
+  register: files_bivouac
+
+- name: Insert data for the Bivouac application
+  community.postgresql.postgresql_script:
+    db: "{{ pg_db }}"
+    login_user: "{{ pg_user }}"
+    login_password: "{{ pg_password }}"
+    login_host: "{{ pg_host }}"
+    port: "{{ pg_port }}"
+    path: "{{ item.path }}"
+  loop: "{{ files_bivouac.files }}"
