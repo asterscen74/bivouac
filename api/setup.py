@@ -23,10 +23,13 @@ setup(
     include_package_data=True,
     python_requires="<4.0.0",
     install_requires=[
-        "fastapi==0.110.1",
-        "pydantic==2.6.4",
-        "sqlalchemy==1.4.37",
+        "fastapi==0.110.2",
+        "pydantic==2.7.0",
+        "pydantic-settings==2.2.1",
+        "sqlalchemy==2.0.29",
         "uvicorn==0.29.0",
+        "psycopg2==2.9.9",
+        "fpdf2==2.7.8",
     ],
     extras_require={
         "dev": [
