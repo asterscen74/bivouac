@@ -25,12 +25,14 @@ Sur la base du fichier `.env.sample`, créez un fichier `.env` et modifiez les d
 - `POSTGRES_PORT` : Port de la base de données
 - `API_FASTAPI_SERVER_HOST` : Hôte de l'API
 - `API_FASTAPI_SERVER_PORT` : Port de l'API
+- `API_OPENAPI_URL` : Chemin vers le fichier openapi.json
+- `API_DOCS_URL` : Chemin vers la documentation Swagger
 
 ## Lancement de l'API
 
-`uvicorn bivouacapi.main:app --reload --port 9005`
+`uvicorn bivouacapi.main:app --reload --port 9010`
 
 ## Consultation de la documentation Swagger
 
-- <http://127.0.0.1:9005/>
-- <http://127.0.0.1:9005/docs>
+- <http://127.0.0.1:9010/>
+- <http://127.0.0.1:9010/docs>
