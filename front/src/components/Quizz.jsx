@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import QuizzComponent from "./QuizzComponent";
 
 export default function Quizz() {
     const navigate = useNavigate();
@@ -16,15 +17,15 @@ export default function Quizz() {
         navigate("/" + nextPage);
     };
 
-
     return (
         <>
-            <h1>{t("Quizz")}</h1>
+            <h1>{t("The good practices quiz")}</h1>
             <Alert severity="success">
                 <AlertTitle>{t("Step")} 3/4</AlertTitle>
-                Répondez à ce petit Quizz
+                {t("Please answer this little quiz")}
             </Alert>
-            TODO : Quizz
+
+            <QuizzComponent />
 
             <Box sx={{ display: 'flex', flexDirection: 'row-reverse', p: 2}}>
                 <Button

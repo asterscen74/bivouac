@@ -21,6 +21,8 @@
     "@reduxjs/toolkit": "^1.8.2",
     "preval.macro": "^5.0.0",
     "i18next": "^23.8.1",
+    "survey-core": "latest",
+    "survey-react-ui": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.0.1",
