@@ -1,0 +1,17 @@
+.correctAnswer {
+    color: green;
+}
+.incorrectAnswer {
+    color: red;
+}
+.sd-element__title.sd-element__title--disabled {
+    opacity: 1;
+}
+
+.infos {
+    background: rgb(237, 247, 237);
+    border-radius: 5px;
+    border: 1px solid rgb(150, 185, 150);
+    padding: 10px;
+    margin: 5px;
+}
