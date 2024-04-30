@@ -6,11 +6,14 @@ import * as SurveyTheme from "survey-core/themes";
 import "../styles/QuizzComponent.css";
 import store from "../store";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { updateResults } from "../stores/Results";
 
 export default function QuizzComponent() {
 
     let infos = "";
     const { i18n } = useTranslation();
+    const dispatch = useDispatch();
 
     let quizzData = store.getState().quizz[i18n.resolvedLanguage];
 
@@ -19,12 +22,26 @@ export default function QuizzComponent() {
     const survey = new Model(quizzData);
     survey.locale = i18n.resolvedLanguage;
     survey.applyTheme(SurveyTheme.FlatLightPanelless);
-    survey.onComplete.add((sender) => {
-        console.log(JSON.stringify(sender.data, null, 3));
-        // TOO enregistrer les résultats ?
-    });
     const correctStr = "Correct";
     const incorrectStr = "Incorrect";
+
+    // Save results until reservation is confirmed
+    function saveSurveyData (survey) {
+        const data = survey.data;
+        dispatch(
+            updateResults({
+                part: "quizz",
+                data: data,
+            })
+        );
+    }
+    survey.onValueChanged.add(saveSurveyData);
+
+    // Restore survey results
+    const prevData = store.getState().results.quizz;
+    if (Object.keys(prevData).length > 0) {
+        survey.data = prevData;
+    }
 
     // Builds an HTML string to display in a question title
     function getTextHtml (text, str, isCorrect) {

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const { config } = require("../settings");
 import config from "../settings"
 
 export const general = createSlice({

@@ -26,6 +26,11 @@ Dans ce fichier, sont définies les variables suivantes :
 - `API_OPENAPI_URL` : Chemin vers le fichier openapi.json
 - `API_DOCS_URL` : Chemin vers la documentation Swagger
 - `FRONT_PORT` : Port utilisé par l'application React
+- `SMTP_PORT` : Port du serveur SMTP
+- `SMTP_SERVER` : Adresse du serveur SMTP
+- `SMTP_LOGIN` : Identifiant de l'utilisateur
+- `SMTP_PASSWORD` : Mot de passe associé à l'utilisateur
+- `SMTP_SENDER_EMAIL` : Adresse e-mail de l'expéditeur
 
 Afin de garantir une qualité entre les différentes contributions, une série de _git hooks_ (à travers l'outil [pre-commit](https://pre-commit.com/)) est disponible.
 

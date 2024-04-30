@@ -11,5 +11,11 @@
     "Welcome": "Welcome",
     "Thanks": "Tanks",
     "The good practices quiz": "The good practices quiz",
-    "Please answer this little quiz": "Please answer this little quiz"
+    "Please answer this little quiz": "Please answer this little quiz",
+    "Incomplete quiz": "The quiz was not completed correctly",
+    "Confirm reservation": "Confirm booking",
+    "Reservation confirmed": "Booking confirmed",
+    "Reservation not confirmed": "Booking not confirmed",
+    "Registration error": "Error saving entered information. Please try again later or contact us if the problem persists.",
+    "Summary sent": "A summary of your reservation has just been e-mailed to you."
 }

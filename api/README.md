@@ -27,6 +27,11 @@ Sur la base du fichier `.env.sample`, créez un fichier `.env` et modifiez les d
 - `API_FASTAPI_SERVER_PORT` : Port de l'API
 - `API_OPENAPI_URL` : Chemin vers le fichier openapi.json
 - `API_DOCS_URL` : Chemin vers la documentation Swagger
+- `SMTP_PORT` : Port du serveur SMTP
+- `SMTP_SERVER` : Adresse du serveur SMTP
+- `SMTP_LOGIN` : Identifiant de l'utilisateur
+- `SMTP_PASSWORD` : Mot de passe associé à l'utilisateur
+- `SMTP_SENDER_EMAIL` : Adresse e-mail de l'expéditeur
 
 ## Lancement de l'API
 
