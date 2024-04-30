@@ -1,4 +1,3 @@
-// import { useNavigate } from "react-router-dom";
 import "../styles/Informations.css";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -11,28 +10,49 @@ import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import "survey-core/defaultV2.min.css";
 import * as SurveyTheme from "survey-core/themes";
+import { useDispatch } from "react-redux";
+import { updateResults } from "../stores/Results";
 
 export default function Informations() {
 
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
+    const dispatch = useDispatch();
 
     let infosData = store.getState().infos[i18n.resolvedLanguage];
 
     const nextStep = (event) => {
-        let nextPage = event.target.name;
-        navigate("/" + nextPage);
+        const result = survey.completeLastPage();
+        if (result === true) {
+            let nextPage = event.target.name;
+            navigate("/" + nextPage);
+        }
+        // // comment above and uncomment below to move through the steps quickly without filling in the form or using routing
+        // let nextPage = event.target.name;
+        // navigate("/" + nextPage);
     };
 
     const survey = new Model(infosData);
     survey.locale = i18n.resolvedLanguage;
     survey.applyTheme(SurveyTheme.PlainLightPanelless);
-    survey.onComplete.add((sender) => {
-        console.log(JSON.stringify(sender.data, null, 3));
-        // TODO Enregistrer les informations
-        // aller à la page suivante
-        navigate("/localisation");
-    });
+
+    // Save results until reservation is confirmed
+    function saveSurveyData (survey) {
+        const data = survey.data;
+        dispatch(
+            updateResults({
+                part: "infos",
+                data: data,
+            })
+        );
+    }
+    survey.onValueChanged.add(saveSurveyData);
+
+    // Restore survey results
+    const prevData = store.getState().results.infos;
+    if (Object.keys(prevData).length > 0) {
+        survey.data = prevData;
+    }
 
     return (
         <>
@@ -42,7 +62,9 @@ export default function Informations() {
                 Saisissez vos informations
             </Alert>
 
-            <Survey model={survey} />
+            <Survey
+            model={survey}
+            />
 
             <Box sx={{ display: 'flex', flexDirection: 'row-reverse', p: 2}}>
                 <Button

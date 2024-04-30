@@ -8,6 +8,4 @@ if (api_host === "localhost") {
 }
 console.log("api_url : " + api_url);
 
-module.exports = {
-    api_url,
-};
+export default api_url;

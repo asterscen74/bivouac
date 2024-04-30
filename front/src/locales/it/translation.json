@@ -11,5 +11,11 @@
     "Welcome": "Benvenuto",
     "Thanks": "Gracie",
     "The good practices quiz": "Il quiz sulle buone pratiche",
-    "Please answer this little quiz": "Per favore rispondi a questo piccolo quiz"
+    "Please answer this little quiz": "Per favore rispondi a questo piccolo quiz",
+    "Incomplete quiz": "Il quiz non è stato completato correttamente",
+    "Confirm reservation": "Confermare la prenotazione",
+    "Reservation confirmed": "Prenotazione confermata",
+    "Reservation not confirmed": "Prenotazione non confermata",
+    "Registration error": "Errore nella registrazione delle informazioni inserite. Riprovare più tardi o contattarci se il problema persiste.",
+    "Summary sent": "Il riepilogo della vostra prenotazione vi è stato appena inviato via e-mail."
 }

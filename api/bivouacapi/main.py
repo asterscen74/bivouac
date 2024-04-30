@@ -13,7 +13,7 @@ from sqlalchemy.sql import text
 from bivouacapi.logs import initLogger
 from bivouacapi.models import PostReservation
 from bivouacapi.settings import MAP_LAYERS_ENUM, session, settings
-from bivouacapi.utils import generate_pdf
+from bivouacapi.utils import generate_pdf, send_summary_mail
 
 logger = initLogger(__name__)
 
@@ -124,38 +124,48 @@ async def get_map_layer(
     tags=["Data"],
 )
 async def create_reservation(
-    request: PostReservation, db: Session = Depends(get_db)
+    request: PostReservation, send_summary: bool = False, db: Session = Depends(get_db)
 ) -> Response:
     """Create a new reservation
 
     - **request**: request model
     """
     logger.info("create_reservation endpoint")
-    nom_reservation = request.nom
-    prenom_reservation = request.prenom
-    nb_places_reservation = request.nb_places
+    date_reservation = request.date
+    nb_tents_reservation = request.nb_tents
+    nb_people_reservation = request.nb_people
+    email_reservation = request.email
+    fr_or_foreign_reservation = request.fr_or_foreign
+    department_reservation = request.department
+    itinerance_reservation = request.itinerance
     lon_reservation = request.lon
     lat_reservation = request.lat
 
     query = f"""
-        INSERT INTO public.reservations(nom, prenom, nb_places, lon, lat,geom)
-        VALUES('{nom_reservation}','{prenom_reservation}',{nb_places_reservation},
-        {lon_reservation},{lat_reservation},ST_Transform(ST_SetSRID(ST_MakePoint({lon_reservation}, {lat_reservation}),4326), 3857))
+        INSERT INTO public.reservations(date,nb_tents,nb_people,email,fr_or_foreign,department,itinerance,lon,lat,geom)
+        VALUES('{date_reservation}',{nb_tents_reservation},{nb_people_reservation},'{email_reservation}','{fr_or_foreign_reservation}',
+        '{department_reservation}','{itinerance_reservation}',{lon_reservation},{lat_reservation},
+        ST_Transform(ST_SetSRID(ST_MakePoint({lon_reservation}, {lat_reservation}),4326), 3857))
         RETURNING id
         """
     try:
+        print(text(query))
         result = db.execute(text(query))
         reservation_number = result.fetchone()[0]
         db.commit()
         logger.info(f"Reservation {reservation_number} successfully registered")
-        return JSONResponse(
-            content=jsonable_encoder(
-                {
-                    "content": "Reservation successfully registered",
-                    "reservation_number": reservation_number,
-                }
-            )
-        )
+
+        # Send summary by e-mail
+        if send_summary:
+            query = f"""SELECT date, nb_tents, nb_people, email, fr_or_foreign, department, itinerance
+            FROM public.reservations
+            WHERE id = {reservation_number}
+            """
+            result = db.execute(text(query)).mappings().one()
+            pdf_content, _pdf_name = await generate_pdf(attributes=result)
+
+            result = await send_summary_mail(result.email, BytesIO(pdf_content))
+            return result
     except sqlalchemy.exc.ProgrammingError:
         db.rollback()
         logger.critical("Error during registration")
@@ -179,7 +189,7 @@ async def generate_send_pdf(
     """
     logger.info("generate_send_pdf endpoint")
     try:
-        query = f"""SELECT nom, prenom, nb_places, lat, lon
+        query = f"""SELECT date, nb_tents, nb_people, email, fr_or_foreign, department, itinerance
             FROM public.reservations
             WHERE id = {reservation_number}
             """

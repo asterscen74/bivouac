@@ -10,6 +10,7 @@ export const infos = createSlice({
                     "type": "text",
                     "title": "Date du bivouac",
                     "inputType": "date",
+                    "defaultValueExpression": "currentDate()",
                     "isRequired": true
                 },
                 {
@@ -29,9 +30,9 @@ export const infos = createSlice({
                     "title": "Nombre de personnes",
                     "maxLength": 25,
                     "inputType": "number",
-                    "min": 0,
+                    "min": 1,
                     "max": 100,
-                    "defaultValue": 0,
+                    "defaultValue": 1,
                     "isRequired": true
                 },
                 {
@@ -56,10 +57,12 @@ export const infos = createSlice({
                     "type": "dropdown",
                     "title": "Département de résidence",
                     "maxLength": 25,
+                    "isRequired": true,
                     "choicesByUrl": {
                       "url": "https://geo.api.gouv.fr/departements",
                       "valueName": "nom"
-                    }
+                    },
+                    "visibleIf": "{fr_or_foreign} = France",
                 },
                 {
                     "name": "itinerance",
