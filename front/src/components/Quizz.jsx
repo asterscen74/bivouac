@@ -59,7 +59,7 @@ export default function Quizz() {
                     output_message: responseData.content
                 }))
             }
-            navigate("/" + nameNextPage)
+            navigate("/declaration-bivouac/" + nameNextPage)
 
         }
 
@@ -73,7 +73,7 @@ export default function Quizz() {
 
     const previousStep = (event) => {
         let nextPage = event.target.name;
-        navigate("/" + nextPage);
+        navigate("/declaration-bivouac/" + nextPage);
     };
 
     const nextStep = () => {
