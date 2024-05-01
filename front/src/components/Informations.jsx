@@ -25,11 +25,11 @@ export default function Informations() {
         const result = survey.completeLastPage();
         if (result === true) {
             let nextPage = event.target.name;
-            navigate("/" + nextPage);
+            navigate("/declaration-bivouac/" + nextPage);
         }
         // // comment above and uncomment below to move through the steps quickly without filling in the form or using routing
         // let nextPage = event.target.name;
-        // navigate("/" + nextPage);
+        // navigate("/declaration-bivouac/" + nextPage);
     };
 
     const survey = new Model(infosData);

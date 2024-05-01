@@ -1,4 +1,3 @@
-// import { useNavigate } from "react-router-dom";
 import "../styles/Localisation.css";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +12,7 @@ export default function Localisation() {
 
     const nextStep = (event) => {
         let nextPage = event.target.name;
-        navigate("/" + nextPage);
+        navigate("/declaration-bivouac/" + nextPage);
     };
 
     return (

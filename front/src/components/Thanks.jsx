@@ -57,7 +57,7 @@ export default function Thanks() {
                 <Button
                     variant="outlined"
                     onClick={backToHome}
-                    name="home"
+                    name="a-propos"
                 >
                     {t("Home")}
                 </Button>
