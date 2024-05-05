@@ -23,10 +23,10 @@ export default function Quizz() {
     const [saveReservation, setSaveReservation] = useState(
         false
     );
-    const nameNextPage = "thanks"
+    const nameNextPage = "thanks";
 
     useEffect(() => {
-        // Alert is displayed for 5 seconds
+        // Alert is displayed for 7.5 seconds
         setTimeout(() => {
             setDisplayAlert(false);
         }, 7500);
@@ -36,7 +36,10 @@ export default function Quizz() {
         // Save survey data in the database and send the summary by e-mail
         async function submitSurvey(data) {
             const dataInfos = data.infos;
-            const body = JSON.stringify(dataInfos);
+            const dataLocalisation = data.localisation;
+            const bodyInfos = JSON.stringify(dataInfos);
+            const bodyLocalisation = JSON.stringify(dataLocalisation);
+            let body = JSON.stringify({ ...JSON.parse(bodyInfos), ...JSON.parse(bodyLocalisation)});
             const headers = new Headers();
             headers.append('Content-Type', 'application/json');
             const response = await fetch(api_url + 'reservations/?send_summary=true', {

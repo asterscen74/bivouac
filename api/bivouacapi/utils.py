@@ -25,6 +25,29 @@ async def get_formatted_datetime():
     return formatted_datetime
 
 
+async def check_locations_argument(locations: list[list[float]]):
+    """Check the format of the locations argument. Each list must contain 2 elements"""
+    logger.info("check_locations method")
+    for location in locations:
+        if len(location) != 2:
+            logger.critical(
+                "Error on the locations argument. Each list must contain 2 elements"
+            )
+            return JSONResponse(
+                status_code=400,
+                content=jsonable_encoder(
+                    {
+                        "content": "Error on the locations argument. Each list must contain 2 elements"
+                    }
+                ),
+            )
+    logger.info("locations argument is valid")
+    return JSONResponse(
+        status_code=200,
+        content=jsonable_encoder({"content": "locations argument is valid"}),
+    )
+
+
 async def send_summary_mail(receiver_email, pdf_attachment):
     """Send the summary of the reservation by e-mail"""
     logger.info("send_summary_mail method")

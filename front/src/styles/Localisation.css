@@ -1,0 +1,66 @@
+.leaflet-container {
+    height: 500px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.container-site-location {
+    display: inline-flex;
+    flex-direction: column;
+    float: right;
+    position: absolute;
+    right: 10px;
+}
+
+.container-buttons-location {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: -10px;
+    align-items: center;
+}
+
+.button-add-location {
+    z-index: 1000 !important;
+    background-color: rgb(52, 81, 94) !important;
+    font-size: 13px !important;
+    top: 17px !important;
+    height: 28px !important;
+    position: inherit !important;
+    margin-right: 10px !important;
+}
+
+.button-add-location:hover {
+    background-color: rgb(52, 81, 94) !important;
+}
+
+.button-stop-add-location {
+    z-index: 1000 !important;
+    background-color: rgb(52, 81, 94) !important;
+    font-size: 13px !important;
+    top: 17px !important;
+    height: 28px !important;
+    position: inherit !important;
+    margin-right: 10px !important;
+}
+
+.button-stop-add-location:hover {
+    background-color: rgb(52, 81, 94) !important;
+}
+
+.button-delete-last-location {
+    z-index: 1000 !important;
+    background-color: white !important;
+    color: rgb(52, 81, 94) !important;
+    font-size: 13px !important;
+    top: 24px !important;
+    height: 28px !important;
+    position: inherit !important;
+}
+
+.p-maximum-locations-reached {
+    margin: 0px 10px 0px 0px;
+    color: rgb(52, 81, 94);
+    font-size: 14px;
+    font-weight: bold;
+}

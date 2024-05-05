@@ -4,7 +4,9 @@ export const general = createSlice({
   name: "general",
   initialState: {
     infos: {},
-    localisation: {},
+    localisation: {
+        locations: []
+    },
     quizz: {},
     reservation: {
         confirmed: false,
@@ -31,9 +33,13 @@ export const general = createSlice({
             output_message: output_message
         };
     },
+    updateLocalisationPositions: (state, props) => {
+        const data = props.payload.data;
+        state.localisation.locations = data;
+    },
   },
 });
 
-export const { updateResults, updateReservation } = general.actions;
+export const { updateResults, updateReservation, updateLocalisationPositions } = general.actions;
 
 export default general.reducer;
