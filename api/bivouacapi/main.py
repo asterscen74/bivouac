@@ -13,7 +13,7 @@ from sqlalchemy.sql import text
 from bivouacapi.logs import initLogger
 from bivouacapi.models import PostReservation
 from bivouacapi.settings import MAP_LAYERS_ENUM, session, settings
-from bivouacapi.utils import generate_pdf, send_summary_mail
+from bivouacapi.utils import check_locations_argument, generate_pdf, send_summary_mail
 
 logger = initLogger(__name__)
 
@@ -100,6 +100,7 @@ async def get_map_layer(
 
         query = f"""SELECT json_build_object(
                     'type', 'Feature',
+                    'layername', '{map_layer.value}',
                     'geometry', ST_AsGeoJSON(geom)::json,
                     'properties', json_build_object(
                         {', '.join(properties)}
@@ -107,6 +108,7 @@ async def get_map_layer(
                 ) as feature
                 FROM public.{map_layer.value}
             """
+
         result = db.execute(text(query))
         data = [feat[0] for feat in result.fetchall()]
         logger.info(f"{map_layer.value} data successfully retrieved")
@@ -138,14 +140,21 @@ async def create_reservation(
     fr_or_foreign_reservation = request.fr_or_foreign
     department_reservation = request.department
     itinerance_reservation = request.itinerance
-    lon_reservation = request.lon
-    lat_reservation = request.lat
+    locations_reservation = request.locations
+
+    check_locations = await check_locations_argument(locations_reservation)
+    if check_locations.status_code == 400:
+        return check_locations
+
+    multipoint_locations_geom = "MULTIPOINT("
+    for location in locations_reservation:
+        multipoint_locations_geom += f"({location[1]} {location[0]}),"
+    multipoint_locations_geom = multipoint_locations_geom[:-1] + ")"
 
     query = f"""
-        INSERT INTO public.reservations(date,nb_tents,nb_people,email,fr_or_foreign,department,itinerance,lon,lat,geom)
+        INSERT INTO public.reservations(date,nb_tents,nb_people,email,fr_or_foreign,department,itinerance,geom)
         VALUES('{date_reservation}',{nb_tents_reservation},{nb_people_reservation},'{email_reservation}','{fr_or_foreign_reservation}',
-        '{department_reservation}','{itinerance_reservation}',{lon_reservation},{lat_reservation},
-        ST_Transform(ST_SetSRID(ST_MakePoint({lon_reservation}, {lat_reservation}),4326), 3857))
+        '{department_reservation}','{itinerance_reservation}', ST_GeomFromText('{multipoint_locations_geom}'))
         RETURNING id
         """
     try:

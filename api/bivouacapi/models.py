@@ -1,7 +1,7 @@
 """Models used in the endpoints"""
 
 from datetime import date
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -18,5 +18,4 @@ class PostReservation(BaseModel):
     fr_or_foreign: str
     department: Optional[str] = None
     itinerance: bool
-    lon: Optional[float] = 0
-    lat: Optional[float] = 0
+    locations: List[List[float]]
