@@ -4,6 +4,10 @@ import Quizz from "./stores/Quizz";
 import Infos from "./stores/Infos";
 import Results from "./stores/Results";
 import Map from "./stores/Map";
+import Contacts from "./stores/Contacts";
+import About from "./stores/About";
+import LegalNotices from "./stores/LegalNotices";
+import GoodPractices from "./stores/GoodPractices";
 
 export default configureStore({
     reducer: {
@@ -11,6 +15,10 @@ export default configureStore({
         quizz: Quizz,
         infos: Infos,
         results: Results,
-        map: Map
+        map: Map,
+        contacts: Contacts,
+        about: About,
+        legalNotices: LegalNotices,
+        goodPractices: GoodPractices
     },
 });

@@ -1,14 +1,19 @@
 import "../styles/LegalNotices.css";
 import { useTranslation } from "react-i18next";
+import store from "../store";
 
 export default function LegalNotices() {
-    const { t } = useTranslation();
+    const {t, i18n } = useTranslation();
+
+    let legalNoticesData = store.getState().legalNotices[i18n.resolvedLanguage];
 
     return (
-        <>
+        <div>
             <h1>{t("Tab legal notices")}</h1>
-            TODO
-            Mentions Légales
-        </>
+            <div dangerouslySetInnerHTML={{
+            __html: legalNoticesData,
+        }}>
+            </div>
+        </div>
     );
 }
