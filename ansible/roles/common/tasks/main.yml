@@ -2,96 +2,107 @@
 - name: Install apt repository for python {{ python_version }}
   become: true
   ansible.builtin.apt_repository:
-    repo: "ppa:deadsnakes/ppa"
-    state: present
-    update_cache: true
+      repo: "ppa:deadsnakes/ppa"
+      state: present
+      update_cache: true
 
 - name: Installing system packages, python
   become: true
   ansible.builtin.apt:
-    name:
-      - aptitude
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
-      - gnupg
-      - lsb-release
-      - git
-      - supervisor
-      - acl
-      - python{{ python_version }}
-      - python{{ python_version }}-distutils
-      - python3-pip
-      - python3-virtualenv
-      - python3-psycopg2
-      - sudo
-      - unzip
-    update_cache: true
-    state: present
+      name:
+          - aptitude
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - gnupg
+          - lsb-release
+          - git
+          - supervisor
+          - acl
+          - python{{ python_version }}
+          - python{{ python_version }}-distutils
+          - python3-pip
+          - python3-virtualenv
+          - python3-psycopg2
+          - libpq-dev
+          - python{{ python_version }}-dev
+          - sudo
+          - unzip
+      update_cache: true
+      state: present
 
 - name: Create accounts
   become: true
   ansible.builtin.user:
-    name: "{{ item.name }}"
-    uid: "{{ item.uid }}"
-    groups: sudo
+      name: "{{ item.name }}"
+      uid: "{{ item.uid }}"
+      groups: sudo
   with_items: "{{ users }}"
 
 - name: Clone bivouac repository
   become: true
   ansible.builtin.git:
-    repo: https://{{ gitlab_repo_token_user }}:{{ gitlab_repo_token_password }}@{{ gitlab_repo_url }}
-    dest: "{{ gitlab_repo_dir }}"
-    update: true
-    force: true
-    version: "{{ gitlab_repo_branch }}"
+      repo: https://{{ gitlab_repo_token_user }}:{{ gitlab_repo_token_password }}@{{ gitlab_repo_url }}
+      dest: "{{ gitlab_repo_dir }}"
+      update: true
+      force: true
+      version: "{{ gitlab_repo_branch }}"
 
 - name: Add permissions to the gitlab repository
   become: true
   ansible.builtin.file:
-    path: "{{ gitlab_repo_dir }}"
-    group: sudo
-    recurse: true
-    mode: "0755"
+      path: "{{ gitlab_repo_dir }}"
+      group: sudo
+      recurse: true
+      mode: "0755"
 
 - name: Add permissions to the api repository
   become: true
   ansible.builtin.file:
-    path: "{{ path_api }}"
-    owner: "{{ api_user }}"
-    recurse: true
-    mode: "0755"
+      path: "{{ path_api }}"
+      owner: "{{ api_user }}"
+      recurse: true
+      mode: "0755"
 
 - name: Add permissions to the front repository
   become: true
   ansible.builtin.file:
-    path: "{{ path_front }}"
-    owner: "{{ front_user }}"
-    recurse: true
-    mode: "0755"
+      path: "{{ path_front }}"
+      owner: "{{ front_user }}"
+      recurse: true
+      mode: "0755"
 
 - name: Add permissions to the supervisor configuration directory
   become: true
   ansible.builtin.file:
-    path: "{{ path_supervisor_conf }}"
-    group: sudo
-    mode: "0775"
+      path: "{{ path_supervisor_conf }}"
+      group: sudo
+      mode: "0775"
 
 - name: Create directory for logs
   become: true
   ansible.builtin.file:
-    path: "{{ path_logs }}"
-    state: directory
-    recurse: true
-    group: sudo
-    mode: "0755"
+      path: "{{ path_logs }}"
+      state: directory
+      recurse: true
+      group: sudo
+      mode: "0755"
 
 - name: Copy .env template
   become: true
   ansible.builtin.template:
-    src: ".env.j2"
-    dest: "{{ path_env }}"
-    force: true
-    group: sudo
-    mode: "0755"
+      src: ".env.j2"
+      dest: "{{ path_env }}"
+      force: true
+      group: sudo
+      mode: "0755"
+
+- name: Copy .env.front template in the front directory
+  become: true
+  ansible.builtin.template:
+      src: ".env.front.j2"
+      dest: "{{ path_front_env }}"
+      force: true
+      group: sudo
+      mode: "0755"

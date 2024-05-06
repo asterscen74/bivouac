@@ -18,6 +18,7 @@ path_app: /opt/bivouac
 path_env: /opt/bivouac/.env
 path_api: /opt/bivouac/api
 path_front: /opt/bivouac/front
+path_front_env: /opt/bivouac/front/.env
 path_supervisor_conf: /etc/supervisor/conf.d
 path_logs: /tmp/logs
 path_data: /opt/data
