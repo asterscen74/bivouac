@@ -94,3 +94,16 @@ Pour pouvoir déployer un rôle en particulier (exemple avec front. le mot de pa
 ```shell
 ansible-playbook --inventory hosts --limit bivouac_remote --tags front -v playbook.yml --ask-vault-pass
 ```
+
+## Diverses commandes de debug
+
+```shell
+sudo service supervisor status
+sudo service supervisor restart
+sudo supervisorctl status all
+sudo journalctl -u supervisor.service -n 100 -f
+sudo supervisorctl restart fastapi-bivouacapi
+cat /tmp/logs/supervisor-bivouacapi-stdout.txt
+cat /tmp/logs/supervisor-bivouacapi-stderr.txt
+sudo apt-get --purge autoremove supervisor
+```
