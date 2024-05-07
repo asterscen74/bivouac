@@ -24,6 +24,17 @@ export default function Quizz() {
         false
     );
     const nameNextPage = "thanks";
+    let resultsData = store.getState().results;
+    let resultsInfosData = resultsData.infos;
+    const nameInformationsPage = "informations";
+
+    // Redirect to the informations page if the page has not been completed
+    useEffect(() => {
+        if (Object.keys(resultsInfosData).length === 0) {
+            navigate("/declaration-bivouac/" + nameInformationsPage);
+        }
+
+    }, [resultsInfosData]);
 
     useEffect(() => {
         // Alert is displayed for 7.5 seconds

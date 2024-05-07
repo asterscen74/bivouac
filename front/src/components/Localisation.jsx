@@ -28,6 +28,7 @@ export default function Localisation() {
 
     let resultsData = store.getState().results;
     let resultsInfosData = resultsData.infos;
+    const previousPage = "informations";
     let resultsLocalisationData = resultsData.localisation;
     const [maxLocations, setMaxLocations] = useState(undefined);
 
@@ -41,6 +42,13 @@ export default function Localisation() {
     const [locationData, setLocationData] = useState(resultsLocalisationData.locations);
     const [displayMaximumLocationReached, setDisplayMaximumLocationReached] = useState(false);
     const [clickCoordinates, setClickCoordinates] = useState([]);
+
+    // Redirect to the informations page if the first page has not been completed
+    useEffect(() => {
+        if (Object.keys(resultsInfosData).length === 0) {
+            navigate("/declaration-bivouac/" + previousPage);
+        }
+    }, [resultsInfosData]);
 
     // Bivouac site undefined
     useEffect(() => {
@@ -65,8 +73,6 @@ export default function Localisation() {
                 setEnableAddLocation(false);
             }
         }
-
-
     }, [locationData, dispatch]);
 
     // Save the coordinates of the click
@@ -80,9 +86,8 @@ export default function Localisation() {
     }, [clickCoordinates, dispatch]);
 
     // Navigate to informations page
-    const previousStep = (event) => {
-        let nextPage = event.target.name;
-        navigate("/declaration-bivouac/" + nextPage);
+    const previousStep = () => {
+        navigate("/declaration-bivouac/" + previousPage);
     };
 
     // Navigate to quizz page
@@ -365,7 +370,6 @@ export default function Localisation() {
                 <Button
                     variant="outlined"
                     onClick={previousStep}
-                    name="informations"
                 >
                     {t("Previous step")}
                 </Button>
