@@ -43,7 +43,7 @@ root.render(
               </Route>
               <Route path="/contacts" exact element={<Contacts />} />
               <Route path="/mentions-legales" exact element={<LegalNotices />} />
-              <Route path="*" element={<Navigate replace to="/a-propos" />} />
+              <Route path="*" element={<Navigate replace to="/declaration-bivouac" />} />
           </Routes>
           <Divider variant="full" />
           <Footer/>
