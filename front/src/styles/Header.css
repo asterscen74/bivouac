@@ -1,9 +1,13 @@
 .img-header {
-    background: url(../assets/img/header.jpg) no-repeat left top;
+    width: 100%;
+}
+
+.main-menu {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px !important;
 }
 
 .MuiMenu-list {
-    background-color: rgb(200, 233, 149);
+    background-color: #76B72A;
 }
 
 /* .MuiSelect-select {

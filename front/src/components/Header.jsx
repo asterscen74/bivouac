@@ -33,8 +33,6 @@ const Header = () => {
         { label: t("Tab about"), id: "a-propos" },
         { label: t("Tab good practices"), id: "les-bonnes-pratiques" },
         { label: t("Tab bivouac declaration"), id: "declaration-bivouac" },
-        { label: t("Tab contacts"), id: "contacts" },
-        { label: t("Tab legal notices"), id: "mentions-legales" },
     ];
 
     const handleOpenNavMenu = (event) => {
@@ -67,13 +65,15 @@ const Header = () => {
 
     return (
         <>
-        <Box sx={{ bgcolor: 'rgb(171 211 110)', height: '360px'}} className="img-header">
+        <Box sx={{ bgcolor: '#76B72A', height: 'auto'}} >
+            <img src="/src/assets/img/header.jpg" alt="img_header" className="img-header"/>
         </Box>
         <AppBar
+            className="main-menu"
             sx={{
                 position: "static",
                 height: "68px",
-                background: "rgb(200 233 149)"
+                background: "#76B72A"
             }}
             >
         <Container maxWidth="">
@@ -113,7 +113,7 @@ const Header = () => {
                         <Link
                             style={{
                                 textDecoration: "none",
-                                color: "#34515E",
+                                color: "#ffffff",
                             }}
                             to={`/${page.id}`}
                         >
@@ -132,7 +132,7 @@ const Header = () => {
                         <Link
                             style={{
                                 textDecoration: "none",
-                                color: "#34515E",
+                                color: "#ffffff",
                             }}
                             to={`/${page.id}`}
                         >
