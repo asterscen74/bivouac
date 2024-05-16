@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="40"
+   height="40"
+   viewBox="0 0 10.583333 10.583333"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (1:1.3.2+202311252150+091e20ef0f)"
+   sodipodi:docname="marker_location.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#ffffff"
+     inkscape:document-units="mm"
+     inkscape:zoom="9.322937"
+     inkscape:cx="11.423439"
+     inkscape:cy="28.799937"
+     inkscape:window-width="1920"
+     inkscape:window-height="1171"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient35"
+       id="linearGradient36"
+       x1="51.711033"
+       y1="-346.55853"
+       x2="93.526993"
+       y2="-346.55853"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient35"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#e3900d;stop-opacity:1;"
+         offset="0"
+         id="stop35" />
+      <stop
+         style="stop-color:#f0a806;stop-opacity:1;"
+         offset="1"
+         id="stop36" />
+    </linearGradient>
+  </defs>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g36"
+       transform="matrix(0.25309316,0,0,0.25309316,-10.377037,92.818419)"
+       inkscape:export-filename="../../../projects/cen_haute_savoie_bivouac/front/src/assets/img/marker_location.png"
+       inkscape:export-xdpi="50"
+       inkscape:export-ydpi="50">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 64.022403,-354.71867 -3.81553,-11.34811"
+         id="path34" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 60.451156,-355.77338 2.547305,-8.5299"
+         id="path35" />
+      <path
+         id="path33"
+         style="fill:url(#linearGradient36);stroke:none;stroke-width:0.169;stroke-linecap:round;stroke-linejoin:round"
+         inkscape:transform-center-y="-6.0356096"
+         transform="translate(-10.710173,2.9603273)"
+         d="m 93.526991,-328.45169 h -41.81596 c 9.148067,-10.70653 16.297775,-22.66477 20.90798,-36.21368 5.059931,13.4281 12.284449,25.31798 20.90798,36.21368 z"
+         sodipodi:nodetypes="cccc" />
+      <path
+         id="path33-6"
+         style="fill:#d77813;fill-opacity:1;stroke:none;stroke-width:0.107499;stroke-linecap:round;stroke-linejoin:round"
+         inkscape:transform-center-y="-3.8391796"
+         d="M 75.425037,-325.49136 H 48.826393 c 5.818979,-6.8103 10.366825,-14.4168 13.299322,-23.0351 3.218563,8.54146 7.813994,16.10447 13.299322,23.0351 z"
+         sodipodi:nodetypes="cccc" />
+    </g>
+  </g>
+</svg>
