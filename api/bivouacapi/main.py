@@ -146,29 +146,47 @@ async def create_reservation(
     if check_locations.status_code == 400:
         return check_locations
 
-    multipoint_locations_geom = "MULTIPOINT("
-    for location in locations_reservation:
-        multipoint_locations_geom += f"({location[1]} {location[0]}),"
-    multipoint_locations_geom = multipoint_locations_geom[:-1] + ")"
-
-    query = f"""
-        INSERT INTO public.reservations(date,nb_tents,nb_people,email,fr_or_foreign,department,itinerance,geom)
-        VALUES('{date_reservation}',{nb_tents_reservation},{nb_people_reservation},'{email_reservation}','{fr_or_foreign_reservation}',
-        '{department_reservation}','{itinerance_reservation}', ST_GeomFromText('{multipoint_locations_geom}'))
-        RETURNING id
-        """
     try:
+        query = f"""
+            INSERT INTO public.reservations(nb_tents,nb_people,email,fr_or_foreign,department,itinerance)
+            VALUES({nb_tents_reservation},{nb_people_reservation},'{email_reservation}','{fr_or_foreign_reservation}',
+            '{department_reservation}','{itinerance_reservation}' )
+            RETURNING id
+            """
         print(text(query))
         result = db.execute(text(query))
         reservation_number = result.fetchone()[0]
         db.commit()
+    except sqlalchemy.exc.ProgrammingError:
+        db.rollback()
+        logger.critical("Error during registration")
+        return JSONResponse(
+            content=jsonable_encoder({"content": "Error during registration"})
+        )
+
+    queries = []
+    for nb, location in enumerate(locations_reservation):
+        location_geom = f"POINT({location[1]} {location[0]})"
+        query = f"""
+            INSERT INTO public.reservations_locations(reservation,date,geom)
+            VALUES('{reservation_number}', '{date_reservation}'::date + INTERVAL '{nb} DAY',ST_GeomFromText('{location_geom}'))
+            """
+        queries.append(query)
+
+    try:
+        for query in queries:
+            print(text(query))
+            result = db.execute(text(query))
+            db.commit()
         logger.info(f"Reservation {reservation_number} successfully registered")
 
         # Send summary by e-mail
         if send_summary:
-            query = f"""SELECT date, nb_tents, nb_people, email, fr_or_foreign, department, itinerance
-            FROM public.reservations
-            WHERE id = {reservation_number}
+            query = f"""SELECT string_agg(rl.date::text, ',') as date, nb_tents, nb_people, email, fr_or_foreign, department, itinerance
+            FROM public.reservations r
+            join public.reservations_locations rl on rl.reservation = r.id
+            WHERE r.id = {reservation_number}
+            group by r.id
             """
             result = db.execute(text(query)).mappings().one()
             pdf_content, _pdf_name = await generate_pdf(attributes=result)

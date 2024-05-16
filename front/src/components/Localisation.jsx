@@ -6,13 +6,14 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { MapContainer, GeoJSON, TileLayer, useMap, Marker } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
 import store from "../store";
 import api_url from "../settings-server.js";
 import { useDispatch } from "react-redux";
 import { updateLocalisationPositions } from "../stores/Results";
-import logoZoneInterdite from '../assets/img/logo_zone_interdite.png';
+import markerLocation from '../assets/img/marker_location.svg'
 import Select from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -168,7 +169,7 @@ export default function Localisation() {
             // Déconseillé
             if (featurePropertiesBivouac === "Déconseillé") {
                 popupContent = `<div>
-                <p><strong>Zone déconseillée - ${featurePropertiesNom}</strong></p>
+                <p><strong>Zone déconseillée</strong></p>
                 <i>En réserve naturelle le camping est interdit, le bivouac est déconseillé. Le bivouac est
                 un campement éphémère avec ou sans abri de manière temporaire de 19h à 9h le
                 lendemain. Le camping sauvage signifie plusieurs nuits au même endroit.
@@ -177,7 +178,7 @@ export default function Localisation() {
             // Toléré
             } else if (featurePropertiesBivouac === "Toléré") {
                 popupContent = `<div>
-                <p><strong>Zone tolérée - ${featurePropertiesNom}</strong></p>
+                <p><strong>Zone tolérée</strong></p>
                 <p>TODO : récupérer nom et capacité. Ex : ${featurePropertiesNom}, places pour 30 tentes</p>
                 <p>TODO : nb bivouacs déclarés à telle date. Ex : 18 bivouacs déclarés au 08/07/2024</p>
                 <p>TODO : horaires tentes tolérées. Ex : <i>Tentes tolérées entre 19h et 9h le lendemain</i></p>
@@ -188,9 +189,8 @@ export default function Localisation() {
             // Interdite
             else if (featurePropertiesBivouac === "Interdit") {
                 popupContent = `<div>
-                <p><strong>Zone interdite - ${featurePropertiesNom}</strong></p>
+                <p><strong>Zone interdite</strong></p>
                 <div style="display: flex;">
-                    <img src=${logoZoneInterdite} alt="logo zone interdite" />
                     <p style="margin-left: 15px">TODO : mettre le texte soulignant la zone interdite</p>
                 </div>
                 </div>
@@ -310,12 +310,18 @@ export default function Localisation() {
         );
       };
 
+    // Custom icon for locations
+    const iconLocation = new L.Icon({
+        iconUrl: markerLocation,
+        iconSize: [40, 40]
+    });
+
     return (
         <>
             <h1>{t("Localisation")}</h1>
             <Alert severity="success">
                 <AlertTitle>{t("Step")} 2/4</AlertTitle>
-                Saisissez vos emplacements de bivouac
+                {t("Point bivouac locations")}
             </Alert>
 
             <div className="container-buttons-location">
@@ -344,7 +350,7 @@ export default function Localisation() {
                     ))}
                     {/* Layer with the bivouac locations */}
                     {locationData.map((location, index) => (
-                    <Marker key={index} position={location} />
+                        <Marker key={index} position={location} icon={iconLocation} />
                     ))}
                     <div className="container-site-location">
                         <ZoomToSite />
