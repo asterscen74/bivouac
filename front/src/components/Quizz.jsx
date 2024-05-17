@@ -10,7 +10,8 @@ import store from "../store";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateReservation } from "../stores/Results";
-import api_url from "../settings-server.js"
+import api_url from "../settings-server.js";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Quizz() {
     const navigate = useNavigate();
@@ -23,6 +24,7 @@ export default function Quizz() {
     const [saveReservation, setSaveReservation] = useState(
         false
     );
+    const [displayCircularProgress, setDisplayCircularProgress] = useState(false);
     const nameNextPage = "thanks";
     let resultsData = store.getState().results;
     let resultsInfosData = resultsData.infos;
@@ -74,13 +76,14 @@ export default function Quizz() {
                 }))
             }
             navigate("/declaration-bivouac/" + nameNextPage)
+            setDisplayCircularProgress(false);
 
         }
 
         // Save the booking
         if (saveReservation === true) {
             const resultsData = store.getState().results;
-            submitSurvey(resultsData)
+            submitSurvey(resultsData);
         }
 
     }, [saveReservation, dispatch, navigate, t]);
@@ -96,6 +99,7 @@ export default function Quizz() {
             setDisplayAlert(true);
         } else {
             setDisplayAlert(false);
+            setDisplayCircularProgress(true);
             setSaveReservation(true);
         }
         // // // comment above and uncomment below to move through the steps quickly without filling in the form or using routing
@@ -119,6 +123,12 @@ export default function Quizz() {
             </Alert>}
 
             <Box sx={{ display: 'flex', flexDirection: 'row-reverse', p: 2}}>
+                {/* Awaiting response from api */}
+                {displayCircularProgress &&
+                <Box sx={{ display: 'flex', marginLeft: '10px', alignItems: 'center' }}>
+                    <CircularProgress sx={{ color: '#76B72A '}} />
+                </Box>
+                }
                 <Button
                     variant="outlined"
                     onClick={nextStep}
