@@ -37,9 +37,20 @@ export const general = createSlice({
         const data = props.payload.data;
         state.localisation.locations = data;
     },
+    resetResults: (state) => {
+        state.infos = {};
+        state.localisation = {
+            locations: []
+        };
+        state.quizz = {};
+        state.reservation = {
+            confirmed: false,
+            output_message: ""
+        };
   },
+}
 });
 
-export const { updateResults, updateReservation, updateLocalisationPositions } = general.actions;
+export const { updateResults, updateReservation, updateLocalisationPositions, resetResults } = general.actions;
 
 export default general.reducer;

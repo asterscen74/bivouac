@@ -1,3 +1,13 @@
 #sv-nav-complete {
     visibility: collapse;
+    height: 0;
+}
+
+.sd-body.sd-body--static {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.survey-container div.sd-action-bar.sd-footer.sd-body__navigation.sd-clearfix {
+    display: none;
 }
