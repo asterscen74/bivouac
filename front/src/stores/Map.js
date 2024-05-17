@@ -32,6 +32,19 @@ export const map = createSlice({
                 }
             }
         },
+        defaultBaseLayers: [
+            {
+              name: "OpenStreetMap",
+              attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a>OpenStreetMap</a> contributors',
+              url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            },
+            {
+              name: "IGN Scan 25",
+              layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR",
+              attribution: '&copy; <a href="https://geoservices.ign.fr/">IGN</a>',
+              url: 'https://wxs.ign.fr/0sm9hm0lu0i25mqne5p5s85r/geoportail/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/jpeg'
+            }
+        ],
         defaultSites: {
             "chamonix": {
                 name: "Chamonix",
