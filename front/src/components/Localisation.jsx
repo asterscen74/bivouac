@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import { MapContainer, GeoJSON, TileLayer, useMap, Marker } from 'react-leaflet';
+import { MapContainer, GeoJSON, TileLayer, useMap, Marker, LayersControl } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
@@ -35,6 +35,7 @@ export default function Localisation() {
 
     let mapData = store.getState().map.initialDisplay;
     const mapDataDefaultLayers = mapData.defaultLayers;
+    const mapDataDefaultBaseLayers = mapData.defaultBaseLayers;
     const mapDataDefaultSites = mapData.defaultSites;
 
     const [defaultSite, setDefaultSite] = useState("");
@@ -333,7 +334,25 @@ export default function Localisation() {
 
             <div id="map">
                 <MapContainer ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true}>
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
+
+                    {/* Basemaps */}
+                    <LayersControl position="bottomright">
+                        {mapDataDefaultBaseLayers.map((baseLayer, index) => {
+                        return (
+                            <LayersControl.BaseLayer
+                            key={index}
+                            checked={index === 0 ? true : false}
+                            name={baseLayer.name}
+                            >
+                            <TileLayer
+                                attribution={baseLayer.attribution}
+                                url={baseLayer.url}
+                            />
+                            </LayersControl.BaseLayer>
+                        )
+                        })}
+                    </LayersControl>
+
                     {/* Disable popup when the user is adding a location. Ternary operator does not work */}
                     {enableAddLocation === false && Object.values(geojsonData).map((data, index) => (
                         <GeoJSON key={index}
