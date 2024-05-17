@@ -7,10 +7,13 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import store from "../store";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { resetResults } from "../stores/Results";
 
 export default function Thanks() {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const dispatch = useDispatch();
     const reservationData = store.getState().results.reservation;
 
     const backToHome = (event) => {
@@ -29,6 +32,13 @@ export default function Thanks() {
             return
         }
       }, [navigate]);
+
+    // Reset the results in the store
+    useEffect(() => {
+        if (reservationData.confirmed === true) {
+            dispatch(resetResults())
+        }
+    }, [reservationData, dispatch]);
 
     return (
         <>

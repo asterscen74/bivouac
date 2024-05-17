@@ -62,9 +62,12 @@ export default function Informations() {
                 Saisissez vos informations
             </Alert>
 
-            <Survey
-            model={survey}
-            />
+            <div className="survey-container">
+                <Survey
+                model={survey}
+                />
+            </div>
+
 
             <Box sx={{ display: 'flex', flexDirection: 'row-reverse', p: 2}}>
                 <Button

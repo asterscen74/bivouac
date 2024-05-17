@@ -12,7 +12,7 @@ import { updateResults } from "../stores/Results";
 export default function QuizzComponent() {
 
     let infos = "";
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
 
     let quizzData = store.getState().quizz[i18n.resolvedLanguage];
@@ -66,7 +66,11 @@ export default function QuizzComponent() {
         if (isCorrect === undefined) {
             q.title = q.prevTitle;
         }
-        q.title =  q.prevTitle + ' ' + (isCorrect ? correctStr : incorrectStr) ;
+
+        // Don't display for the last question
+        if (q.title !== t("Last question quiz")) {
+            q.title =  q.prevTitle + ' ' + (isCorrect ? correctStr : incorrectStr);
+        }
     }
 
     survey.onValueChanged.add((_, options) => {

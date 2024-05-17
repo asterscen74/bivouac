@@ -36,7 +36,7 @@ export default function Quizz() {
             navigate("/declaration-bivouac/" + nameInformationsPage);
         }
 
-    }, [resultsInfosData]);
+    }, [resultsInfosData, navigate]);
 
     useEffect(() => {
         // Alert is displayed for 7.5 seconds
