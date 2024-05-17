@@ -141,6 +141,7 @@ async def create_reservation(
     department_reservation = request.department
     itinerance_reservation = request.itinerance
     locations_reservation = request.locations
+    quizz_note_reservation = request.quizz_note
 
     check_locations = await check_locations_argument(locations_reservation)
     if check_locations.status_code == 400:
@@ -148,9 +149,9 @@ async def create_reservation(
 
     try:
         query = f"""
-            INSERT INTO public.reservations(nb_tents,nb_people,email,fr_or_foreign,department,itinerance)
+            INSERT INTO public.reservations(nb_tents,nb_people,email,fr_or_foreign,department,itinerance,quizz_note)
             VALUES({nb_tents_reservation},{nb_people_reservation},'{email_reservation}','{fr_or_foreign_reservation}',
-            '{department_reservation}','{itinerance_reservation}' )
+            '{department_reservation}','{itinerance_reservation}', '{quizz_note_reservation}' )
             RETURNING id
             """
         print(text(query))

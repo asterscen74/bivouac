@@ -50,9 +50,12 @@ export default function Quizz() {
         async function submitSurvey(data) {
             const dataInfos = data.infos;
             const dataLocalisation = data.localisation;
+            const dataQuizz = data.quizz;
+            const dataQuizzLastQuestion = dataQuizz[t("Last question quiz")];
             const bodyInfos = JSON.stringify(dataInfos);
             const bodyLocalisation = JSON.stringify(dataLocalisation);
-            let body = JSON.stringify({ ...JSON.parse(bodyInfos), ...JSON.parse(bodyLocalisation)});
+            const bodyQuizz = JSON.stringify({"quizz_note": dataQuizzLastQuestion});
+            let body = JSON.stringify({ ...JSON.parse(bodyInfos), ...JSON.parse(bodyLocalisation), ...JSON.parse(bodyQuizz)});
             const headers = new Headers();
             headers.append('Content-Type', 'application/json');
             const response = await fetch(api_url + 'reservations/?send_summary=true', {
