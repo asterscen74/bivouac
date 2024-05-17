@@ -19,3 +19,4 @@ class PostReservation(BaseModel):
     department: Optional[str] = None
     itinerance: bool
     locations: List[List[float]]
+    quizz_note: Optional[str] = None
