@@ -203,6 +203,62 @@ async def create_reservation(
 
 
 @app.get(
+    "/reservations/",
+    summary="Get the number of tents by date and bivouac zoning",
+    tags=["Data"],
+)
+async def get_number_tents_date_bivouac_zoning(
+    start_date,
+    itinerance: bool,
+    db: Session = Depends(get_db),
+):
+    """Get the number of tents by date and bivouac zoning
+
+    - **start_date**: starting date
+    - **fields**: reservation with itinerance or not
+    """
+    logger.info("get_number_tents_date_bivouac_zoning")
+    try:
+
+        if itinerance:
+            query_where_part = f"""WHERE date BETWEEN '{start_date}'::date
+            AND '{start_date}'::date + INTERVAL '2 DAY'"""
+        else:
+            query_where_part = f"WHERE date = '{start_date}'::date"
+
+        query = f"""
+                SELECT date, name_bivouac_zoning,
+                SUM(reservations.nb_tents) AS nb_tents
+                FROM reservations_locations
+                LEFT JOIN reservations
+                ON reservations_locations.reservation = reservations.id
+                {query_where_part}
+                GROUP BY date, name_bivouac_zoning
+                ORDER BY date
+            """
+
+        result = db.execute(text(query))
+
+        data = {}
+        for row in result.fetchall():
+            date, name_bivouac_zoning, nb_tents = row
+            if name_bivouac_zoning not in data:
+                data[name_bivouac_zoning] = {}
+            data[name_bivouac_zoning][date] = nb_tents
+        logger.info(
+            "The number of tents by date and bivouac zoning successfully retrieved"
+        )
+        return JSONResponse(content=jsonable_encoder({"content": data}))
+    except sqlalchemy.exc.ProgrammingError:
+        logger.critical(
+            "Error while retrieving the number of tents by date and bivouac zoning"
+        )
+        return JSONResponse(
+            content=jsonable_encoder({"content": "Error while retrieving data"})
+        )
+
+
+@app.get(
     "/pdf/",
     summary="Get a pdf of the reservation",
     tags=["Tools"],

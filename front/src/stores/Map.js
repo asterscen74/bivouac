@@ -21,7 +21,7 @@ export const map = createSlice({
             },
             "zonage_bivouac": {
                 name: "zonage_bivouac",
-                fields: ["bivouac","nom","color","fillcolor"],
+                fields: ["bivouac","nom","color","fillcolor","capacite","report","reglementation"],
                 style: {
                     attributeColor: "color",
                     color: "",
