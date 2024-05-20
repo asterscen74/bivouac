@@ -12,11 +12,12 @@ import { useEffect, useRef, useState } from 'react';
 import store from "../store";
 import api_url from "../settings-server.js";
 import { useDispatch } from "react-redux";
-import { updateLocalisationPositions } from "../stores/Results";
+import { updateLocalisationPositions, updateResults } from "../stores/Results";
 import markerLocation from '../assets/img/marker_location.svg'
 import Select from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import moment from 'moment';
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -28,10 +29,16 @@ export default function Localisation() {
     );
 
     let resultsData = store.getState().results;
-    let resultsInfosData = resultsData.infos;
+    let resultsInfosData = resultsData.infos
+    const infoDate = resultsInfosData.date;
+    const momentInfoDate = moment(infoDate);
+    const infoItinerance = resultsInfosData.itinerance === "Yes" ? "true" : "false";
     const previousPage = "informations";
     let resultsLocalisationData = resultsData.localisation;
+    let resultsNbTentsZoningDate = resultsData.nb_tents_zoning_date;
     const [maxLocations, setMaxLocations] = useState(undefined);
+    const [nbTentsZoningDate, setNbTentsZoningDate] = useState(resultsNbTentsZoningDate);
+    const minTentsReserved = 10;
 
     let mapData = store.getState().map.initialDisplay;
     const mapDataDefaultLayers = mapData.defaultLayers;
@@ -50,6 +57,29 @@ export default function Localisation() {
         if (Object.keys(resultsInfosData).length === 0) {
             navigate("/declaration-bivouac/" + previousPage);
         }
+
+        const fetchNbTentsZoningDate = async (start_date, itinerance) => {
+            try {
+                let urlSource = `${api_url}reservations/?start_date=${start_date}&itinerance=${itinerance}`;
+                const response = await fetch(urlSource);
+                if (response.status === 200) {
+                    const data = await response.json();
+                    const dataContent = data.content;
+                    dispatch(
+                        updateResults({
+                            part: "nb_tents_zoning_date",
+                            data: dataContent,
+                        })
+                    );
+                    setNbTentsZoningDate(dataContent);
+                }
+            } catch (error) {
+              console.error("Error fetching endpoint to retrieve the number of points:", error);
+            }
+        };
+
+        fetchNbTentsZoningDate(infoDate, infoItinerance);
+
     }, [resultsInfosData]);
 
     // Bivouac site undefined
@@ -167,33 +197,59 @@ export default function Localisation() {
 
             const featurePropertiesBivouac = featureProperties["bivouac"];
             const featurePropertiesNom = featureProperties["nom"];
+            const featurePropertiesReglementation = featureProperties["reglementation"];
             // Déconseillé
             if (featurePropertiesBivouac === "Déconseillé") {
                 popupContent = `<div>
-                <p><strong>Zone déconseillée</strong></p>
-                <i>En réserve naturelle le camping est interdit, le bivouac est déconseillé. Le bivouac est
-                un campement éphémère avec ou sans abri de manière temporaire de 19h à 9h le
-                lendemain. Le camping sauvage signifie plusieurs nuits au même endroit.
-                </i>
+                <p><strong>Zone déconseillée - ${featurePropertiesNom}</strong></p>
+                <p>${featurePropertiesReglementation}</p>
                 </div>`;
             // Toléré
             } else if (featurePropertiesBivouac === "Toléré") {
+                let featurePropertiesNbTentsReserved = "";
+                let textNbTentsReserved = "";
+
+                let datesReserved = [momentInfoDate.format('YYYY-MM-DD')];
+                if (infoItinerance === "true") {
+                    datesReserved.push(momentInfoDate.clone().add(1, 'days').format('YYYY-MM-DD'));
+                    datesReserved.push(momentInfoDate.clone().add(2, 'days').format('YYYY-MM-DD'));
+                }
+
+                for (const dateReserved of datesReserved) {
+                    let dateReservedFormatted = moment(dateReserved).format('DD/MM/YYYY');
+                    if (featurePropertiesNom in nbTentsZoningDate) {
+                        let datesNbTentsZoningDate = Object.keys(nbTentsZoningDate[featurePropertiesNom]);
+                        if (datesNbTentsZoningDate.includes(dateReserved)) {
+                            let finalNbTents = nbTentsZoningDate[featurePropertiesNom][dateReserved];
+                            if (finalNbTents < minTentsReserved) {
+                                finalNbTents = minTentsReserved
+                            }
+                            textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${finalNbTents} bivouacs déclarés au ${dateReservedFormatted}</p>`;
+                        } else {
+                            textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${minTentsReserved} bivouacs déclarés au ${dateReservedFormatted}</p>`;
+                        }
+                    } else {
+                        textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${minTentsReserved} bivouacs déclarés au ${dateReservedFormatted}</p>`;
+                    }
+                }
+
+                featurePropertiesNbTentsReserved = `<div>${textNbTentsReserved}</div>`;
+                const featurePropertiesCapacite = featureProperties["capacite"];
+                const featurePropertiesReport = featureProperties["report"];
                 popupContent = `<div>
-                <p><strong>Zone tolérée</strong></p>
-                <p>TODO : récupérer nom et capacité. Ex : ${featurePropertiesNom}, places pour 30 tentes</p>
-                <p>TODO : nb bivouacs déclarés à telle date. Ex : 18 bivouacs déclarés au 08/07/2024</p>
-                <p>TODO : horaires tentes tolérées. Ex : <i>Tentes tolérées entre 19h et 9h le lendemain</i></p>
-                <p>TODO : définition de la zone où le report est possible. Ex : Report possible à la zone de la Giettaz/Rollaz</p>
+                <p><strong>Zone tolérée - ${featurePropertiesNom}</strong></p>
+                <p>${featurePropertiesReglementation}</p>
+                <p>Capacité : ${featurePropertiesCapacite} tentes</p>
+                ${featurePropertiesNbTentsReserved}
+                <p>Zone de report possible : ${featurePropertiesReport}</p>
                 </div>
                 `;
             }
             // Interdite
             else if (featurePropertiesBivouac === "Interdit") {
                 popupContent = `<div>
-                <p><strong>Zone interdite</strong></p>
-                <div style="display: flex;">
-                    <p style="margin-left: 15px">TODO : mettre le texte soulignant la zone interdite</p>
-                </div>
+                <p><strong>Zone interdite - ${featurePropertiesNom}</strong></p>
+                <p>${featurePropertiesReglementation}</p>
                 </div>
                 `;
             }
