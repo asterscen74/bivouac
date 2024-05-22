@@ -61,14 +61,21 @@ async def send_summary_mail(receiver_email, pdf_attachment):
         receiver_email = receiver_email
 
         text = """
-        Bonjour,
-        Merci d'avoir déclaré votre réservation de bivouac.
-        Vous trouverez ci-joint une synthèse de votre réservation.
-        Bon bivouac !
+Bonjour,
+Voici votre attestation ainsi que toutes les bonnes pratiques à adopter pour une nuit à la belle étoile en réserve naturelle.
+Conservez ce document, il vous sera demandé par les gardes de la réserve naturelle.
+L'équipe des réserves naturelles de Haute-Savoie vous souhaite une bonne nuit !
+Une question ? contact@cen-haute-savoie.org
+
+Hello,
+Here is your bivy declaration and a summary of best practices for your time out in the nature reserve.
+Please save a copy of this document, as you may be asked to display it to rangers
+The Haute Savoie nature reserves team wishes you a pleasant night!
+For further information: contact@cen-haute-savoie.org
         """
 
         message = MIMEMultipart()
-        message["Subject"] = "Bivouac : synthèse de votre réservation"
+        message["Subject"] = "Attestation de bivouac"
         message["From"] = sender_email
         message["To"] = receiver_email
         message.attach(MIMEText(text, "plain"))
