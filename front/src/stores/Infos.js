@@ -31,7 +31,7 @@ export const infos = createSlice({
                     "maxLength": 25,
                     "inputType": "number",
                     "min": 1,
-                    "max": 100,
+                    "max": 5,
                     "defaultValue": 1,
                     "isRequired": true
                 },
@@ -204,7 +204,7 @@ export const infos = createSlice({
                     "maxLength": 25,
                     "inputType": "number",
                     "min": 1,
-                    "max": 100,
+                    "max": 5,
                     "defaultValue": 1,
                     "isRequired": true
                 },
@@ -377,7 +377,7 @@ export const infos = createSlice({
                     "maxLength": 25,
                     "inputType": "number",
                     "min": 1,
-                    "max": 100,
+                    "max": 5,
                     "defaultValue": 1,
                     "isRequired": true
                 },

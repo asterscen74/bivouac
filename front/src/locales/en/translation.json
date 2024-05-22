@@ -1,7 +1,7 @@
 {
     "Tab about": "About us",
     "Tab good practices": "Good practices",
-    "Tab bivouac declaration": "Bivouac declaration",
+    "Tab bivouac declaration": "Bivouac reservation",
     "Tab contacts": "Contacts",
     "Tab legal notices": "Legal notices",
     "languageFrench": "French",
@@ -34,7 +34,7 @@
     "Welcome": "Welcome",
     "Enter your informations": "Enter your informations",
     "Select site": "Select a location",
-    "Point bivouac locations": "Enter your bivouac locations by clicking on the map",
+    "Point bivouac locations": "Enter your bivouac sites by clicking on the Add a location button and then on the map.",
     "Add location": "Add a location",
     "Stop Add location": "Stop adding location",
     "Delete last location": "Delete the last location",
