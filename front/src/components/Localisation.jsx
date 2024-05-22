@@ -22,9 +22,10 @@ import * as turf from '@turf/turf';
 
 export default function Localisation() {
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
     const mapRef = useRef();
+    const [key, setKey] = useState(0);
     const [displayAlert, setDisplayAlert] = useState(
         false
     );
@@ -52,6 +53,19 @@ export default function Localisation() {
     const [locationData, setLocationData] = useState(resultsLocalisationData.locations);
     const [displayMaximumLocationReached, setDisplayMaximumLocationReached] = useState(false);
     const [clickCoordinates, setClickCoordinates] = useState([]);
+
+    // Listen for language changes
+    useEffect(() => {
+        const handleLanguageChanged = () => {
+          // Update the key to force rendering
+          setKey(prevKey => prevKey + 1);
+        };
+        i18n.on('languageChanged', handleLanguageChanged);
+
+        return () => {
+          i18n.off('languageChanged', handleLanguageChanged);
+        };
+      }, [i18n]);
 
     // Redirect to the informations page if the first page has not been completed
     useEffect(() => {
@@ -219,8 +233,8 @@ export default function Localisation() {
             // Déconseillé
             if (featurePropertiesBivouac === "Déconseillé") {
                 popupContent = `<div>
-                <p><strong>Zone déconseillée - ${featurePropertiesNom}</strong></p>
-                <p>${featurePropertiesReglementation}</p>
+                <p><strong>${t("Localisation Content.Not recommended area")} - ${featurePropertiesNom}</strong></p>
+                <p>${t("Localisation Content.Reglementation." + featurePropertiesReglementation)}</p>
                 </div>`;
             // Toléré
             } else if (featurePropertiesBivouac === "Toléré") {
@@ -241,12 +255,12 @@ export default function Localisation() {
                             if (finalNbTents < minTentsReserved) {
                                 finalNbTents = minTentsReserved
                             }
-                            textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${finalNbTents} bivouacs déclarés au ${dateReservedFormatted}</p>`;
+                            textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${finalNbTents} ${t("Localisation Content.Bivouacs declared")} ${dateReservedFormatted}</p>`;
                         } else {
-                            textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${minTentsReserved} bivouacs déclarés au ${dateReservedFormatted}</p>`;
+                            textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${minTentsReserved} ${t("Localisation Content.Bivouacs declared")} ${dateReservedFormatted}</p>`;
                         }
                     } else {
-                        textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${minTentsReserved} bivouacs déclarés au ${dateReservedFormatted}</p>`;
+                        textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${minTentsReserved} ${t("Localisation Content.Bivouacs declared")} ${dateReservedFormatted}</p>`;
                     }
                 }
                 featurePropertiesNbTentsReserved = `<div>${textNbTentsReserved}</div>`;
@@ -255,14 +269,14 @@ export default function Localisation() {
                 const featurePropertiesReport = featureProperties["report"];
                 let textZoneReport = "";
                 if (featurePropertiesReport !== "") {
-                    textZoneReport = `<p>Zone de report possible : ${featurePropertiesReport}</p>`
+                    textZoneReport = `<p>${t("Localisation Content.Possible transfer zone")} : ${featurePropertiesReport}</p>`
                 }
 
                 const featurePropertiesCapacite = featureProperties["capacite"];
                 popupContent = `<div>
-                <p><strong>Zone tolérée - ${featurePropertiesNom}</strong></p>
-                <p>${featurePropertiesReglementation}</p>
-                <p>Capacité d'accueil maximale : ${featurePropertiesCapacite} tentes</p>
+                <p><strong>${t("Localisation Content.Tolerated area")} - ${featurePropertiesNom}</strong></p>
+                <p>${t("Localisation Content.Reglementation." + featurePropertiesReglementation)}</p>
+                <p>${t("Localisation Content.Maximum capacity")} : ${featurePropertiesCapacite} ${t("Localisation Content.Tents")}</p>
                 ${featurePropertiesNbTentsReserved}
                 ${textZoneReport}
                 </div>
@@ -271,8 +285,8 @@ export default function Localisation() {
             // Interdite
             else if (featurePropertiesBivouac === "Interdit") {
                 popupContent = `<div>
-                <p><strong>Zone interdite - ${featurePropertiesNom}</strong></p>
-                <p>${featurePropertiesReglementation}</p>
+                <p><strong>${t("Localisation Content.Forbidden area")} - ${featurePropertiesNom}</strong></p>
+                <p>${t("Localisation Content.Reglementation." + featurePropertiesReglementation)}</p>
                 </div>
                 `;
             }
@@ -412,7 +426,7 @@ export default function Localisation() {
             </div>
 
             <div id="map">
-                <MapContainer ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true}>
+                <MapContainer key={key} ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true}>
 
                     {/* Basemaps */}
                     <LayersControl position="bottomright">

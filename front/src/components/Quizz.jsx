@@ -64,15 +64,15 @@ export default function Quizz() {
                 body: body,
                 headers: headers,
             })
-            const responseData = await response.json()
 
             if (response.status !== 200) {
                 dispatch(updateReservation({
                     status: false,
-                    output_message: t("Registration error")
+                    output_message: "Registration error"
                 }))
             }
             else {
+                const responseData = await response.json()
                 dispatch(updateReservation({
                     status: true,
                     output_message: responseData.content
