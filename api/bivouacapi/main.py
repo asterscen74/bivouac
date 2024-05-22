@@ -135,7 +135,6 @@ async def create_reservation(
     """
     logger.info("create_reservation endpoint")
     date_reservation = request.date
-    nb_tents_reservation = request.nb_tents
     nb_people_reservation = request.nb_people
     email_reservation = request.email
     fr_or_foreign_reservation = request.fr_or_foreign
@@ -143,6 +142,7 @@ async def create_reservation(
     itinerance_reservation = request.itinerance
     locations_reservation = request.locations
     quizz_note_reservation = request.quizz_note
+    nb_tents_reservation = 1
 
     check_locations = await check_locations_argument(locations_reservation)
     if check_locations.status_code == 400:
