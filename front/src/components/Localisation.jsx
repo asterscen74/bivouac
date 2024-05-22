@@ -18,6 +18,7 @@ import Select from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import moment from 'moment';
+import * as turf from '@turf/turf';
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -111,8 +112,25 @@ export default function Localisation() {
     useEffect(() => {
         if (clickCoordinates.length > 0 ) {
             if (enableAddLocation === true) {
-            const newLocationData = [...locationData, clickCoordinates ];
-            setLocationData(newLocationData);
+                // Check if the location is in a reservable zone
+                let locationReservable = true;
+                const turfPoint = turf.point([clickCoordinates[1], clickCoordinates[0]]);
+                for (const feature of geojsonData["zonage_bivouac"].features) {
+                    const featureReservable = feature.properties.reservable;
+                    if (featureReservable === false) {
+                        const turfPolygon = turf.multiPolygon(feature.geometry.coordinates);
+                        if (turf.booleanPointInPolygon(turfPoint, turfPolygon) === true) {
+                            locationReservable = false;
+                            break;
+                        }
+                    }
+              }
+
+            // Location in a reservable zone
+            if (locationReservable === true) {
+                const newLocationData = [...locationData, clickCoordinates ];
+                setLocationData(newLocationData);
+            }
         }
         }
     }, [clickCoordinates, dispatch]);
@@ -206,15 +224,14 @@ export default function Localisation() {
                 </div>`;
             // Toléré
             } else if (featurePropertiesBivouac === "Toléré") {
+                // Number of tents reserved
                 let featurePropertiesNbTentsReserved = "";
                 let textNbTentsReserved = "";
-
                 let datesReserved = [momentInfoDate.format('YYYY-MM-DD')];
                 if (infoItinerance === "true") {
                     datesReserved.push(momentInfoDate.clone().add(1, 'days').format('YYYY-MM-DD'));
                     datesReserved.push(momentInfoDate.clone().add(2, 'days').format('YYYY-MM-DD'));
                 }
-
                 for (const dateReserved of datesReserved) {
                     let dateReservedFormatted = moment(dateReserved).format('DD/MM/YYYY');
                     if (featurePropertiesNom in nbTentsZoningDate) {
@@ -232,16 +249,22 @@ export default function Localisation() {
                         textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${minTentsReserved} bivouacs déclarés au ${dateReservedFormatted}</p>`;
                     }
                 }
-
                 featurePropertiesNbTentsReserved = `<div>${textNbTentsReserved}</div>`;
-                const featurePropertiesCapacite = featureProperties["capacite"];
+
+                // Report
                 const featurePropertiesReport = featureProperties["report"];
+                let textZoneReport = "";
+                if (featurePropertiesReport !== "") {
+                    textZoneReport = `<p>Zone de report possible : ${featurePropertiesReport}</p>`
+                }
+
+                const featurePropertiesCapacite = featureProperties["capacite"];
                 popupContent = `<div>
                 <p><strong>Zone tolérée - ${featurePropertiesNom}</strong></p>
                 <p>${featurePropertiesReglementation}</p>
-                <p>Capacité : ${featurePropertiesCapacite} tentes</p>
+                <p>Capacité d'accueil maximale : ${featurePropertiesCapacite} tentes</p>
                 ${featurePropertiesNbTentsReserved}
-                <p>Zone de report possible : ${featurePropertiesReport}</p>
+                ${textZoneReport}
                 </div>
                 `;
             }
