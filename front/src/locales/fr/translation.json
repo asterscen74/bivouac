@@ -5,6 +5,24 @@
     "Tab contacts": "Contacts",
     "Tab legal notices": "Mentions légales",
     "Informations": "Renseignements",
+    "Localisation": "Localisation",
+    "Localisation Content": {
+        "Not recommended area": "Zone déconseillée",
+        "Tolerated area": "Zone tolérée",
+        "Forbidden area": "Zone interdite",
+        "Tents": "tentes",
+        "Maximum capacity": "Capacité d'accueil maximale",
+        "Possible transfer zone": "Zone de report possible",
+        "Bivouacs declared": "bivouacs déclarés au",
+        "Reglementation": {
+            "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits.": "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits.",
+            "Dans cette zone, le bivouac est toléré et les tentes sont interdites avant 19h et après 9h le lendemain. Les feux et le survol en drone sont interdits. D’août à septembre un troupeau gardé pâture, merci de vous éloigner des clôtures et respecter le chien de protection.": "Dans cette zone, le bivouac est toléré et les tentes sont interdites avant 19h et après 9h le lendemain. Les feux et le survol en drone sont interdits. D’août à septembre un troupeau gardé pâture, merci de vous éloigner des clôtures et respecter le chien de protection.",
+            "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone du 1 juillet au 31 Août. Les feux et le survol en drone sont interdits.": "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone du 1 juillet au 31 Août. Les feux et le survol en drone sont interdits.",
+            "Dans cette zone, le bivouac est toléré et les tentes sont interdites avant 19h et après 9h le lendemain. Les feux et le survol en drone sont interdits.": "Dans cette zone, le bivouac est toléré et les tentes sont interdites avant 19h et après 9h le lendemain. Les feux et le survol en drone sont interdits.",
+            "Dans cette zone, le bivouac est déconseillé et les tentes sont interdites avant 19h et après 9 heures le lendemain. Les feux et le survol en drone sont interdits.": "Dans cette zone, le bivouac est déconseillé et les tentes sont interdites avant 19h et après 9 heures le lendemain. Les feux et le survol en drone sont interdits.",
+            "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de la Pierre à Bérard pour le bivouac. Tél : 04.50.54.62.08.": "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de la Pierre à Bérard pour le bivouac. Tél : 04.50.54.62.08."
+        }
+    },
     "languageFrench": "Français",
     "languageEnglish": "Anglais",
     "languageItalian": "Italien",
@@ -14,6 +32,7 @@
     "Home": "Retour à l'accueil",
     "Start": "Commencez",
     "Welcome": "Bienvenue",
+    "Enter your informations": "Saisissez vos informations",
     "Select site": "Sélectionner un site",
     "Point bivouac locations": "Saisissez vos emplacements de bivouac en cliquant sur la carte",
     "Add location": "Ajouter un emplacement",

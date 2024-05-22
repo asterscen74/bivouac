@@ -59,7 +59,7 @@ export default function Informations() {
             <h1>{t("Informations")}</h1>
             <Alert severity="success">
                 <AlertTitle>{t("Step")} 1/4</AlertTitle>
-                Saisissez vos informations
+                {t("Enter your informations")}
             </Alert>
 
             <div className="survey-container">

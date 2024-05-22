@@ -116,7 +116,8 @@ async def get_map_layer(
     except sqlalchemy.exc.ProgrammingError:
         logger.critical(f"Error while retrieving data from {map_layer.value} layer")
         return JSONResponse(
-            content=jsonable_encoder({"content": "Error while retrieving data"})
+            status_code=400,
+            content=jsonable_encoder({"content": "Error while retrieving data"}),
         )
 
 
@@ -154,7 +155,6 @@ async def create_reservation(
             '{department_reservation}','{itinerance_reservation}', '{quizz_note_reservation}' )
             RETURNING id
             """
-        print(text(query))
         result = db.execute(text(query))
         reservation_number = result.fetchone()[0]
         db.commit()
@@ -162,7 +162,14 @@ async def create_reservation(
         db.rollback()
         logger.critical("Error during registration")
         return JSONResponse(
-            content=jsonable_encoder({"content": "Error during registration"})
+            status_code=400,
+            content=jsonable_encoder({"content": "Error during registration"}),
+        )
+    except:
+        logger.critical("Error during registration")
+        return JSONResponse(
+            status_code=400,
+            content=jsonable_encoder({"content": "Error during registration"}),
         )
 
     queries = []
@@ -198,7 +205,8 @@ async def create_reservation(
         db.rollback()
         logger.critical("Error during registration")
         return JSONResponse(
-            content=jsonable_encoder({"content": "Error during registration"})
+            status_code=400,
+            content=jsonable_encoder({"content": "Error during registration"}),
         )
 
 
@@ -254,7 +262,8 @@ async def get_number_tents_date_bivouac_zoning(
             "Error while retrieving the number of tents by date and bivouac zoning"
         )
         return JSONResponse(
-            content=jsonable_encoder({"content": "Error while retrieving data"})
+            status_code=400,
+            content=jsonable_encoder({"content": "Error while retrieving data"}),
         )
 
 
@@ -294,5 +303,6 @@ async def generate_send_pdf(
         # )
     except sqlalchemy.exc.ProgrammingError:
         return JSONResponse(
-            content=jsonable_encoder({"content": "Error while retrieving data"})
+            status_code=400,
+            content=jsonable_encoder({"content": "Error while retrieving data"}),
         )

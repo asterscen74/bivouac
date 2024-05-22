@@ -56,7 +56,7 @@ export default function Thanks() {
                         <h1>{t("Reservation not confirmed")}</h1>
                         <Alert severity="error">
                             <AlertTitle>{t("Step")} 4/4</AlertTitle>
-                            {reservationData.output_message}
+                            {t(reservationData.output_message)}
                         </Alert>
                     </div>
                 )

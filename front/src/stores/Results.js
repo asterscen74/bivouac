@@ -48,10 +48,6 @@ export const general = createSlice({
             locations: []
         };
         state.quizz = {};
-        state.reservation = {
-            confirmed: false,
-            output_message: ""
-        };
   },
 }
 });

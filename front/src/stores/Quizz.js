@@ -224,6 +224,117 @@ export const quizz = createSlice({
                     "html": "<h4>Great! You answered correctly on all questions !</h4>"
                 }
             ]
+        },
+        it: {
+            "title": "Quiz per rafforzare la conoscenza delle migliori pratiche",
+            "showProgressBar": "bottom",
+            "startSurveyText": "Iniziare il quiz",
+            "pages": [
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "horaires",
+                            "title": "Per bivaccare, posso montare un leggero riparo",
+                            "choices": [
+                                "Dalle 19.00 alle 9.00",
+                                "Per più giorni di seguito",
+                                "Per tutto il giorno"
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "Dalle 19.00 alle 9.00",
+                            "infos": "Il campeggio è vietato nelle riserve naturali. È possibile piantare la tenda per una sola notte tra le 19.00 e le 9.00 del mattino."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "bruits",
+                            "title": "La mia serata all'aperto è cullata da :",
+                            "choices": [
+                                "Musica in uscita dai miei altoparlanti portatili",
+                                "I suoni della natura",
+                                "Uno strumento musicale"
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "I suoni della natura",
+                            "infos": "L'uso di qualsiasi tipo di dispositivo sonoro è vietato all'interno delle riserve naturali per la tranquillità della fauna selvatica. Il rumore aumenta il livello di stress e influenza il suo comportamento. Per rispettare il loro spazio vitale, fate silenzio!"
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "feu",
+                            "title": "Potrei accendere un fuoco:",
+                            "choices": [
+                                "Per riscaldarsi",
+                                "Mangiare un pasto caldo",
+                                "Mai, ma posso comunque usare un fornello per cucinare i miei cibi."
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "Mai, ma posso comunque usare un fornello per cucinare i miei cibi.",
+                            "infos": "Per limitare l'innesco di incendi, il danneggiamento della flora e il disturbo della fauna selvatica, è vietato accendere il fuoco. I fornelli sono tollerati."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "eau",
+                            "title": "Vicino a un lago o a un ruscello, potrei :",
+                            "choices": [
+                                "Lavare i piatti e/o me stesso",
+                                "Guardare senza immergersi",
+                                "Pescare senza licenza"
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "Guardare senza immergersi",
+                            "infos": "I laghi d'altitudine sono ecosistemi sensibili che non possono assorbire input esterni (come creme solari, dentifrici,...). Non immergetevi nulla, per contribuire alla loro sicurezza! Per la pesca è necessaria una licenza locale."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "dechets",
+                            "title": "Cosa fare con i miei rifiuti?",
+                            "choices": [
+                                "",
+                                "Posso lasciare la mia carta igienica sotto una roccia",
+                                "Posso lasciare i miei rifiuti biodegradabili"
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "Porto con me tutta la mia spazzatura, compresa la carta igienica.",
+                            "infos": "In alto i rifiuti si decompongono molto lentamente. Per evitare che gli animali si nutrano di cibo inadatto, portate giù tutti i rifiuti. Questo include la carta igienica e gli avanzi di cibo."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "text",
+                            "name": "Do you have a comment on that survey ?"
+                        }
+                    ]
+                }
+            ],
+            "completedHtml": "<h4>You answered <b>{correctAnswers}</b> over <b>{questionCount}</b> good answers.</h4>",
+            "completedHtmlOnCondition": [
+                {
+                    "expression": "{correctAnswers} == 0",
+                    "html": "<h4>Unfortunately, none of your answers is correct. Please try again.</h4>"
+                },
+                {
+                    "expression": "{correctAnswers} == {questionCount}",
+                    "html": "<h4>Great! You answered correctly on all questions !</h4>"
+                }
+            ]
         }
     }
 });
