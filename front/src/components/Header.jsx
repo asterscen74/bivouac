@@ -65,7 +65,7 @@ const Header = () => {
 
     return (
         <>
-        <Box sx={{ bgcolor: '#76B72A', height: 'auto'}} >
+        <Box sx={{ bgcolor: '#007854', height: 'auto'}} >
             <img src="/src/assets/img/header.jpg" alt="img_header" className="img-header"/>
         </Box>
         <AppBar
@@ -73,7 +73,7 @@ const Header = () => {
             sx={{
                 position: "static",
                 height: "68px",
-                background: "#76B72A"
+                background: "#007854"
             }}
             >
         <Container maxWidth="">
@@ -146,6 +146,7 @@ const Header = () => {
             <div id="box-select-language">
                         <Select
                             id="appbar-select-language"
+                            className="combo-i18n"
                             defaultValue={currentLanguage}
                             value={currentLanguage}
                             onChange={handleLanguageChange}

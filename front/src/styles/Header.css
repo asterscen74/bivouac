@@ -7,7 +7,13 @@
 }
 
 .MuiMenu-list {
-    background-color: #76B72A;
+    background-color: #007854;
+    color: white;
+}
+
+#box-select-language .combo-i18n {
+    border: none;
+    color: #fff;
 }
 
 /* .MuiSelect-select {
