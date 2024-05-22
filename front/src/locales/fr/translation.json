@@ -1,7 +1,7 @@
 {
     "Tab about": "À propos",
     "Tab good practices": "Bonnes pratiques",
-    "Tab bivouac declaration": "Déclaration bivouac",
+    "Tab bivouac declaration": "Réservation bivouac",
     "Tab contacts": "Contacts",
     "Tab legal notices": "Mentions légales",
     "Informations": "Renseignements",
@@ -34,7 +34,7 @@
     "Welcome": "Bienvenue",
     "Enter your informations": "Saisissez vos informations",
     "Select site": "Sélectionner un site",
-    "Point bivouac locations": "Saisissez vos emplacements de bivouac en cliquant sur la carte",
+    "Point bivouac locations": "Saisissez vos emplacements de bivouac en cliquant sur le bouton Ajouter un emplacement puis sur la carte",
     "Add location": "Ajouter un emplacement",
     "Stop Add location": "Arrêter l'ajout d'emplacement",
     "Delete last location": "Supprimer le dernier emplacement",
