@@ -48,6 +48,7 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.reservations OWNER to postgres;
 
 -- Triggers
+DROP TRIGGER IF EXISTS reservations_locations_bivouac_zoning ON public.reservations_locations;
 CREATE TRIGGER reservations_locations_bivouac_zoning
 BEFORE INSERT ON reservations_locations
 FOR EACH ROW
