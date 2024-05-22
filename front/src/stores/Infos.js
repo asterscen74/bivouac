@@ -14,17 +14,6 @@ export const infos = createSlice({
                     "isRequired": true
                 },
                 {
-                    "name": "nb_tents",
-                    "type": "text",
-                    "title": "Nombre de tentes",
-                    "maxLength": 25,
-                    "inputType": "number",
-                    "min": 0,
-                    "max": 100,
-                    "defaultValue": 0,
-                    "isRequired": true
-                },
-                {
                     "name": "nb_people",
                     "type": "text",
                     "title": "Nombre de personnes",
@@ -187,17 +176,6 @@ export const infos = createSlice({
                     "isRequired": true
                 },
                 {
-                    "name": "nb_tents",
-                    "type": "text",
-                    "title": "Number of tents",
-                    "maxLength": 25,
-                    "inputType": "number",
-                    "min": 0,
-                    "max": 100,
-                    "defaultValue": 0,
-                    "isRequired": true
-                },
-                {
                     "name": "nb_people",
                     "type": "text",
                     "title": "Number of people",
@@ -357,17 +335,6 @@ export const infos = createSlice({
                     "title": "Data del bivacco",
                     "inputType": "date",
                     "defaultValueExpression": "currentDate()",
-                    "isRequired": true
-                },
-                {
-                    "name": "nb_tents",
-                    "type": "text",
-                    "title": "Numero di tende",
-                    "maxLength": 25,
-                    "inputType": "number",
-                    "min": 0,
-                    "max": 100,
-                    "defaultValue": 0,
                     "isRequired": true
                 },
                 {

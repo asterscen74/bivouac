@@ -12,7 +12,6 @@ class PostReservation(BaseModel):
     """
 
     date: date
-    nb_tents: int
     nb_people: int
     email: str
     fr_or_foreign: str
