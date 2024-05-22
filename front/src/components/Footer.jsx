@@ -20,11 +20,11 @@ export default function Footer() {
     return (
         <div style={{ width: '100%' }}>
             <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
+                <img src={logoCen} className="logo" alt="CEN logo" />
+                <img src={logoRn74} className="logo" alt="RN74 logo" />
+                <img src={logoFrancenotionverte} className="logo" alt="France Nation Verte logo" />
                 <img src={logoVcmb} className="logo" alt="VCMB logo" />
                 <img src={logoContamines} className="logo" alt="Contamines logo" />
-                <img src={logoFrancenotionverte} className="logo" alt="France Nation Verte logo" />
-                <img src={logoRn74} className="logo" alt="RN74 logo" />
-                <img src={logoCen} className="logo" alt="CEN logo" />
             </Box>
             <Divider variant="full" />
             <Box sx={{ display: 'flex', justifyContent: 'center' }} className="menu-footer">
@@ -33,7 +33,7 @@ export default function Footer() {
                         <Link
                             style={{
                                 textDecoration: "none",
-                                color: "#76B72A",
+                                color: "#007854",
                             }}
                             to={`/${page.id}`}
                         >
