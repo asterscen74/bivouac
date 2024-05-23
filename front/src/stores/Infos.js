@@ -160,7 +160,8 @@ export const infos = createSlice({
                     "maxLength": 25,
                     "isRequired": true,
                     "valueTrue": "Yes",
-                    "valueFalse": "No"
+                    "valueFalse": "No",
+                    "defaultValue": "false",
                 }
             ],
             "showQuestionNumbers": false
@@ -322,7 +323,8 @@ export const infos = createSlice({
                     "maxLength": 25,
                     "isRequired": true,
                     "valueTrue": "Yes",
-                    "valueFalse": "No"
+                    "valueFalse": "No",
+                    "defaultValue": "false",
                 }
             ],
             "showQuestionNumbers": false
@@ -484,7 +486,8 @@ export const infos = createSlice({
                     "maxLength": 25,
                     "isRequired": true,
                     "valueTrue": "Yes",
-                    "valueFalse": "No"
+                    "valueFalse": "No",
+                    "defaultValue": "false",
                 }
             ],
             "showQuestionNumbers": false
