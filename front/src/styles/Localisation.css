@@ -20,12 +20,19 @@
     align-items: center;
 }
 
+@media only screen and (max-width: 600px) {
+    .container-buttons-location {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
 .button-add-location {
     z-index: 1000 !important;
     background-color: rgb(52, 81, 94) !important;
-    font-size: 13px !important;
+    font-size: 15px !important;
     top: 17px !important;
-    height: 28px !important;
+    height: 32px !important;
     position: inherit !important;
     margin-right: 10px !important;
 }
@@ -37,9 +44,9 @@
 .button-stop-add-location {
     z-index: 1000 !important;
     background-color: rgb(52, 81, 94) !important;
-    font-size: 13px !important;
+    font-size: 15px !important;
     top: 17px !important;
-    height: 28px !important;
+    height: 32px !important;
     position: inherit !important;
     margin-right: 10px !important;
 }
@@ -52,16 +59,16 @@
     z-index: 1000 !important;
     background-color: white !important;
     color: rgb(52, 81, 94) !important;
-    font-size: 13px !important;
+    font-size: 15px !important;
     top: 24px !important;
-    height: 28px !important;
+    height: 32px !important;
     position: inherit !important;
 }
 
 .p-maximum-locations-reached {
     margin: 0px 10px 0px 0px;
     color: rgb(52, 81, 94);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
 }
 
