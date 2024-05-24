@@ -127,18 +127,55 @@ export default function Localisation() {
         if (clickCoordinates.length > 0 ) {
             if (enableAddLocation === true) {
                 // Check if the location is in a reservable zone
+                // Check if the quota for the number of tents has been reached
                 let locationReservable = true;
+                let countFalseIntersection = 0;
                 const turfPoint = turf.point([clickCoordinates[1], clickCoordinates[0]]);
-                for (const feature of geojsonData["zonage_bivouac"].features) {
+                const featuresZonageBivouac = geojsonData["zonage_bivouac"].features;
+                for (const feature of featuresZonageBivouac) {
                     const featureReservable = feature.properties.reservable;
-                    if (featureReservable === false) {
-                        const turfPolygon = turf.multiPolygon(feature.geometry.coordinates);
-                        if (turf.booleanPointInPolygon(turfPoint, turfPolygon) === true) {
+                    const featureQuotas = feature.properties.quotas;
+                    const featurePropertiesNom = feature.properties.nom;
+                    const turfPolygon = turf.multiPolygon(feature.geometry.coordinates);
+                    const resultIntersectionPointInPolygon = turf.booleanPointInPolygon(turfPoint, turfPolygon);
+                    if (resultIntersectionPointInPolygon === true) {
+                        // Feature not reservable
+                        if (featureReservable === false) {
                             locationReservable = false;
                             break;
                         }
+                        // Feature reservable : check the quota
+                        else {
+                            if (featurePropertiesNom in nbTentsZoningDate) {
+                                let dateReserved = "";""
+                                if ( locationData.length === 0 ) {
+                                    dateReserved = momentInfoDate.format('YYYY-MM-DD');
+                                } else if ( locationData.length === 1) {
+                                    dateReserved = momentInfoDate.clone().add(1, 'days').format('YYYY-MM-DD');
+                                } else {
+                                    dateReserved = momentInfoDate.clone().add(2, 'days').format('YYYY-MM-DD');
+                                }
+
+                                // At least one reservation at this date in this bivouac zoning
+                                if (Object.keys(nbTentsZoningDate[featurePropertiesNom]).includes(dateReserved)) {
+                                    let nbTents = nbTentsZoningDate[featurePropertiesNom][dateReserved];
+                                    // Quota reached
+                                    if (nbTents >= featureQuotas) {
+                                        locationReservable = false;
+                                    }
+                                }
+                            }
+                        }
+
+                    } else {
+                        countFalseIntersection += 1
                     }
-              }
+                }
+
+            // The location is not located in a bivouac zone
+            if (countFalseIntersection === featuresZonageBivouac.length) {
+                locationReservable = false;
+            }
 
             // Location in a reservable zone
             if (locationReservable === true) {
@@ -158,7 +195,8 @@ export default function Localisation() {
     const nextStep = (event) => {
         let nextPage = event.target.name;
         const localisationData = store.getState().results.localisation;
-        if (localisationData.locations.length === 0) {
+        const nbLocations = localisationData.locations.length
+        if (nbLocations === 0 || (nbLocations === 1 && infoItinerance === "true")) {
             setDisplayAlert(true);
         } else {
             setDisplayAlert(false);
@@ -230,6 +268,7 @@ export default function Localisation() {
             const featurePropertiesBivouac = featureProperties["bivouac"];
             const featurePropertiesNom = featureProperties["nom"];
             const featurePropertiesReglementation = featureProperties["reglementation"];
+            const featurePropertiesQuotas = featureProperties["quotas"];
             // Déconseillé
             if (featurePropertiesBivouac === "Déconseillé") {
                 popupContent = `<div>
@@ -255,12 +294,23 @@ export default function Localisation() {
                             if (finalNbTents < minTentsReserved) {
                                 finalNbTents = minTentsReserved
                             }
-                            textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${finalNbTents} ${t("Localisation Content.Bivouacs declared")} ${dateReservedFormatted}</p>`;
+                            // Round to the next 5
+                            else {
+                                finalNbTents = Math.ceil(parseFloat(finalNbTents) / 5) * 5;
+                            }
+
+                            // Quota reached
+                            if (finalNbTents >= featurePropertiesQuotas) {
+                                textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")}</p>`;
+                            }
+                            else {
+                                textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Less than")} ${finalNbTents} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}</p>`;
+                            }
                         } else {
-                            textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${minTentsReserved} ${t("Localisation Content.Bivouacs declared")} ${dateReservedFormatted}</p>`;
+                            textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Less than")} ${minTentsReserved} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}</p>`;
                         }
                     } else {
-                        textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${minTentsReserved} ${t("Localisation Content.Bivouacs declared")} ${dateReservedFormatted}</p>`;
+                        textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Less than")} ${minTentsReserved} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}</p>`;
                     }
                 }
                 featurePropertiesNbTentsReserved = `<div>${textNbTentsReserved}</div>`;
