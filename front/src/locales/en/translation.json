@@ -27,6 +27,11 @@
             "Dans cette zone, le bivouac est toléré et les tentes sont interdites avant 19h et après 9h le lendemain. Les feux et le survol en drone sont interdits.": "In this zone, bivouacs are tolerated and tents are prohibited before 7pm and after 9am the following day. Fires and drone flights are prohibited.",
             "Dans cette zone, le bivouac est déconseillé et les tentes sont interdites avant 19h et après 9 heures le lendemain. Les feux et le survol en drone sont interdits.": "In this zone, bivouacs are not recommended and tents are forbidden before 7pm and after 9am the following day. Fires and drone flights are prohibited.",
             "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de la Pierre à Bérard pour le bivouac. Tél : 04.50.54.62.08.": "In order to preserve the natural environment, bivouacking and swimming are prohibited in this area. Fires and drone flights are prohibited. Contact the Pierre à Bérard refuge for bivouacs. Tel: 04.50.54.62.08."
+        },
+        "Legend": {
+            "row1": "Edge of the nature reserve, bivouacs are not recommended (except in specific areas).",
+            "row2": "Not bookable",
+            "row3": "Bivouacs tolerated, reservable area"
         }
     },
     "Next step": "Next Step",
