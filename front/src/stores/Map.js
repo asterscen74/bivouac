@@ -56,7 +56,11 @@ export const map = createSlice({
                 center: [45.7770, 6.7489],
                 zoom: 12
             }
-        }
+        },
+        centroidesContaminesZonesTolerees: [
+            { lat: 45.7587242404128, lon: 6.70966921430888 },
+            { lat: 45.7735225609917, lon: 6.71745227558621 }
+        ]
     },
   },
 //   reducers: {},

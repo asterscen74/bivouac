@@ -75,3 +75,56 @@
 .paragraph-nb-tents-reserved {
     margin: 0 !important;
 }
+
+.legend-container {
+    background-color: white;
+    position: absolute;
+    display: inline-flex;
+    flex-direction: column;
+    z-index: 1000;
+    left: 10px;
+    bottom: 10px;
+    border-radius: 10px;
+    max-width: 50vw;
+}
+
+@media only screen and (max-width: 600px) {
+    .legend-container {
+        left: 3vw;
+        bottom: 7vw;
+    }
+}
+
+.legend-row-container {
+    display: inline-flex;
+    flex-direction: row;
+    padding: 4px;
+    align-items: center;
+}
+
+.legend-row-symbol {
+    width: 30px;
+    height: 20px;
+    margin: 0 10px 0 0;
+    flex-shrink: 0;
+}
+
+.legend-row-text {
+    font-size: 0.75rem;
+    margin: 0;
+}
+
+.legend-row-symbol-limite-reserve-naturelle {
+    background-color: rgba(0, 136, 91, 0);
+    border: 2px solid rgba(0, 136, 91, 1);
+}
+
+.legend-row-symbol-non-reservable {
+    background-color: rgba(231, 76, 60, 0.2);
+    border: 2px solid rgba(231, 76, 60, 1);
+}
+
+.legend-row-symbol-tolere-reservable {
+    background-color: rgba(39, 174, 96, 0.2);
+    border: 2px solid rgba(39, 174, 96, 1);
+}

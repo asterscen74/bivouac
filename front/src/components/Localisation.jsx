@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import { MapContainer, GeoJSON, TileLayer, useMap, Marker, LayersControl } from 'react-leaflet';
+import { MapContainer, GeoJSON, TileLayer, useMap, Marker, CircleMarker, LayersControl } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
@@ -93,9 +93,17 @@ export default function Localisation() {
             }
         };
 
+        // If roaming status changed, check number of locations
+        // Cannot exceed 1 if there is no roaming
+        if (infoItinerance === "false" && locationData.length > 1) {
+            const newLocationData = locationData.slice(0, 1);
+            setLocationData(newLocationData);
+
+        }
+
         fetchNbTentsZoningDate(infoDate, infoItinerance);
 
-    }, [resultsInfosData]);
+    }, [resultsInfosData, infoItinerance]);
 
     // Bivouac site undefined
     useEffect(() => {
@@ -454,6 +462,62 @@ export default function Localisation() {
         );
       };
 
+
+    // Legend map
+    const MapLegend = () => {
+        return (
+            <div className="legend-container">
+             <div className="legend-row-container">
+                <p className="legend-row-symbol legend-row-symbol-limite-reserve-naturelle"></p>
+                <p className="legend-row-text">{t("Localisation Content.Legend.row1")}</p>
+             </div>
+             <div className="legend-row-container">
+                <p className="legend-row-symbol legend-row-symbol-non-reservable"></p>
+                <p className="legend-row-text">{t("Localisation Content.Legend.row2")}</p>
+             </div>
+             <div className="legend-row-container">
+                <p className="legend-row-symbol legend-row-symbol-tolere-reservable"></p>
+                <p className="legend-row-text">{t("Localisation Content.Legend.row3")}</p>
+             </div>
+
+            </div>
+        );
+      };
+
+    // Centroids on areas tolerated in the Contamines area (not very visible)
+    const centroidesContaminesZonesTolerees = mapData.centroidesContaminesZonesTolerees;
+    const DynamicCircleMarkersCentroidsContaminesZonesTolerees = ( points ) => {
+        const map = useMap();
+        const [zoom, setZoom] = useState(map.getZoom());
+
+        useEffect(() => {
+            const handleZoom = () => {
+                setZoom(map.getZoom());
+            };
+            map.on('zoomend', handleZoom);
+
+            return () => {
+                map.off('zoomend', handleZoom);
+            };
+        }, [map]);
+
+        return (
+            <>
+                {points.points.map((point, index) => (
+                    <CircleMarker
+                        key={index}
+                        center={[point.lat, point.lon]}
+                        radius={1 + zoom * 0.25}
+                        color="#27AE60"
+                        fillColor="#27AE60"
+                        fillOpacity={0.2}
+                    >
+                    </CircleMarker>
+                ))}
+            </>
+        );
+    };
+
     // Custom icon for locations
     const iconLocation = new L.Icon({
         iconUrl: markerLocation,
@@ -477,6 +541,8 @@ export default function Localisation() {
 
             <div id="map">
                 <MapContainer key={key} ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true}>
+
+                    <DynamicCircleMarkersCentroidsContaminesZonesTolerees points={centroidesContaminesZonesTolerees} />
 
                     {/* Basemaps */}
                     <LayersControl position="bottomright">
@@ -518,6 +584,8 @@ export default function Localisation() {
                         <ZoomToSite />
                         <AddClickEvent />
                     </div>
+
+                    <MapLegend />
                 </MapContainer>
             </div>
 
