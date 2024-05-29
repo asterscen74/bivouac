@@ -10,14 +10,11 @@ import { useDispatch } from "react-redux";
 import { updateResults } from "../stores/Results";
 
 export default function QuizzComponent() {
-
     let infos = "";
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
 
     let quizzData = store.getState().quizz[i18n.resolvedLanguage];
-
-    // TODO : traduction en italien dans le store
 
     const survey = new Model(quizzData);
     survey.locale = i18n.resolvedLanguage;
@@ -58,7 +55,10 @@ export default function QuizzComponent() {
     // Adds "Correct" or "Incorrect" to a question title
     function changeTitle (q) {
         if (!q) return;
-        infos = q.jsonObj.infos;
+
+        if(q.jsonObj.infos !== undefined) {
+            infos = q.jsonObj.infos;
+        }
         const isCorrect = q.isAnswerCorrect();
         if (!q.prevTitle) {
             q.prevTitle = q.title;
@@ -76,6 +76,18 @@ export default function QuizzComponent() {
     survey.onValueChanged.add((_, options) => {
         // Change the question title when the question value is changed
         changeTitle(options.question);
+    });
+
+    // Prevent going to the next question until the correct answer has been ticked
+    survey.onCurrentPageChanging.add(function(survey, options) {
+        const currentPage = survey.currentPage;
+        const currentQuestion = currentPage.questions[0];
+        if (options.isGoingBackward === false && currentQuestion.value !== currentQuestion.correctAnswer) {
+            options.allow = false;
+            currentQuestion.addError(t("Select the correct answer"));
+        } else {
+            currentQuestion.clearErrors();
+        }
     });
 
     survey.onTextMarkdown.add((_, options) => {

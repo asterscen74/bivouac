@@ -3,6 +3,7 @@
 }
 .incorrectAnswer {
     color: red;
+    font-size: 1.8em !important;
 }
 .sd-element__title.sd-element__title--disabled {
     opacity: 1;
