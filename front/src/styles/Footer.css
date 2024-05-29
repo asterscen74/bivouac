@@ -17,4 +17,9 @@
         max-height: 35px;
         padding: 5px;
     }
+
+    .menu-footer-item {
+        padding-right: 15px;
+        font-size: 0.85rem;
+    }
 }
