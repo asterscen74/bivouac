@@ -5,7 +5,7 @@ import store from "../store";
 export default function GoodPractices() {
     const {t, i18n } = useTranslation();
 
-    let goodPracticesData = store.getState().legalNotices[i18n.resolvedLanguage];
+    let goodPracticesData = store.getState().goodPractices[i18n.resolvedLanguage];
 
     return (
         <div>

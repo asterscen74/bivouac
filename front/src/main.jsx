@@ -18,10 +18,9 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import About from './components/About';
+import About from './components/Impacts';
 import GoodPractices from './components/GoodPractices';
 import BivouacDeclaration from './components/BivouacDeclaration';
-import Contacts from './components/Contacts';
 import LegalNotices from './components/LegalNotices';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -32,7 +31,7 @@ root.render(
         <Header/>
         <Container fixed>
           <Routes>
-              <Route path="/a-propos" exact element={<About />} />
+              <Route path="/impacts-bivouac" exact element={<About />} />
               <Route path="/les-bonnes-pratiques" exact element={<GoodPractices />} />
               <Route path="/declaration-bivouac" element={<BivouacDeclaration />}>
                 <Route path='informations' element={<Informations />}/>
@@ -41,7 +40,6 @@ root.render(
                 <Route path='thanks' element={<Thanks />}/>
                 <Route path="*" element={<BivouacDeclaration />} />
               </Route>
-              <Route path="/contacts" exact element={<Contacts />} />
               <Route path="/mentions-legales" exact element={<LegalNotices />} />
               <Route path="*" element={<Navigate replace to="/declaration-bivouac" />} />
           </Routes>

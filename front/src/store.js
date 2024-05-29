@@ -4,8 +4,7 @@ import Quizz from "./stores/Quizz";
 import Infos from "./stores/Infos";
 import Results from "./stores/Results";
 import Map from "./stores/Map";
-import Contacts from "./stores/Contacts";
-import About from "./stores/About";
+import Impacts from "./stores/Impacts";
 import LegalNotices from "./stores/LegalNotices";
 import GoodPractices from "./stores/GoodPractices";
 
@@ -16,8 +15,7 @@ export default configureStore({
         infos: Infos,
         results: Results,
         map: Map,
-        contacts: Contacts,
-        about: About,
+        impacts: Impacts,
         legalNotices: LegalNotices,
         goodPractices: GoodPractices
     },
