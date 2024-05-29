@@ -6,14 +6,15 @@ import logoFrancenotionverte from '../assets/img/logo_francenationverte.png'
 import logoRn74 from '../assets/img/logo_rn74.png'
 import logoVcmb from '../assets/img/logo_vcmb.png'
 import { Link } from "react-router-dom";
+import { Link as LinkEmail } from "@react-email/link";
 import { useTranslation } from "react-i18next";
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 
 export default function Footer() {
     const { t } = useTranslation();
+    const contactsAdress = t("Tab contacts");
     const pages = [
-        { label: t("Tab contacts"), id: "contacts" },
         { label: t("Tab legal notices"), id: "mentions-legales" },
     ];
 
@@ -28,6 +29,13 @@ export default function Footer() {
             </Box>
             <Divider variant="full" />
             <Box sx={{ display: 'flex', justifyContent: 'center' }} className="menu-footer">
+                <span className="menu-footer-item" key="contacts">
+                    <LinkEmail href={"mailto:"+contactsAdress} style={{
+                        color: "rgb(0, 120, 84)"
+                    }}>
+                    {contactsAdress}
+                    </LinkEmail>
+                </span>
                 {pages.map((page) => (
                     <span className="menu-footer-item" key={page.id}>
                         <Link
