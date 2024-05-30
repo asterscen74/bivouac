@@ -26,6 +26,9 @@ pg_db: bivouac
 pg_port: 5432
 pg_host: localhost
 
+## Nginx config
+nginx_server_name: "bivouac.oslandia.io"
+
 # API
 api_fastapi_server_host: bivouac.oslandia.io
 api_fastapi_server_port: 9010

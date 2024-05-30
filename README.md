@@ -95,7 +95,63 @@ Pour pouvoir déployer un rôle en particulier (exemple avec front. le mot de pa
 ansible-playbook --inventory hosts --limit bivouac_remote --tags front -v playbook.yml --ask-vault-pass
 ```
 
+## Déploiement Ansible sur le serveur du client
+
+L'accès au serveur se fera via un accès SSH. Une fois le nécessaire fait par le client sur le serveur, il faudra créer une nouvelle clé ssh et l'envoyer sur le serveur.
+
+```shell
+ssh-keygen -t rsa
+ssh-copy-id -i /home/vincent/.ssh/id_rsa_bivouac_client.pub -p 7422  -o PubkeyAuthentication=no  oslandia@178.33.110.230
+```
+
+```shell
+cd ansible
+```
+
+Le groupe `bivouac_client` est présent dans le fichier `ansible/hosts`. Il utiliser le fichier de variables `bivouac_client.cen74.com.yml`. Il faut également disposer d'une configuration SSH fonctionnelle nommée `bivouac_client.cen74.com` pour pouvoir se connecter au serveur distant.
+
+Exemple de configuration SSH (`~/.ssh/config`):
+
+```ini
+Host bivouac_client.cen74.com
+  HostName 178.33.110.230
+  Port 7422
+  User oslandia
+  IdentityFile /home/vincent/.ssh/id_rsa_bivouac_client
+```
+
+Pour tester la connexion au serveur distant, on peut utiliser la commande suivante:
+
+```shell
+ansible bivouac_client -m ping -i hosts
+```
+
+Pour pouvoir déployer un rôle en particulier (exemple avec front. le mot de passe vault est dans le pass sous la clé **ansible_vault_password**):
+
+```shell
+ansible-playbook --inventory hosts --limit bivouac_client --tags front -v playbook.yml --ask-vault-pass
+```
+
 ## Diverses commandes de debug
+
+### PostgreSQL
+
+```shell
+PGPASSWORD=J66aQaDp6C64dc psql -U bivouac -d bivouac -h localhost
+```
+
+### Services Apache & Nginx
+
+```shell
+sudo service apache2 status
+sudo systemctl status apache2
+sudo systemctl status nginx.service
+sudo journalctl -xeu nginx.service
+sudo cat /var/log/nginx/error.log
+sudo cat /var/log/nginx/access.log
+```
+
+### Service supervisor
 
 ```shell
 sudo service supervisor status
@@ -105,5 +161,7 @@ sudo journalctl -u supervisor.service -n 100 -f
 sudo supervisorctl restart fastapi-bivouacapi
 cat /tmp/logs/supervisor-bivouacapi-stdout.txt
 cat /tmp/logs/supervisor-bivouacapi-stderr.txt
+cat /tmp/logs/supervisor-bivouacfront-stdout.txt
+cat /tmp/logs/supervisor-bivouacfront-stderr.txt
 sudo apt-get --purge autoremove supervisor
 ```
