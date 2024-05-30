@@ -5,7 +5,7 @@ let api_url = "";
 if (api_host === "localhost") {
     api_url = "http://" + api_host + ":" + api_port + "/";
 } else {
-    api_url = "http://" + api_host + "/api/";
+    api_url = "https://" + api_host + "/api/";
 }
 // console.log("api_url : " + api_url);
 

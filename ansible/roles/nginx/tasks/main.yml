@@ -2,30 +2,63 @@
 - name: Install nginx
   become: true
   ansible.builtin.apt:
-    name:
-      - nginx
-    update_cache: true
-    state: present
+      name:
+          - nginx
+      update_cache: true
+      state: present
+
+- name: Check if SSL certificate exists
+  become: true
+  ansible.builtin.stat:
+      path: "/etc/letsencrypt/live/{{ nginx_server_name }}/fullchain.pem"
+  register: cert
+  when: ssl_certificate
+
+- name: Install certbot
+  become: true
+  ansible.builtin.apt:
+      name:
+          - certbot
+          - python3-certbot-nginx
+      update_cache: true
+      state: present
+  when: ssl_certificate
+
+- name: Generate SSL certificate with Certbot
+  become: true
+  ansible.builtin.command:
+      cmd: certbot certonly --nginx -d {{ nginx_server_name }} --non-interactive --agree-tos --email {{ certbot_email1 }},{{ certbot_email2 }}
+  when: not cert.stat.exists
+  register: certbot_result
+  changed_when: "'Congratulations' in certbot_result.stdout"
+
+- name: Create cron job for Certbot
+  become: true
+  ansible.builtin.cron:
+      name: "Renew Let's Encrypt certificates"
+      job: "0 12 * * * /usr/bin/certbot renew --quiet"
+      state: present
+  when: ssl_certificate
 
 - name: Ensure nginx is started
   become: true
   ansible.builtin.systemd:
-    name: "nginx"
-    state: started
+      name: "nginx"
+      state: started
 
 - name: Ensure the nginx default site is installed
   become: true
   ansible.builtin.template:
-    src: "bivouac-nginx.conf.j2"
-    dest: "{{ path_nginx }}/sites-available/{{ nginx_conf_name }}"
-    force: true
-    mode: "0644"
+      src: "bivouac-nginx.conf.j2"
+      dest: "{{ path_nginx }}/sites-available/{{ nginx_conf_name }}"
+      force: true
+      mode: "0644"
 
 - name: Create a symbolic link of the default site
   become: true
   ansible.builtin.file:
-    src: "{{ path_nginx }}/sites-available/{{ nginx_conf_name }}"
-    dest: "{{ path_nginx }}/sites-enabled/{{ nginx_conf_name }}"
-    force: true
-    state: link
+      src: "{{ path_nginx }}/sites-available/{{ nginx_conf_name }}"
+      dest: "{{ path_nginx }}/sites-enabled/{{ nginx_conf_name }}"
+      force: true
+      state: link
   notify: Reload nginx

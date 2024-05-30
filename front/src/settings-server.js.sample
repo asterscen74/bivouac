@@ -4,7 +4,7 @@ var api_host = import.meta.env.VITE_REACT_APP_API_FASTAPI_SERVER_HOST || "localh
 if (api_host === "localhost") {
     var api_url = "http://" + api_host + ":" + api_port + "/api/";
 } else {
-    var api_url = "http://" + api_host + "/api/";
+    var api_url = "https://" + api_host + "/api/";
 }
 // console.log("api_url : " + api_url);
 

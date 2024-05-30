@@ -41,6 +41,9 @@ pg_host: localhost
 
 ## Nginx config
 nginx_server_name: "bivouac.nature-haute-savoie.fr"
+ssl_certificate: true
+certbot_email1: ""
+certbot_email2: ""
 
 # API
 api_fastapi_server_host: bivouac.nature-haute-savoie.fr
