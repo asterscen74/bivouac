@@ -10,7 +10,6 @@ python_version: "3.10"
 node_version: "20"
 
 ## Nginx config
-nginx_server_name: "bivouac.oslandia.io"
 nginx_conf_name: "bivouac"
 
 ## Paths
