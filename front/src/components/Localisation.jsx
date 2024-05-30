@@ -101,7 +101,9 @@ export default function Localisation() {
 
         }
 
-        fetchNbTentsZoningDate(infoDate, infoItinerance);
+        if (infoDate) {
+            fetchNbTentsZoningDate(infoDate, infoItinerance);
+        }
 
     }, [resultsInfosData, infoItinerance]);
 

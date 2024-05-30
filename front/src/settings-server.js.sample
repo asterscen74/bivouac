@@ -6,6 +6,6 @@ if (api_host === "localhost") {
 } else {
     var api_url = "http://" + api_host + "/api/";
 }
-console.log("api_url : " + api_url);
+// console.log("api_url : " + api_url);
 
 export default api_url;
