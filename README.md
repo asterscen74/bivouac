@@ -137,7 +137,7 @@ ansible-playbook --inventory hosts --limit bivouac_client --tags front -v playbo
 ### PostgreSQL
 
 ```shell
-PGPASSWORD=J66aQaDp6C64dc psql -U bivouac -d bivouac -h localhost
+PGPASSWORD=... psql -U bivouac -d bivouac -h localhost
 ```
 
 ### Services Apache & Nginx
