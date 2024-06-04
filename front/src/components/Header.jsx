@@ -33,6 +33,7 @@ const Header = () => {
         { label: t("Tab impact bivouacs"), id: "impacts-bivouac" },
         { label: t("Tab good practices"), id: "les-bonnes-pratiques" },
         { label: t("Tab bivouac declaration"), id: "declaration-bivouac" },
+        { label: t("Tab nature reserves"), id: "reserve-naturelle-haute-savoie" },
     ];
 
     const handleOpenNavMenu = (event) => {

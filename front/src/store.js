@@ -7,6 +7,7 @@ import Map from "./stores/Map";
 import Impacts from "./stores/Impacts";
 import LegalNotices from "./stores/LegalNotices";
 import GoodPractices from "./stores/GoodPractices";
+import NatureReserve from "./stores/NatureReserve";
 
 export default configureStore({
     reducer: {
@@ -17,6 +18,7 @@ export default configureStore({
         map: Map,
         impacts: Impacts,
         legalNotices: LegalNotices,
-        goodPractices: GoodPractices
+        goodPractices: GoodPractices,
+        natureReserve: NatureReserve,
     },
 });
