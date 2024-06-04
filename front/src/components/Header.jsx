@@ -65,9 +65,6 @@ const Header = () => {
 
     return (
         <>
-        <Box sx={{ bgcolor: '#007854', height: 'auto'}} >
-            <img src="/src/assets/img/header.jpg" alt="img_header" className="img-header"/>
-        </Box>
         <AppBar
             className="main-menu"
             sx={{
