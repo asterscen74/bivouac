@@ -190,11 +190,20 @@ async def create_reservation(
 
         # Send summary by e-mail
         if send_summary:
-            query = f"""SELECT string_agg(rl.date::text, ',') as date, nb_tents, nb_people, email, fr_or_foreign, department, itinerance
-            FROM public.reservations r
-            join public.reservations_locations rl on rl.reservation = r.id
-            WHERE r.id = {reservation_number}
-            group by r.id
+            query = f"""With s as (
+                SELECT rl.date::text as date, nb_people, email,
+                    zb.commune, rl.name_bivouac_zoning, r.id
+                FROM public.reservations r
+                join public.reservations_locations rl on rl.reservation = r.id
+                join public.zonage_bivouac zb on zb.nom = rl.name_bivouac_zoning
+                WHERE r.id = {reservation_number}
+                order by date
+            )
+            SELECT string_agg(s.date::text, ',') as date, nb_people, email,
+                    string_agg(s.commune, ',') as communes
+                    ,string_agg(s.name_bivouac_zoning, ',') as reserves
+            FROM s
+            group by id, nb_people, email
             """
             result = db.execute(text(query)).mappings().one()
             pdf_content, _pdf_name = await generate_pdf(attributes=result)
@@ -261,47 +270,6 @@ async def get_number_tents_date_bivouac_zoning(
         logger.critical(
             "Error while retrieving the number of tents by date and bivouac zoning"
         )
-        return JSONResponse(
-            status_code=400,
-            content=jsonable_encoder({"content": "Error while retrieving data"}),
-        )
-
-
-@app.get(
-    "/pdf/",
-    summary="Get a pdf of the reservation",
-    tags=["Tools"],
-)
-async def generate_send_pdf(
-    reservation_number: int,
-    db: Session = Depends(get_db),
-):
-    """Generate the reservation pdf
-
-    - **reservation_number**: Reservation number
-    """
-    logger.info("generate_send_pdf endpoint")
-    try:
-        query = f"""SELECT date, nb_tents, nb_people, email, fr_or_foreign, department, itinerance
-            FROM public.reservations
-            WHERE id = {reservation_number}
-            """
-        result = db.execute(text(query)).mappings().one()
-        pdf_content, pdf_name = await generate_pdf(attributes=result)
-        # Method 1 : PDF in memory
-        buffer = BytesIO(pdf_content)
-        headers = {"Content-Disposition": f'attachment; filename="{pdf_name}.pdf"'}
-        return Response(
-            buffer.getvalue(),
-            headers=headers,
-            media_type="application/pdf",
-        )
-        # # Method 2 : PDF on the disk
-        # from fastapi.responses import FileResponse
-        # return FileResponse(
-        #     path="hello_world.pdf", filename="", media_type="application/pdf"
-        # )
-    except sqlalchemy.exc.ProgrammingError:
         return JSONResponse(
             status_code=400,
             content=jsonable_encoder({"content": "Error while retrieving data"}),
