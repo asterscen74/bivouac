@@ -70,7 +70,7 @@ export default function Localisation() {
     // Redirect to the informations page if the first page has not been completed
     useEffect(() => {
         if (Object.keys(resultsInfosData).length === 0) {
-            navigate("/declaration-bivouac/" + previousPage);
+            navigate("/reservation-bivouac/" + previousPage);
         }
 
         const fetchNbTentsZoningDate = async (start_date, itinerance) => {
@@ -198,7 +198,7 @@ export default function Localisation() {
 
     // Navigate to informations page
     const previousStep = () => {
-        navigate("/declaration-bivouac/" + previousPage);
+        navigate("/reservation-bivouac/" + previousPage);
     };
 
     // Navigate to quizz page
@@ -210,11 +210,11 @@ export default function Localisation() {
             setDisplayAlert(true);
         } else {
             setDisplayAlert(false);
-            navigate("/declaration-bivouac/" + nextPage);
+            navigate("/reservation-bivouac/" + nextPage);
         }
         // // // comment above and uncomment below to move through the steps quickly without filling in the form or using routing
         // let nextPage = event.target.name;
-        // navigate("/declaration-bivouac/" + nextPage)
+        // navigate("/reservation-bivouac/" + nextPage)
     };
 
 
@@ -285,6 +285,7 @@ export default function Localisation() {
                 <p><strong>${t("Localisation Content.Not recommended area")} - ${featurePropertiesNom}</strong></p>
                 <p>${t("Localisation Content.Reglementation." + featurePropertiesReglementation)}</p>
                 </div>`;
+                layer.bindPopup(popupContent);
             // Toléré
             } else if (featurePropertiesBivouac === "Toléré") {
                 // Number of tents reserved
@@ -341,6 +342,7 @@ export default function Localisation() {
                 ${textZoneReport}
                 </div>
                 `;
+                layer.bindPopup(popupContent);
             }
             // Interdite
             else if (featurePropertiesBivouac === "Interdit") {
@@ -349,9 +351,9 @@ export default function Localisation() {
                 <p>${t("Localisation Content.Reglementation." + featurePropertiesReglementation)}</p>
                 </div>
                 `;
+                layer.bindPopup(popupContent);
             }
 
-            layer.bindPopup(popupContent);
         }
     }
 
@@ -464,6 +466,17 @@ export default function Localisation() {
         );
       };
 
+    // Map properties
+    function SetMapProperties() {
+        const map = useMap();
+        map.setMaxBounds([
+            [45.64667860570071412, 6.31042310515216265],
+            [46.2431276285698587, 7.29443215087411545],
+          ]);
+        map.setMinZoom(10);
+        map.setMaxZoom(18);
+    }
+
 
     // Legend map
     const MapLegend = () => {
@@ -525,6 +538,8 @@ export default function Localisation() {
         iconUrl: markerLocation,
         iconSize: [40, 40]
     });
+
+    
 
     return (
         <>
@@ -588,6 +603,7 @@ export default function Localisation() {
                     </div>
 
                     <MapLegend />
+                    <SetMapProperties />
                 </MapContainer>
             </div>
 

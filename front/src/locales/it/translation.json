@@ -30,8 +30,8 @@
             "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de la Pierre à Bérard pour le bivouac. Tél : 04.50.54.62.08.": "Per preservare l'ambiente naturale, in quest'area sono vietati il bivacco e la balneazione. Sono vietati i fuochi e i voli di droni. Contattare il rifugio Pierre à Bérard per i bivacchi. Tel: 04.50.54.62.08."
         },
         "Legend": {
-            "row1": "Ai margini della riserva naturale, i bivacchi sono sconsigliati (tranne che in aree specifiche).",
-            "row2": "Non prenotabile",
+            "row1": "Ai margini della riserva naturale, i bivacchi non raccomandata (tranne che in aree specifiche).",
+            "row2": "Bivacchi pribita, area non prenotabile",
             "row3": "Bivacchi tollerati, area riservabile"
         }
     },
@@ -41,9 +41,9 @@
     "Home": "Tornare a casa",
     "Start": "Iniziare",
     "Welcome": "Benvenuto",
-    "Enter your informations": "Per effettuare la prenotazione, dovrete compilare una serie di dati. Ricordate che non è necessario utilizzare questa applicazione se volete bivaccare al di fuori delle Riserve Aiguilles Rouges, Contamines e Sixt-Fer-à-Cheval. Infine, è necessaria 1 prenotazione per ogni tenda.",
+    "Enter your informations": "Per effettuare la prenotazione, dovrete compilare una serie di dati. Ricordate che non è necessario utilizzare questa applicazione se volete bivaccare al di fuori delle Riserve Aiguilles Rouges, Contamines-Montjoie e Sixt-Fer-à-Cheval. Infine, è necessaria 1 prenotazione per ogni tenda.",
     "Select site": "Selezionare un sito",
-    "Point bivouac locations": "Inserite i vostri siti di bivacco nelle Riserve Aiguilles Rouges, Contamines e Sixt-Fer-à-Cheval cliccando sul pulsante Aggiungere una posizione e poi sulla mappa.",
+    "Point bivouac locations": "Inserite i vostri siti di bivacco nelle Riserve Natural Aiguilles Rouges, Contamines-Montjoie e Sixt-Fer-à-Cheval/Passy cliccando sul pulsante Aggiungere una posizione e poi sulla mappa.",
     "Add location": "Aggiungere una posizione",
     "Stop Add location": "smettere di aggiungere posizione",
     "Delete last location": "Eliminare l'ultima posizione",

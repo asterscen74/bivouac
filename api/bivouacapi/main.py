@@ -244,14 +244,14 @@ async def get_number_tents_date_bivouac_zoning(
             query_where_part = f"WHERE date = '{start_date}'::date"
 
         query = f"""
-                SELECT date, name_bivouac_zoning,
+                SELECT loc.date, loc.name_bivouac_zoning,
                 SUM(reservations.nb_tents) AS nb_tents
-                FROM reservations_locations
+                FROM reservations_locations AS loc
                 LEFT JOIN reservations
-                ON reservations_locations.reservation = reservations.id
+                ON loc.reservation = reservations.id
                 {query_where_part}
-                GROUP BY date, name_bivouac_zoning
-                ORDER BY date
+                GROUP BY loc.date, loc.name_bivouac_zoning
+                ORDER BY loc.date
             """
 
         result = db.execute(text(query))
