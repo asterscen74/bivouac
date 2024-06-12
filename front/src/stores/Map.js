@@ -4,7 +4,7 @@ export const map = createSlice({
   name: "map",
   initialState: {
     initialDisplay: {
-        defaultCenter: [45.8756, 6.8389],
+        defaultCenter: [45.9165, 6.8389],
         defaultZoom: 10,
         defaultLayers: {
             "aires_de_protection": {
@@ -65,6 +65,7 @@ export const map = createSlice({
   },
 //   reducers: {},
 });
+
 
 // export const {} = map.actions;
 

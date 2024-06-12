@@ -17,7 +17,7 @@ export default function Quizz() {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const numberAnswersExpected = 5;
+    const numberAnswersExpected = 6;
     const [displayAlert, setDisplayAlert] = useState(
         false
     );
@@ -33,7 +33,7 @@ export default function Quizz() {
     // Redirect to the informations page if the page has not been completed
     useEffect(() => {
         if (Object.keys(resultsInfosData).length === 0) {
-            navigate("/declaration-bivouac/" + nameInformationsPage);
+            navigate("/reservation-bivouac/" + nameInformationsPage);
         }
 
     }, [resultsInfosData, navigate]);
@@ -78,7 +78,7 @@ export default function Quizz() {
                     output_message: responseData.content
                 }))
             }
-            navigate("/declaration-bivouac/" + nameNextPage)
+            navigate("/reservation-bivouac/" + nameNextPage)
             setDisplayCircularProgress(false);
 
         }
@@ -93,7 +93,7 @@ export default function Quizz() {
 
     const previousStep = (event) => {
         let nextPage = event.target.name;
-        navigate("/declaration-bivouac/" + nextPage);
+        navigate("/reservation-bivouac/" + nextPage);
     };
 
     const nextStep = () => {

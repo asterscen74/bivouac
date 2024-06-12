@@ -4,16 +4,16 @@ import { useEffect } from "react";
 export default function BivouacDeclaration() {
     const navigate = useNavigate();
     const location = useLocation();
-    const acceptedLocations = ["/declaration-bivouac/informations",
-    "/declaration-bivouac/localisation",
-    "/declaration-bivouac/quizz",
-    "/declaration-bivouac/thanks"]
+    const acceptedLocations = ["/reservation-bivouac/informations",
+    "/reservation-bivouac/localisation",
+    "/reservation-bivouac/quizz",
+    "/reservation-bivouac/thanks"]
 
     useEffect(() => {
         if (
             !acceptedLocations.includes(location.pathname)
         ) {
-            navigate("/declaration-bivouac/informations");
+            navigate("/reservation-bivouac/informations");
         }
       }, [navigate]);
 

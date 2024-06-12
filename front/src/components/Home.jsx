@@ -17,7 +17,7 @@ export default function Home() {
         <>
             <h1>{t("Welcome")}</h1>
             <p>
-                Bienvenue sur le site de déclaration de bivouac
+                Bienvenue sur le site de réservation de bivouac
             </p>
             <Box sx={{ display: 'flex', flexDirection: 'row-reverse', p: 2}}>
                 <Button

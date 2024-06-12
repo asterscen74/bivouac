@@ -34,7 +34,7 @@ root.render(
           <Routes>
               <Route path="/impacts-bivouac" exact element={<About />} />
               <Route path="/les-bonnes-pratiques" exact element={<GoodPractices />} />
-              <Route path="/declaration-bivouac" element={<BivouacDeclaration />}>
+              <Route path="/reservation-bivouac" element={<BivouacDeclaration />}>
                 <Route path='informations' element={<Informations />}/>
                 <Route path='localisation' element={<Localisation />}/>
                 <Route path='quizz' element={<Quizz />}/>
@@ -43,7 +43,7 @@ root.render(
               </Route>
               <Route path="/reserve-naturelle-haute-savoie" exact element={<NatureReserve />} />
               <Route path="/mentions-legales" exact element={<LegalNotices />} />
-              <Route path="*" element={<Navigate replace to="/declaration-bivouac" />} />
+              <Route path="*" element={<Navigate replace to="/reservation-bivouac" />} />
           </Routes>
           <Divider variant="full" />
           <Footer/>

@@ -30,8 +30,8 @@
             "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de la Pierre à Bérard pour le bivouac. Tél : 04.50.54.62.08.": "In order to preserve the natural environment, bivouacking and swimming are prohibited in this area. Fires and drone flights are prohibited. Contact the Pierre à Bérard refuge for bivouacs. Tel: 04.50.54.62.08."
         },
         "Legend": {
-            "row1": "Edge of the nature reserve, bivouacs are not recommended (except in specific areas).",
-            "row2": "Not bookable",
+            "row1": "Edge of the nature reserve, bivouacs not recommended (except in specific areas).",
+            "row2": "Bivouac prohibited, non bookable area",
             "row3": "Bivouacs tolerated, reservable area"
         }
     },
@@ -41,9 +41,9 @@
     "Home": "Home",
     "Start": "Start",
     "Welcome": "Welcome",
-    "Enter your informations": "To make your reservation, you'll need to fill in a number of details. Remember, you don't need to use this application if you want to bivouac outside the Aiguilles Rouges, Contamines and Sixt-Fer-à-Cheval Reserves. Finally, 1 reservation is required per tent.",
+    "Enter your informations": "One reservation is required per tent. Camping is prohibited in nature reserves. Only bivouacking is allowed for one night only, at the same location, with or without shelter, between 7pm and 9am. Remember, you don't need to use this application if you want to bivouac outside the Aiguilles Rouges, Contamines-Montjoie and Sixt-Fer-à-Cheval/Passy Natural Reserves.",
     "Select site": "Select a location",
-    "Point bivouac locations": "Enter your bivouac sites in the Aiguilles Rouges, Contamines and Sixt-Fer-à-Cheval Reserves by clicking on the Add a location button and then on the map.",
+    "Point bivouac locations": "Enter your bivouac sites in the Aiguilles Rouges, Contamines-Montjoie and Sixt-Fer-à-Cheval/Passy Natural Reserves by clicking on the Add a location button and then on the map.",
     "Add location": "Add a location",
     "Stop Add location": "Stop adding location",
     "Delete last location": "Delete the last location",
@@ -51,7 +51,7 @@
     "Incomplete location": "You must indicate your bivouac location or a minimum of 2 locations if you are roaming.",
     "Thanks": "Tanks",
     "The good practices quiz": "The good practices quiz",
-    "Please answer this little quiz": "Please answer this little quiz",
+    "Please answer this little quiz": "Please answer this quiz",
     "Incomplete quiz": "The quiz was not completed correctly",
     "Last question quiz": "Do you have a comment on that survey ?",
     "Select the correct answer": "You must select the correct answer to move on to the next question",
