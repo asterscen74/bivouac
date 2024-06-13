@@ -3,7 +3,7 @@ ansible_python_interpreter: "/usr/bin/python3"
 
 # Gitlab repository
 ## Repository URL
-gitlab_repo_url: git.oslandia.net/Client-projects/cen_haute_savoie_bivouac.git
+gitlab_repo_url: test
 ## Repository main branch
 gitlab_repo_branch: main
 ## Access token User
