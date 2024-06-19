@@ -24,6 +24,7 @@ export default function Informations() {
     const nextStep = (event) => {
         const result = survey.completeLastPage();
         if (result === true) {
+            window.scrollTo(500, 500);
             let nextPage = event.target.name;
             navigate("/reservation-bivouac/" + nextPage);
         }
