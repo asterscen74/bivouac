@@ -16,11 +16,11 @@ export const quizz = createSlice({
                             "title": "Bivouaquer c’est planter ma tente…",
                             "choices": [
                                 "toute une semaine.",
-                                "une seule nuit, sur un même emplacement, entre 9h et 19h.",
+                                "une seule nuit, sur un même emplacement, entre 19h et 9h.",
                                 "toute la journée pour faire la sieste."
                             ],
                             "isRequired": true,
-                            "correctAnswer": "une seule nuit, sur un même emplacement, entre 9h et 19h.",
+                            "correctAnswer": "une seule nuit, sur un même emplacement, entre 19h et 9h.",
                             "infos": "Le camping est interdit dans les réserves naturelles. Seul le bivouac est toléré pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h."
                         }
                     ]
@@ -144,11 +144,11 @@ export const quizz = createSlice({
                             "title": "Bivouac is…",
                             "choices": [
                                 "All the week",
-                                "One night only,same area, between 9am and 7pm",
+                                "One night only,same area, between 7pm and 9am",
                                 "All day long for my nap"
                             ],
                             "isRequired": true,
-                            "correctAnswer": "One night only,same area, between 9am and 7pm",
+                            "correctAnswer": "One night only,same area, between 7pm and 9am",
                             "infos": "Camping is forbidden in nature reserves. You may only pitch your tent for one night between 7pm and 9 am."
                         }
                     ]

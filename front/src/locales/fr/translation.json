@@ -41,7 +41,7 @@
     "Home": "Retour à l'accueil",
     "Start": "Commencez",
     "Welcome": "Bienvenue",
-    "Enter your informations": "Une réservation est nécessaire par tente. Le camping est interdit dans les réserves naturelles. Seul le bivouac est toléré;pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h.Pour rappel, il n'est pas nécessaire de réserver sa nuit en bivouac en dehors des Réserves naturelles : du Massif des Aiguilles Rouges, des Contamines-Montjoie et de Sixt-Fer-à-Cheval/Passy.",
+    "Enter your informations": "Une réservation est nécessaire par tente. Le camping est interdit dans les réserves naturelles. Seul le bivouac est toléré; pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h. Pour rappel, il n'est pas nécessaire de réserver sa nuit en bivouac en dehors des Réserves naturelles : du Massif des Aiguilles Rouges, des Contamines-Montjoie et de Sixt-Fer-à-Cheval/Passy.",
     "Select site": "Sélectionner un site",
     "Point bivouac locations": "Saisissez vos emplacements de bivouac  au sein des Réserves naturelles du massif des Aiguilles Rouges, des Contamines-Montjoie et de Sixt-Fer-à-Cheval/Passy en cliquant sur le bouton Ajouter un emplacement puis sur la carte",
     "Add location": "Ajouter un emplacement",
@@ -51,7 +51,7 @@
     "Incomplete location": "Vous devez indiquer votre emplacement de bivouac ou au minimum 2 emplacements dans le cas d'une itinérance",
     "Thanks": "Merci",
     "The good practices quiz": "Le Quiz des bonnes pratiques",
-    "Please answer this little quiz": "Merci de répondre à ce petit quiz",
+    "Please answer this little quiz": "Merci de répondre au quiz",
     "Incomplete quiz": "Le quizz n'a pas été correctement rempli",
     "Last question quiz": "Une remarque sur notre outil ?",
     "Select the correct answer": "Vous devez sélectionner la bonne réponse pour passer à la question suivante",
@@ -59,5 +59,5 @@
     "Reservation confirmed": "Réservation confirmée",
     "Reservation not confirmed": "Réservation non confirmée",
     "Registration error": "Erreur lors de l'enregistrement des informations saisies. Merci de réessayer ultérieurement ou contactez-nous si le problème persiste.",
-    "Summary sent": "Un récapitulatif de votre réservation vient de vous être envoyé par mail."
+    "Summary sent": "Votre réservation vient de vous être envoyé par mail. Elle sera à présenter aux gardes de la réserve naturelle. Vous ne l'avez pas reçu ? Vérifiez dans vos spams et contactez-nous. Merci d'avoir pris le temps de répondre ! "
 }

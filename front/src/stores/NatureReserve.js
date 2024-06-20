@@ -23,7 +23,7 @@ export const NatureReserve = createSlice({
         <p>Sixt-Passy : <a target="_blank" href="https://www.cen-haute-savoie.org/reserve-naturelle/sixt-fer-cheval-passy">https://www.cen-haute-savoie.org/reserve-naturelle/sixt-fer-cheval-passy</a></p>
         <p>Bout du lac d’Annecy : <a target="_blank" href="https://www.cen-haute-savoie.org/reserve-naturelle/bout-lac-annecy">https://www.cen-haute-savoie.org/reserve-naturelle/bout-lac-annecy</a></p>
         <p>Roc de chère : <a target="_blank" href="https://www.cen-haute-savoie.org/reserve-naturelle/roc-chere">https://www.cen-haute-savoie.org/reserve-naturelle/roc-chere</a></p>
-        <p>Delta de la dranse : <a target="_blank" href="">https://www.cen-haute-savoie.org/reserve-naturelle/delta-dranse</a></p>
+        <p>Delta de la dranse : <a target="_blank" href="https://www.cen-haute-savoie.org/reserve-naturelle/delta-dranse">https://www.cen-haute-savoie.org/reserve-naturelle/delta-dranse</a></p>
         `,
         en: `
         <p>Nature reserves are areas protected by ministerial decree to preserve an exceptional natural heritage. Let's take the time to contemplate and experience their many facets... but let's also play a part in preserving them.</p>
