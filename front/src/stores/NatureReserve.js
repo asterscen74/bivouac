@@ -7,6 +7,7 @@ export const NatureReserve = createSlice({
         <p>Véritables cœurs de nature, les réserves naturelles sont des espaces protégés par décret ministériel en vue de conserver un patrimoine naturel d’exception. Prenons le temps de contempler et de vivre leurs multiples facettes… mais soyons aussi acteur de leur préservation.</p>
         <p>En France, 304 réserves naturelles nationales ou régionales s’étendent sur plus de 2, 8 millions d’ha.</p>
         <p>Si les plus grandes se situent dans les Terres australes françaises ou dans la forêt tropicale Guyanaise, la Haute-Savoie est le département qui en possède le plus (9) et qui détient le record de l’altitude avec la plus haute réserve naturelle de France, celle des Contamines-Montjoie (à 3 892 m).</p>
+        <p>Ces espaces naturels protégés représentent 5% du territoire Haut-Savoyard. Alors respectons ces lieux de quiétude et de vie !<p>
         <p><strong>VOCATION D’UNE RÉSERVE NATURELLE</strong></p>
         <p><strong>Les sciences sont des outils fondamentaux pour mieux comprendre le monde qui nous entoure et ses fragilités.
         La réserve naturelle est un laboratoire en plein air !
@@ -29,6 +30,7 @@ export const NatureReserve = createSlice({
         <p>Nature reserves are areas protected by ministerial decree to preserve an exceptional natural heritage. Let's take the time to contemplate and experience their many facets... but let's also play a part in preserving them.</p>
         <p>In France, 304 national or regional nature reserves cover more than 2.8 million hectares.</p>
         <p>While the largest are in the French Southern Territories or the Guyanese rainforest, Haute-Savoie is the department with the most (9) and holds the record for highest altitude with the highest nature reserve in France, Les Contamines-Montjoie (at 3,892 m).</p>
+        <p>These protected natural areas represent 5% of the Haut-Savoyard territory. So let's respect these places of tranquility and life!<p>
         <p><strong>PURPOSE OF A NATURE RESERVE</strong></p>
         <p><strong>Science is a fundamental tool for understanding the world around us and its fragility.
         The nature reserve is an open-air laboratory!
@@ -52,6 +54,7 @@ export const NatureReserve = createSlice({
         <p>In Francia, 304 riserve naturali nazionali o regionali coprono più di 2,8 milioni di ettari.</p>
         <p>Mentre i più grandi si trovano nei Territori Francesi del Sud o nella foresta pluviale della Guyana, l'Alta Savoia è il dipartimento con il maggior numero (9) e detiene il record di altitudine con la riserva naturale più alta di Francia, Les Contamines-Montjoie (a 3.892 m).</p>
         <p><strong>SCOPO DI UNA RISERVA NATURALE</strong></p>
+        <p>Queste aree naturali protette rappresentano il 5% del territorio dell'Haut-Savoyard. Rispettiamo quindi questi luoghi di pace e tranquillità!</p>
         <p><strong>La scienza è uno strumento fondamentale per comprendere il mondo che ci circonda e la sua fragilità.
         La riserva naturale è un laboratorio a cielo aperto!
         In quest'area esiste un progetto di conservazione e gestione delle specie e degli ambienti naturali, alla ricerca di un delicato equilibrio tra uomo e natura. Amare, scoprire, imparare, rispettare... quest'area è aperta al pubblico e porta i visitatori ben oltre i confini della meraviglia.</strong></p>

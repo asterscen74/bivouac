@@ -9,7 +9,7 @@ export const LegalNotices = createSlice({
         <p>ASTERS - Conservatoire d'espaces naturels de Haute-Savoie</p>
         <p>60 avenue de France 74000 Annecy</p>
         <p>04 50 66 47 51</p>
-        <p>contact@cen-haute-savoie.org</p>
+        <p>bivouac@cen-haute-savoie.org</p>
         <p class="section-title">Directeur de publication</p>
         <p>Juliette Buret</p>
         <p class="section-title">Création graphique</p>
@@ -39,7 +39,7 @@ export const LegalNotices = createSlice({
         <p>ASTERS - Conservatoire d'espaces naturels de Haute-Savoie</p>
         <p>60 avenue de France 74000 Annecy</p>
         <p>04 50 66 47 51</p>
-        <p>contact@cen-haute-savoie.org</p>
+        <p>bivouac@cen-haute-savoie.org</p>
         <p class="section-title">Publishing director</p>
         <p>Juliette Buret</p>
         <p class="section-title">Graphic design</p>
@@ -69,7 +69,7 @@ export const LegalNotices = createSlice({
         <p>ASTERS - Conservatoire d'espaces naturels de Haute-Savoie</p>
         <p>60 avenue de France 74000 Annecy</p>
         <p>04 50 66 47 51</p>
-        <p>contact@cen-haute-savoie.org</p>
+        <p>bivouac@cen-haute-savoie.org</p>
         <p class="section-title">Direttore di pubblicazione</p>
         <p>Juliette Buret</p>
         <p class="section-title">Design grafico</p>

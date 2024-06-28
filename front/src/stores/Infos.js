@@ -156,7 +156,7 @@ export const infos = createSlice({
                 {
                     "name": "itinerance",
                     "type": "boolean",
-                    "title": "Option en itinérance",
+                    "title": "Option en itinérance : Êtes-vous en randonnée itinérante, sur plusieurs jours ?",
                     "maxLength": 25,
                     "isRequired": true,
                     "valueTrue": "Yes",
@@ -319,7 +319,7 @@ export const infos = createSlice({
                 {
                     "name": "itinerance",
                     "type": "boolean",
-                    "title": "Roaming option",
+                    "title": "Roaming option : Are you on a multi-day tour ?",
                     "maxLength": 25,
                     "isRequired": true,
                     "valueTrue": "Yes",
@@ -482,7 +482,7 @@ export const infos = createSlice({
                 {
                     "name": "itinerance",
                     "type": "boolean",
-                    "title": "Opzione roaming",
+                    "title": "Opzione roaming : state facendo un tour di più giorni",
                     "maxLength": 25,
                     "isRequired": true,
                     "valueTrue": "Yes",

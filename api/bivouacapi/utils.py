@@ -65,13 +65,13 @@ Bonjour,
 Voici votre réservation en pièce jointe ainsi que toutes les bonnes pratiques à adopter pour une nuit à la belle étoile en réserve naturelle.
 Conservez ce document, il vous sera demandé par les gardes de la réserve naturelle.
 L'équipe des réserves naturelles de Haute-Savoie vous souhaite une bonne nuit !
-Une question ? contact@cen-haute-savoie.org
+Une question ? bivouac@cen-haute-savoie.org
 
 Hello,
 Here is your bivouac registration and a summary of best practices for your time out in the nature reserve.
 Please save a copy of this document, as you may be asked to display it to rangers
 The Haute Savoie nature reserves team wishes you a pleasant night!
-For further information: contact@cen-haute-savoie.org
+For further information: bivouac@cen-haute-savoie.org
         """
 
         message = MIMEMultipart()

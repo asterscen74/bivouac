@@ -50,7 +50,7 @@ export const quizz = createSlice({
                             "title": "Je peux faire du feu...",
                             "choices": [
                                 "quand « Allumez le feu » est ma chanson préférée.",
-                                "pour ne pas manger mes saucisses crues.",
+                                "avec du bois mort pour ne pas manger mes saucisses crues.",
                                 "jamais, je peux uniquement utiliser un réchaud."
                             ],
                             "isRequired": true,
@@ -179,7 +179,7 @@ export const quizz = createSlice({
                             "choices": [
                                 "when -Light My Fire- is my favorite song.",
                                 "never, I can only use a stove.",
-                                "to avoid eating my sausages raw."
+                                "with dead wood so I don't eat my sausages raw."
                             ],
                             "isRequired": true,
                             "correctAnswer": "never, I can only use a stove.",
@@ -306,7 +306,7 @@ export const quizz = createSlice({
                             "title": "Potrei accendere un fuoco:",
                             "choices": [
                                 "Per riscaldarsi",
-                                "Mangiare un pasto caldo",
+                                "Con legno morto per non mangiare le mie salsicce crude",
                                 "Mai, ma posso comunque usare un fornello per cucinare i miei cibi."
                             ],
                             "isRequired": true,
