@@ -142,7 +142,10 @@ async def create_reservation(
     itinerance_reservation = request.itinerance
     locations_reservation = request.locations
     quizz_note_reservation = request.quizz_note
-    comment = quizz_note_reservation.replace("'", " ")
+    if quizz_note_reservation:
+        comment = quizz_note_reservation.replace("'", " ")
+    else:
+        comment = None
     nb_tents_reservation = 1
 
     check_locations = await check_locations_argument(locations_reservation)

@@ -12,6 +12,7 @@ import "survey-core/defaultV2.min.css";
 import * as SurveyTheme from "survey-core/themes";
 import { useDispatch } from "react-redux";
 import { updateResults } from "../stores/Results";
+import CookieConsent from "react-cookie-consent";
 
 export default function Informations() {
 
@@ -24,7 +25,6 @@ export default function Informations() {
     const nextStep = (event) => {
         const result = survey.completeLastPage();
         if (result === true) {
-            window.scrollTo(500, 500);
             let nextPage = event.target.name;
             navigate("/reservation-bivouac/" + nextPage);
         }
@@ -57,6 +57,20 @@ export default function Informations() {
 
     return (
         <>
+            <CookieConsent 
+                buttonText={t("I understand")}
+                style={{
+                    background: "#007854",
+                }}
+                buttonStyle={{
+                    background: "white",
+                    color: "rgb(30, 70, 32)",
+                    padding: "10px 20px",
+                    border: "1px solid black",
+                  }}
+                >
+                {t("This website uses cookies to enhance the user experience")}
+            </CookieConsent>
             <h1>{t("Informations")}</h1>
             <Alert severity="success">
                 <AlertTitle>{t("Step")} 1/4</AlertTitle>

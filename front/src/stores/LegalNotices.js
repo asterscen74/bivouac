@@ -13,7 +13,7 @@ export const LegalNotices = createSlice({
         <p class="section-title">Directeur de publication</p>
         <p>Juliette Buret</p>
         <p class="section-title">Création graphique</p>
-        <p>La création webdesign et l'intégration ont été réalisés par ASTERS.</p>
+        <p>La création webdesign et l'intégration ont été réalisés par ASTERS-CEN74.</p>
         <p class="section-title">Développement technique</p>
         <p>Le développement technique initial a été réalisé par <a target="_blank" href="https://oslandia.com/">Oslandia</a> de manière open source et Jules Grillot pour Asters-CEN74</p>
         <p class="section-title">Maintenance</p>
@@ -27,7 +27,7 @@ export const LegalNotices = createSlice({
         <p class="section-title">Cookies</p>
         <p>La navigation sur ce site provoque l’installation de p'tits fichiers, nommés cookies, sur le navigateur de l’utilisateur. Ils sont gentils et ne prennent pas de place 😉. Par contre, le refus d’installation d’un cookie peut bloquer techniquement l’accès à certains services et réduire notre capacité à améliorer l'expérience de navigation via des mesures d'audience. </p>
         <p class="section-title">Gestion des données personnelles</p>
-        <p>En surfant sur ce site, des informations peuvent être recueillies : provenances, fournisseur d'accès, adresse IP, etc. ASTERS - Conservatoire d'espaces naturels de Haute-Savoie collecte des informations personnelles pour le besoin de certains services proposés par ce site, voir ci-dessus. Le droit d’accès, de rectification et d’opposition aux données personnelles concernant les visiteurs, s'effectuent par demande écrite à l'adresse ci-dessus.</p>
+        <p>En surfant sur ce site, les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé par : Asters-CEN74. Dans le but du projet de sensibilisation aux conséquences du bivouac en espaces protégés, elles sont conservées pendant maximum un an et sont destinées au service réserves naturelles. Conformément à la loi «RGPD », vous pouvez exercer votre droit d’accès aux données vous concernant et les faire rectifier en contactant: bivouac@cen-haute-savoie.org.</p>
         <p class="section-title">Droit applicable et attribution de juridiction</p>
         <p>Tout litige en relation avec l’utilisation de ce site est soumis au droit français et dans la langue de Molière. Cocorico !</p>
         <p class="section-title">Encore là ?</p>
@@ -57,7 +57,7 @@ export const LegalNotices = createSlice({
         <p class="section-title">Cookies</p>
         <p>Browsing this site causes small files called cookies to be installed on the user's browser. They're nice and don't take up much space 😉. However, refusing to install a cookie may technically block access to certain services and reduce our ability to improve the browsing experience through audience measurement.</p>
         <p class="section-title">Personal data management</p>
-        <p>When surfing on this site, information may be collected: origin, access provider, IP address, etc. ASTERS - Conservatoire d'espaces naturels de Haute-Savoie collects personal information for the purposes of certain services offered by this site, see above. The right of access, rectification and opposition to personal data concerning visitors can be exercised by written request to the above address.</p>
+        <p>When surfing on this site, data gathered through this form are recorded in a digital file handled by Asters-CEN74. They will be saved for a year and used by the nature reserves to understand trends and impacts of bivies in nature areas. You may access and modify these data by contacting : bivouac@cen-haute-savoie.org .</p>
         <p class="section-title">Applicable law and jurisdiction</p>
         <p>Any dispute relating to the use of this site is subject to French law and in the language of Molière. Cock-a-doodle-doo!</p>
         <p class="section-title">Here again?</p>
@@ -87,7 +87,7 @@ export const LegalNotices = createSlice({
         <p class="section-title">Cookies</p>
         <p>La navigazione in questo sito provoca l'installazione nel browser dell'utente di piccoli file chiamati cookie. Sono simpatici e non occupano molto spazio 😉 . Tuttavia, il rifiuto di installare un cookie può tecnicamente bloccare l'accesso ad alcuni servizi e ridurre la nostra capacità di migliorare l'esperienza di navigazione attraverso la misurazione del pubblico. </p>
         <p class="section-title">Gestione dei dati personali</p>
-        <p>Quando si naviga su questo sito, possono essere raccolte informazioni: origine, fornitore di accesso, indirizzo IP, ecc. ASTERS - Conservatoire d'espaces naturels de Haute-Savoie raccoglie informazioni personali ai fini di alcuni servizi offerti da questo sito, vedi sopra. Il diritto di accesso, rettifica e opposizione ai dati personali dei visitatori può essere esercitato mediante richiesta scritta all'indirizzo sopra indicato.</p>
+        <p>Quando si naviga su questo sito, I dati raccolti tramite questo modulo vengono registrati in un file digitale gestito da Asters-CEN74 . Saranno conservati per un anno e utilizzati dalle riserve naturali per comprendere le tendenze e gli impatti dei bivacchi nelle aree naturali. È possibile accedere e modificare questi dati contattando: bivouac@cen-haute-savoie.org.</p>
         <p class="section-title">Legge applicabile e giurisdizione</p>
         <p>Qualsiasi controversia relativa all'utilizzo di questo sito è soggetta al diritto francese e alla lingua di Molière. Cocorico!</p>
         <p class="section-title">Ancora qui?</p>
