@@ -142,6 +142,7 @@ async def create_reservation(
     itinerance_reservation = request.itinerance
     locations_reservation = request.locations
     quizz_note_reservation = request.quizz_note
+    comment = quizz_note_reservation.replace("'", " ")
     nb_tents_reservation = 1
 
     check_locations = await check_locations_argument(locations_reservation)
@@ -152,7 +153,7 @@ async def create_reservation(
         query = f"""
             INSERT INTO public.reservations(nb_tents,nb_people,email,fr_or_foreign,department,itinerance,quizz_note)
             VALUES({nb_tents_reservation},{nb_people_reservation},'{email_reservation}','{fr_or_foreign_reservation}',
-            '{department_reservation}','{itinerance_reservation}', '{quizz_note_reservation}' )
+            '{department_reservation}','{itinerance_reservation}', '{comment}' )
             RETURNING id
             """
         result = db.execute(text(query))
