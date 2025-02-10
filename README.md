@@ -1,6 +1,16 @@
-# Bivouac
+# Outil de réservation pour encadrer la pratique du bivouac dans les réserves naturelles de Haute-Savoie
 
-Ce projet a pour objectif de créer une plateforme de réservation de Bivouac en Haute-Savoie.
+Suite à la une hausse de la pratique du bivouac en réserves naturelles, Asters, le conservatoire d'espaces naturels de Haute-Savoie, a développé avec ses partenaires un outil de réservation du bivouac.
+
+Cette plateforme en ligne est composé d’un outil cartographique et un quizz de sensibilisation.
+
+L'objectif est de mieux gérer cette pratique et ces effets sur la biodiversité grâce à une meilleure connaissance des pratiquants (suivi quantitatif et sensibilisation ludique).
+
+*Développement*
+
+*Asters-CEN74 : Jules Grillot et Juliette Buret*
+
+*Oslandia : Sylvain Beorchia et Vincent Bré*
 
 ## Installation & Configuration
 
