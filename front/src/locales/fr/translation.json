@@ -29,7 +29,8 @@
         "Legend": {
             "row1": "Limite de réserve naturelle, le bivouac déconseillé (hors zones spécifiques)",
             "row2": "Bivouac interdit, zone non réservable",
-            "row3": "Bivouac toléré, zone réservable"
+            "row3": "Bivouac toléré, zone réservable",
+            "row4": "Bivouac toléré, zone complète pour cette date"
         }
     },
     "languageFrench": "Français",
@@ -41,11 +42,11 @@
     "Home": "Retour à l'accueil",
     "Start": "Commencez",
     "Welcome": "Bienvenue",
-    "Enter your informations": "Une réservation est nécessaire par tente. Le camping est interdit dans les réserves naturelles. Seul le bivouac est toléré; pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h. Pour rappel, il n'est pas nécessaire de réserver sa nuit en bivouac en dehors des Réserves naturelles : du Massif des Aiguilles Rouges, des Contamines-Montjoie et de Sixt-Fer-à-Cheval/Passy.",
+    "Enter your informations": "Une réservation est nécessaire par tente. Le camping (plusieurs nuits) est interdit dans les réserves naturelles. Seul le bivouac est toléré; pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h. Pour rappel, il n'est pas nécessaire de réserver sa nuit en bivouac en dehors des Réserves naturelles : du Massif des Aiguilles Rouges, des Contamines-Montjoie et de Sixt-Fer-à-Cheval/Passy.",
     "Select site": "Sélectionner un site",
     "Point bivouac locations": "Saisissez vos emplacements de bivouac  au sein des Réserves naturelles du massif des Aiguilles Rouges, des Contamines-Montjoie et de Sixt-Fer-à-Cheval/Passy en cliquant sur le bouton Ajouter un emplacement puis sur la carte",
-    "Add location": "Ajouter un emplacement",
-    "Stop Add location": "Arrêter l'ajout d'emplacement",
+    "Add location": "Placer ma tente",
+    "Stop Add location": "Arrêter le placement de ma tente",
     "Delete last location": "Supprimer le dernier emplacement",
     "Maximum number location reached": "Nombre maximum d'emplacements atteint",
     "Incomplete location": "Vous devez indiquer votre emplacement de bivouac ou au minimum 2 emplacements dans le cas d'une itinérance",

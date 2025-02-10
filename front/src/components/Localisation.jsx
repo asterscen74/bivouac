@@ -46,6 +46,7 @@ export default function Localisation() {
     const mapDataDefaultLayers = mapData.defaultLayers;
     const mapDataDefaultBaseLayers = mapData.defaultBaseLayers;
     const mapDataDefaultSites = mapData.defaultSites;
+    var completeArea = false;
 
     const [defaultSite, setDefaultSite] = useState("");
     const [enableAddLocation, setEnableAddLocation] = useState(false);
@@ -258,12 +259,67 @@ export default function Localisation() {
         const featureLayerName = feature.layername;
         const featureProperties = feature.properties;
         const styleFeature = mapDataDefaultLayers[featureLayerName].style;
-        return {
+        const featurePropertiesBivouac = featureProperties["bivouac"];
+        const featurePropertiesNom = featureProperties["nom"];
+        const featurePropertiesQuotas = featureProperties["quotas"];
+        if (featurePropertiesBivouac === "Toléré") {
+            let featurePropertiesNbTentsReserved = "";
+            let textNbTentsReserved = "";
+            let datesReserved = [momentInfoDate.format('YYYY-MM-DD')];
+            if (infoItinerance === "true") {
+                datesReserved.push(momentInfoDate.clone().add(1, 'days').format('YYYY-MM-DD'));
+                datesReserved.push(momentInfoDate.clone().add(2, 'days').format('YYYY-MM-DD'));
+            }
+            for (const dateReserved of datesReserved) {
+                let dateReservedFormatted = moment(dateReserved).format('DD/MM/YYYY');
+                if (featurePropertiesNom in nbTentsZoningDate) {
+                    let datesNbTentsZoningDate = Object.keys(nbTentsZoningDate[featurePropertiesNom]);
+                    if (datesNbTentsZoningDate.includes(dateReserved)) {
+                        let finalNbTents = nbTentsZoningDate[featurePropertiesNom][dateReserved];
+                        if (finalNbTents >= featurePropertiesQuotas) {
+                            completeArea = true;
+                            return {
+                                fillColor: "rgba(255, 165, 0, 1)",
+                                color: "rgba(255, 165, 0, 1)",
+                                fillOpacity: styleFeature.fillOpacity,
+                                weight: styleFeature.weight
+                            }; 
+                        } 
+                        else {
+                                return {
+                                fillColor: styleFeature.attributeFillColor !== "" ? featureProperties[styleFeature.attributeFillColor] : styleFeature.fillColor,
+                                color: styleFeature.attributeColor !== "" ? featureProperties[styleFeature.attributeColor] : styleFeature.color,
+                                fillOpacity: styleFeature.fillOpacity,
+                                weight: styleFeature.weight
+                            };
+                        }
+                    } else {
+                        return {
+                        fillColor: styleFeature.attributeFillColor !== "" ? featureProperties[styleFeature.attributeFillColor] : styleFeature.fillColor,
+                        color: styleFeature.attributeColor !== "" ? featureProperties[styleFeature.attributeColor] : styleFeature.color,
+                        fillOpacity: styleFeature.fillOpacity,
+                        weight: styleFeature.weight
+                    };
+                }
+                } else {
+                    return {
+                    fillColor: styleFeature.attributeFillColor !== "" ? featureProperties[styleFeature.attributeFillColor] : styleFeature.fillColor,
+                    color: styleFeature.attributeColor !== "" ? featureProperties[styleFeature.attributeColor] : styleFeature.color,
+                    fillOpacity: styleFeature.fillOpacity,
+                    weight: styleFeature.weight
+                };
+            }
+            }
+        }
+        else {
+            return {
             fillColor: styleFeature.attributeFillColor !== "" ? featureProperties[styleFeature.attributeFillColor] : styleFeature.fillColor,
             color: styleFeature.attributeColor !== "" ? featureProperties[styleFeature.attributeColor] : styleFeature.color,
             fillOpacity: styleFeature.fillOpacity,
             weight: styleFeature.weight
         };
+    }
+        
     };
 
     // Customize the popup
@@ -291,6 +347,7 @@ export default function Localisation() {
                 // Number of tents reserved
                 let featurePropertiesNbTentsReserved = "";
                 let textNbTentsReserved = "";
+
                 let datesReserved = [momentInfoDate.format('YYYY-MM-DD')];
                 if (infoItinerance === "true") {
                     datesReserved.push(momentInfoDate.clone().add(1, 'days').format('YYYY-MM-DD'));
@@ -302,20 +359,14 @@ export default function Localisation() {
                         let datesNbTentsZoningDate = Object.keys(nbTentsZoningDate[featurePropertiesNom]);
                         if (datesNbTentsZoningDate.includes(dateReserved)) {
                             let finalNbTents = nbTentsZoningDate[featurePropertiesNom][dateReserved];
-                            if (finalNbTents < minTentsReserved) {
-                                finalNbTents = minTentsReserved
-                            }
-                            // Round to the next 5
-                            else {
-                                finalNbTents = Math.ceil(parseFloat(finalNbTents) / 5) * 5;
-                            }
-
+                            let estimatedTents = Math.ceil(parseFloat(finalNbTents) / 5) * 5;
+                              
                             // Quota reached
                             if (finalNbTents >= featurePropertiesQuotas) {
                                 textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")}</p>`;
                             }
                             else {
-                                textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Less than")} ${finalNbTents} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}</p>`;
+                                textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Less than")} ${estimatedTents} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}</p>`;
                             }
                         } else {
                             textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Less than")} ${minTentsReserved} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}</p>`;
@@ -480,23 +531,49 @@ export default function Localisation() {
 
     // Legend map
     const MapLegend = () => {
-        return (
-            <div className="legend-container">
-             <div className="legend-row-container">
-                <p className="legend-row-symbol legend-row-symbol-limite-reserve-naturelle"></p>
-                <p className="legend-row-text">{t("Localisation Content.Legend.row1")}</p>
-             </div>
-             <div className="legend-row-container">
-                <p className="legend-row-symbol legend-row-symbol-non-reservable"></p>
-                <p className="legend-row-text">{t("Localisation Content.Legend.row2")}</p>
-             </div>
-             <div className="legend-row-container">
-                <p className="legend-row-symbol legend-row-symbol-tolere-reservable"></p>
-                <p className="legend-row-text">{t("Localisation Content.Legend.row3")}</p>
-             </div>
+        { console.log(completeArea) }
+        if (completeArea === true) {
+            return (
+                <div className="legend-container">
+                <div className="legend-row-container">
+                    <p className="legend-row-symbol legend-row-symbol-limite-reserve-naturelle"></p>
+                    <p className="legend-row-text">{t("Localisation Content.Legend.row1")}</p>
+                </div>
+                <div className="legend-row-container">
+                    <p className="legend-row-symbol legend-row-symbol-non-reservable"></p>
+                    <p className="legend-row-text">{t("Localisation Content.Legend.row2")}</p>
+                </div>
+                <div className="legend-row-container">
+                    <p className="legend-row-symbol legend-row-symbol-tolere-reservable"></p>
+                    <p className="legend-row-text">{t("Localisation Content.Legend.row3")}</p>
+                </div>
+                <div className="legend-row-container">
+                    <p className="legend-row-symbol legend-row-symbol-tolere-complet"></p>
+                    <p className="legend-row-text">{t("Localisation Content.Legend.row4")}</p>
+                </div>
 
-            </div>
-        );
+                </div>
+            );
+        } else {
+            return (
+                <div className="legend-container">
+                <div className="legend-row-container">
+                    <p className="legend-row-symbol legend-row-symbol-limite-reserve-naturelle"></p>
+                    <p className="legend-row-text">{t("Localisation Content.Legend.row1")}</p>
+                </div>
+                <div className="legend-row-container">
+                    <p className="legend-row-symbol legend-row-symbol-non-reservable"></p>
+                    <p className="legend-row-text">{t("Localisation Content.Legend.row2")}</p>
+                </div>
+                <div className="legend-row-container">
+                    <p className="legend-row-symbol legend-row-symbol-tolere-reservable"></p>
+                    <p className="legend-row-text">{t("Localisation Content.Legend.row3")}</p>
+                </div>
+
+                </div>
+            );
+        }
+        
       };
 
     // Centroids on areas tolerated in the Contamines area (not very visible)

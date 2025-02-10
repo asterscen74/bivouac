@@ -32,7 +32,8 @@
         "Legend": {
             "row1": "Edge of the nature reserve, bivouacs not recommended (except in specific areas).",
             "row2": "Bivouac prohibited, non bookable area",
-            "row3": "Bivouacs tolerated, reservable area"
+            "row3": "Bivouacs tolerated, reservable area",
+            "row4": "Bivouacs tolerated, complete area for this date"
         }
     },
     "Next step": "Next Step",

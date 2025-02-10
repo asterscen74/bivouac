@@ -72,7 +72,7 @@ export const quizz = createSlice({
                             ],
                             "isRequired": true,
                             "correctAnswer": "le contempler et ne pas me baigner.",
-                            "infos": "Les lacs d'altitude sont des écosystèmes sensibles aux apports extérieurs (crème solaire, dentifrice...)mis en péril lorsque l’eau est troublée par des actions humaines, nuisant à l’oxygénation nécessaire à leur survie. . Ne rien y tremper, c'est les préserver ! Quant à la pêche, un permis de pêche est obligatoire (on parle bien de pêche avec une canne, reposez ce bâton de dynamite…)."
+                            "infos": "Les lacs d'altitude sont des écosystèmes sensibles aux apports extérieurs (crème solaire, dentifrice...)et ils sont mis en péril lorsque l’eau est troublée par des actions humaines. Ne rien y tremper, c'est les préserver ! Quant à la pêche, un permis de pêche est obligatoire (on parle bien de pêche avec une canne, reposez ce bâton de dynamite…)."
                         }
                     ]
                 },

@@ -36,7 +36,7 @@ export const infos = createSlice({
                 {
                     "name": "fr_or_foreign",
                     "type": "dropdown",
-                    "title": "France ou étranger",
+                    "title": "Pays de résidence",
                     "maxLength": 25,
                     "isRequired": true,
                     "choices": [ "France", "Étranger" ]
