@@ -31,8 +31,8 @@ Dans ce fichier, sont définies les variables suivantes :
 - `POSTGRES_DB` : Nom de la base de données
 - `POSTGRES_HOST` : Adresse de la base de données
 - `POSTGRES_PORT` : Port utilisé par la base de données
-- `API_FLASK_SERVER_HOST` : Adresse de l'API
-- `API_FLASK_SERVER_PORT` : Port de l'API lorsqu'elle est lancée en mode production
+- `API_FASTAPI_SERVER_HOST` : Adresse de l'API
+- `API_FASTAPI_SERVER_PORT` : Port de l'API lorsqu'elle est lancée en mode production
 - `API_OPENAPI_URL` : Chemin vers le fichier openapi.json
 - `API_DOCS_URL` : Chemin vers la documentation Swagger
 - `FRONT_PORT` : Port utilisé par l'application React
