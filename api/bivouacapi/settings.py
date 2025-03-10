@@ -44,7 +44,7 @@ class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
 
 @lru_cache
 def get_settings() -> Settings:
-    return Settings(".env")
+    return Settings()
 
 
 settings = get_settings()
@@ -58,6 +58,5 @@ MAP_LAYERS_ENUM = Enum(
     [
         ("aires_de_protection", "aires_de_protection"),
         ("zonage_bivouac", "zonage_bivouac"),
-        ("reservations", "reservations"),
     ],
 )

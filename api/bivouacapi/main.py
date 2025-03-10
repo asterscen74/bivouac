@@ -147,7 +147,7 @@ async def create_reservation(
         department = department_reservation.replace("'", " ")
     else:
         department = None
-    itinerance_reservation = request.itinerance
+
     locations_reservation = request.locations
     quizz_note_reservation = request.quizz_note
     if quizz_note_reservation:
@@ -162,9 +162,9 @@ async def create_reservation(
 
     try:
         query = f"""
-            INSERT INTO public.reservations(nb_tents,nb_people,email,fr_or_foreign,department,itinerance,quizz_note)
+            INSERT INTO public.reservations(nb_tents,nb_people,email,fr_or_foreign,department,quizz_note)
             VALUES({nb_tents_reservation},{nb_people_reservation},'{email}','{fr_or_foreign_reservation}',
-            '{department}','{itinerance_reservation}', '{comment}' )
+            '{department}', '{comment}' )
             RETURNING id
             """
         result = db.execute(text(query))
@@ -238,23 +238,15 @@ async def create_reservation(
 )
 async def get_number_tents_date_bivouac_zoning(
     start_date,
-    itinerance: bool,
     db: Session = Depends(get_db),
 ):
     """Get the number of tents by date and bivouac zoning
 
     - **start_date**: starting date
-    - **fields**: reservation with itinerance or not
     """
     logger.info("get_number_tents_date_bivouac_zoning")
     try:
-
-        if itinerance:
-            query_where_part = f"""WHERE date BETWEEN '{start_date}'::date
-            AND '{start_date}'::date + INTERVAL '2 DAY'"""
-        else:
-            query_where_part = f"WHERE date = '{start_date}'::date"
-
+        query_where_part = f"WHERE date = '{start_date}'::date"
         query = f"""
                 SELECT loc.date, loc.name_bivouac_zoning,
                 SUM(reservations.nb_tents) AS nb_tents

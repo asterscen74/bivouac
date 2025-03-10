@@ -153,16 +153,6 @@ export const infos = createSlice({
                         ],
                     "visibleIf": "{fr_or_foreign} = France",
                 },
-                {
-                    "name": "itinerance",
-                    "type": "boolean",
-                    "title": "Option en itinérance : Êtes-vous en randonnée itinérante, sur plusieurs jours ?",
-                    "maxLength": 25,
-                    "isRequired": true,
-                    "valueTrue": "Yes",
-                    "valueFalse": "No",
-                    "defaultValue": "false",
-                }
             ],
             "showQuestionNumbers": false
         },
@@ -316,16 +306,6 @@ export const infos = createSlice({
                         ],
                     "visibleIf": "{fr_or_foreign} = France",
                 },
-                {
-                    "name": "itinerance",
-                    "type": "boolean",
-                    "title": "Roaming option : Are you on a multi-day tour ?",
-                    "maxLength": 25,
-                    "isRequired": true,
-                    "valueTrue": "Yes",
-                    "valueFalse": "No",
-                    "defaultValue": "false",
-                }
             ],
             "showQuestionNumbers": false
         },
@@ -479,16 +459,6 @@ export const infos = createSlice({
                         ],
                     "visibleIf": "{fr_or_foreign} = Francia",
                 },
-                {
-                    "name": "itinerance",
-                    "type": "boolean",
-                    "title": "Opzione roaming : state facendo un tour di più giorni",
-                    "maxLength": 25,
-                    "isRequired": true,
-                    "valueTrue": "Yes",
-                    "valueFalse": "No",
-                    "defaultValue": "false",
-                }
             ],
             "showQuestionNumbers": false
         }

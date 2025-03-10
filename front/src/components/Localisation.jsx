@@ -34,7 +34,6 @@ export default function Localisation() {
     let resultsInfosData = resultsData.infos
     const infoDate = resultsInfosData.date;
     const momentInfoDate = moment(infoDate);
-    const infoItinerance = resultsInfosData.itinerance === "Yes" ? "true" : "false";
     const previousPage = "informations";
     let resultsLocalisationData = resultsData.localisation;
     let resultsNbTentsZoningDate = resultsData.nb_tents_zoning_date;
@@ -74,9 +73,9 @@ export default function Localisation() {
             navigate("/reservation-bivouac/" + previousPage);
         }
 
-        const fetchNbTentsZoningDate = async (start_date, itinerance) => {
+        const fetchNbTentsZoningDate = async (start_date) => {
             try {
-                let urlSource = `${api_url}reservations/?start_date=${start_date}&itinerance=${itinerance}`;
+                let urlSource = `${api_url}reservations/?start_date=${start_date}`;
                 const response = await fetch(urlSource);
                 if (response.status === 200) {
                     const data = await response.json();
@@ -94,19 +93,11 @@ export default function Localisation() {
             }
         };
 
-        // If roaming status changed, check number of locations
-        // Cannot exceed 1 if there is no roaming
-        if (infoItinerance === "false" && locationData.length > 1) {
-            const newLocationData = locationData.slice(0, 1);
-            setLocationData(newLocationData);
-
-        }
-
         if (infoDate) {
-            fetchNbTentsZoningDate(infoDate, infoItinerance);
+            fetchNbTentsZoningDate(infoDate);
         }
 
-    }, [resultsInfosData, infoItinerance]);
+    }, [resultsInfosData]);
 
     // Bivouac site undefined
     useEffect(() => {
@@ -207,7 +198,7 @@ export default function Localisation() {
         let nextPage = event.target.name;
         const localisationData = store.getState().results.localisation;
         const nbLocations = localisationData.locations.length
-        if (nbLocations === 0 || (nbLocations === 1 && infoItinerance === "true")) {
+        if (nbLocations === 0) {
             setDisplayAlert(true);
         } else {
             setDisplayAlert(false);
@@ -263,15 +254,8 @@ export default function Localisation() {
         const featurePropertiesNom = featureProperties["nom"];
         const featurePropertiesQuotas = featureProperties["quotas"];
         if (featurePropertiesBivouac === "Toléré") {
-            let featurePropertiesNbTentsReserved = "";
-            let textNbTentsReserved = "";
             let datesReserved = [momentInfoDate.format('YYYY-MM-DD')];
-            if (infoItinerance === "true") {
-                datesReserved.push(momentInfoDate.clone().add(1, 'days').format('YYYY-MM-DD'));
-                datesReserved.push(momentInfoDate.clone().add(2, 'days').format('YYYY-MM-DD'));
-            }
             for (const dateReserved of datesReserved) {
-                let dateReservedFormatted = moment(dateReserved).format('DD/MM/YYYY');
                 if (featurePropertiesNom in nbTentsZoningDate) {
                     let datesNbTentsZoningDate = Object.keys(nbTentsZoningDate[featurePropertiesNom]);
                     if (datesNbTentsZoningDate.includes(dateReserved)) {
@@ -283,8 +267,8 @@ export default function Localisation() {
                                 color: "rgba(255, 165, 0, 1)",
                                 fillOpacity: styleFeature.fillOpacity,
                                 weight: styleFeature.weight
-                            }; 
-                        } 
+                            };
+                        }
                         else {
                                 return {
                                 fillColor: styleFeature.attributeFillColor !== "" ? featureProperties[styleFeature.attributeFillColor] : styleFeature.fillColor,
@@ -319,7 +303,7 @@ export default function Localisation() {
             weight: styleFeature.weight
         };
     }
-        
+
     };
 
     // Customize the popup
@@ -349,10 +333,6 @@ export default function Localisation() {
                 let textNbTentsReserved = "";
 
                 let datesReserved = [momentInfoDate.format('YYYY-MM-DD')];
-                if (infoItinerance === "true") {
-                    datesReserved.push(momentInfoDate.clone().add(1, 'days').format('YYYY-MM-DD'));
-                    datesReserved.push(momentInfoDate.clone().add(2, 'days').format('YYYY-MM-DD'));
-                }
                 for (const dateReserved of datesReserved) {
                     let dateReservedFormatted = moment(dateReserved).format('DD/MM/YYYY');
                     if (featurePropertiesNom in nbTentsZoningDate) {
@@ -360,7 +340,7 @@ export default function Localisation() {
                         if (datesNbTentsZoningDate.includes(dateReserved)) {
                             let finalNbTents = nbTentsZoningDate[featurePropertiesNom][dateReserved];
                             let estimatedTents = Math.ceil(parseFloat(finalNbTents) / 5) * 5;
-                              
+
                             // Quota reached
                             if (finalNbTents >= featurePropertiesQuotas) {
                                 textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")}</p>`;
@@ -531,7 +511,6 @@ export default function Localisation() {
 
     // Legend map
     const MapLegend = () => {
-        { console.log(completeArea) }
         if (completeArea === true) {
             return (
                 <div className="legend-container">
@@ -573,7 +552,7 @@ export default function Localisation() {
                 </div>
             );
         }
-        
+
       };
 
     // Centroids on areas tolerated in the Contamines area (not very visible)
@@ -616,7 +595,7 @@ export default function Localisation() {
         iconSize: [40, 40]
     });
 
-    
+
 
     return (
         <>
