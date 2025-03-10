@@ -1,14 +1,14 @@
 -- Add sample data
 -- sample data : reservations table
-INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "itinerance", "quizz_note") VALUES (2, 1, 'test@test.com', 'Étranger', 'None', 't', 'top');
-INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "itinerance", "quizz_note") VALUES (2, 1, 'test@test.com', 'Étranger', 'None', 't', 'top');
-INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "itinerance", "quizz_note") VALUES (2, 1, 'test@test.com', 'Étranger', 'None', 't', 'top');
-INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "itinerance", "quizz_note") VALUES (2, 1, 'test@test.com', 'Étranger', 'None', 't', 'top');
-INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "itinerance", "quizz_note") VALUES (2, 1, 'test@test.com', 'Étranger', 'None', 't', 'top');
-INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "itinerance", "quizz_note") VALUES (1, 1, 'test@test.com', 'France', 'Ardèche', 't', 'None');
-INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "itinerance", "quizz_note") VALUES (6, 1, 'test@test.com', 'France', 'Aveyron', 't', 'None');
-INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "itinerance", "quizz_note") VALUES (13, 13, 'test@test.com', 'Étranger', 'None', 't', 'cool');
-INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "itinerance", "quizz_note") VALUES (7, 1, 'test@test.com', 'Étranger', 'None', 't', 'cool');
+INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "quizz_note") VALUES (2, 1, 'test@test.com', 'Étranger', 'None', 'top');
+INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "quizz_note") VALUES (2, 1, 'test@test.com', 'Étranger', 'None', 'top');
+INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "quizz_note") VALUES (2, 1, 'test@test.com', 'Étranger', 'None', 'top');
+INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "quizz_note") VALUES (2, 1, 'test@test.com', 'Étranger', 'None', 'top');
+INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "quizz_note") VALUES (2, 1, 'test@test.com', 'Étranger', 'None', 'top');
+INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "quizz_note") VALUES (1, 1, 'test@test.com', 'France', 'Ardèche', 'None');
+INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "quizz_note") VALUES (6, 1, 'test@test.com', 'France', 'Aveyron', 'None');
+INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "quizz_note") VALUES (13, 13, 'test@test.com', 'Étranger', 'None', 'cool');
+INSERT INTO "public"."reservations" ("nb_tents", "nb_people", "email", "fr_or_foreign", "department", "quizz_note") VALUES (7, 1, 'test@test.com', 'Étranger', 'None', 'cool');
 -- sample data : reservations_locations table
 INSERT INTO "public"."reservations_locations" ("geom" , "reservation", "date", "name_bivouac_zoning") VALUES ('0101000020E610000001000000A0EA1A405099BE4B19E04640', 1, '2024/05/18', 'Les Lacs Jovet');
 INSERT INTO "public"."reservations_locations" ("geom" , "reservation", "date", "name_bivouac_zoning") VALUES ('0101000020E610000001000000A0EA1A405099BE4B19E04640', 2, '2024/05/18', 'Les Lacs Jovet');

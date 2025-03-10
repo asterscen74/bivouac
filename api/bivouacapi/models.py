@@ -16,6 +16,5 @@ class PostReservation(BaseModel):
     email: str
     fr_or_foreign: str
     department: Optional[str] = None
-    itinerance: bool
     locations: List[List[float]]
     quizz_note: Optional[str] = None
