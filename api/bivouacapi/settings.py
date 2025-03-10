@@ -44,7 +44,7 @@ class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
 
 @lru_cache
 def get_settings() -> Settings:
-    return Settings(".env")
+    return Settings()
 
 
 settings = get_settings()
