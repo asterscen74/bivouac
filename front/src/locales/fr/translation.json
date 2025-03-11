@@ -56,11 +56,12 @@
     "Incomplete quiz": "Le quizz n'a pas été correctement rempli",
     "Last question quiz": "Une remarque sur notre outil ?",
     "Select the correct answer": "Vous devez sélectionner la bonne réponse pour passer à la question suivante",
+    "Modify reservation": "Modifier la réservation",
     "Confirm reservation": "Confirmer la réservation",
     "Reservation confirmed": "Réservation confirmée",
-    "Reservation not confirmed": "Réservation non confirmée",
+    "Reservation awaiting confirmation": "Réservation en attente de confirmation",
     "Registration error": "Erreur lors de l'enregistrement des informations saisies. Merci de réessayer ultérieurement ou contactez-nous si le problème persiste.",
-    "Summary sent": "Votre réservation vient de vous être envoyé par mail. Elle sera à présenter aux gardes de la réserve naturelle. Vous ne l'avez pas reçu ? Vérifiez dans vos spams et contactez-nous. Merci d'avoir pris le temps de répondre ! ",
+    "Summary sent": "Votre réservation vient de vous être envoyée par mail. Elle sera à présenter aux gardes de la réserve naturelle. Vous ne l'avez pas reçu ? Vérifiez dans vos spams et contactez-nous. Merci d'avoir pris le temps de répondre ! ",
     "This website uses cookies to enhance the user experience": "Nous utilisons des cookies sur notre site pour améliorer votre expérience de navigation. Si vous souhaitez en savoir plus, vous pouvez consulter nos mentions légales.",
     "I understand": "Je comprends"
 }

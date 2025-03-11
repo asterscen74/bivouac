@@ -8,23 +8,14 @@ import AlertTitle from '@mui/material/AlertTitle';
 import QuizzComponent from "./QuizzComponent";
 import store from "../store";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateReservation } from "../stores/Results";
-import api_url from "../settings-server.js";
-import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Quizz() {
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const dispatch = useDispatch();
     const numberAnswersExpected = 6;
     const [displayAlert, setDisplayAlert] = useState(
         false
     );
-    const [saveReservation, setSaveReservation] = useState(
-        false
-    );
-    const [displayCircularProgress, setDisplayCircularProgress] = useState(false);
     const nameNextPage = "thanks";
     let resultsData = store.getState().results;
     let resultsInfosData = resultsData.infos;
@@ -45,52 +36,6 @@ export default function Quizz() {
         }, 7500);
       }, [displayAlert]);
 
-    useEffect(() => {
-        // Save survey data in the database and send the summary by e-mail
-        async function submitSurvey(data) {
-            const dataInfos = data.infos;
-            const dataLocalisation = data.localisation;
-            const dataQuizz = data.quizz;
-            const dataQuizzLastQuestion = dataQuizz[t("Last question quiz")];
-            const bodyInfos = JSON.stringify(dataInfos);
-            const bodyLocalisation = JSON.stringify(dataLocalisation);
-            const bodyQuizz = JSON.stringify({"quizz_note": dataQuizzLastQuestion});
-            let body = JSON.stringify({ ...JSON.parse(bodyInfos), ...JSON.parse(bodyLocalisation), ...JSON.parse(bodyQuizz)});
-            const headers = new Headers();
-            headers.append('Content-Type', 'application/json');
-            const response = await fetch(api_url + 'reservations/?send_summary=true', {
-                method: 'POST',
-                mode: 'cors',
-                body: body,
-                headers: headers,
-            })
-
-            if (response.status !== 200) {
-                dispatch(updateReservation({
-                    status: false,
-                    output_message: "Registration error"
-                }))
-            }
-            else {
-                const responseData = await response.json()
-                dispatch(updateReservation({
-                    status: true,
-                    output_message: responseData.content
-                }))
-            }
-            navigate("/reservation-bivouac/" + nameNextPage)
-            setDisplayCircularProgress(false);
-
-        }
-
-        // Save the booking
-        if (saveReservation === true) {
-            const resultsData = store.getState().results;
-            submitSurvey(resultsData);
-        }
-
-    }, [saveReservation, dispatch, navigate, t]);
-
     const previousStep = (event) => {
         let nextPage = event.target.name;
         navigate("/reservation-bivouac/" + nextPage);
@@ -102,11 +47,8 @@ export default function Quizz() {
             setDisplayAlert(true);
         } else {
             setDisplayAlert(false);
-            setDisplayCircularProgress(true);
-            setSaveReservation(true);
+            navigate("/reservation-bivouac/" + nameNextPage)
         }
-        // // // comment above and uncomment below to move through the steps quickly without filling in the form or using routing
-        // setSaveReservation(true);
     };
 
     return (
@@ -126,18 +68,12 @@ export default function Quizz() {
             </Alert>}
 
             <Box sx={{ display: 'flex', flexDirection: 'row-reverse', p: 2}}>
-                {/* Awaiting response from api */}
-                {displayCircularProgress &&
-                <Box sx={{ display: 'flex', marginLeft: '10px', alignItems: 'center' }}>
-                    <CircularProgress sx={{ color: '#76B72A '}} />
-                </Box>
-                }
                 <Button
                     variant="outlined"
                     onClick={nextStep}
                     name="thanks"
                 >
-                    {t("Confirm reservation")}
+                    {t("Next step")}
                 </Button>
                 <Button
                     variant="outlined"
