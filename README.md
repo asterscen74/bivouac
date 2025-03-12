@@ -41,6 +41,7 @@ Dans ce fichier, sont définies les variables suivantes :
 - `SMTP_LOGIN` : Identifiant de l'utilisateur
 - `SMTP_PASSWORD` : Mot de passe associé à l'utilisateur
 - `SMTP_SENDER_EMAIL` : Adresse e-mail de l'expéditeur
+- `WEBSITE_DOMAIN` : Url de la plateforme de réservation
 
 Afin de garantir une qualité entre les différentes contributions, une série de _git hooks_ (à travers l'outil [pre-commit](https://pre-commit.com/)) est disponible.
 
