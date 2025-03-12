@@ -27,7 +27,7 @@ export default function Cancel() {
             const body = JSON.stringify({ ...JSON.parse(bodyUuid), ...JSON.parse(bodyEmail) });
             const headers = new Headers();
             headers.append('Content-Type', 'application/json');
-            const response = await fetch(api_url + 'reservations/cancel/', {
+            const response = await fetch(api_url + 'reservations/cancel', {
                 method: 'POST',
                 mode: 'cors',
                 body: body,
