@@ -23,6 +23,7 @@ import GoodPractices from './components/GoodPractices';
 import BivouacDeclaration from './components/BivouacDeclaration';
 import LegalNotices from './components/LegalNotices';
 import NatureReserve from './components/NatureReserve';
+import Cancel from './components/Cancel';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -39,6 +40,7 @@ root.render(
                 <Route path='localisation' element={<Localisation />}/>
                 <Route path='quizz' element={<Quizz />}/>
                 <Route path='thanks' element={<Thanks />}/>
+                <Route path="cancel/:uuid" element={<Cancel />} />
                 <Route path="*" element={<BivouacDeclaration />} />
               </Route>
               <Route path="/reserve-naturelle-haute-savoie" exact element={<NatureReserve />} />

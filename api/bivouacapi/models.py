@@ -18,3 +18,12 @@ class PostReservation(BaseModel):
     department: Optional[str] = None
     locations: List[List[float]]
     quizz_note: Optional[str] = None
+
+
+class PostCancelReservation(BaseModel):
+    """
+    Parameters to cancel reservation
+    """
+
+    uuid: str
+    email: str

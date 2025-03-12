@@ -34,6 +34,7 @@ class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
     SMTP_LOGIN: str = Field(..., validation_alias="SMTP_LOGIN")
     SMTP_PASSWORD: str = Field(..., validation_alias="SMTP_PASSWORD")
     SMTP_SENDER_EMAIL: str = Field(..., validation_alias="SMTP_SENDER_EMAIL")
+    WEBSITE_DOMAIN: str = Field(..., validation_alias="WEBSITE_DOMAIN")
     openapi_url: str = Field(
         default="/docs/openapi.json", validation_alias="API_OPENAPI_URL"
     )

@@ -48,8 +48,10 @@ async def check_locations_argument(locations: list[list[float]]):
     )
 
 
-async def send_summary_mail(receiver_email, pdf_attachment):
-    """Send the summary of the reservation by e-mail"""
+async def send_summary_mail(receiver_email, cancel_url, pdf_attachment):
+    """Send the summary of the reservation by e-mail
+    and add the cancellation link
+    """
     logger.info("send_summary_mail method")
     try:
         # SMTP configuration
@@ -60,18 +62,20 @@ async def send_summary_mail(receiver_email, pdf_attachment):
         sender_email = settings.SMTP_SENDER_EMAIL
         receiver_email = receiver_email
 
-        text = """
+        text = f"""
 Bonjour,
 Voici votre réservation en pièce jointe ainsi que toutes les bonnes pratiques à adopter pour une nuit à la belle étoile en réserve naturelle.
 Conservez ce document, il vous sera demandé par les gardes de la réserve naturelle.
 L'équipe des réserves naturelles de Haute-Savoie vous souhaite une bonne nuit !
 Une question ? bivouac@cen-haute-savoie.org
+Pour annuler votre réservation : {cancel_url}
 
 Hello,
 Here is your bivouac registration and a summary of best practices for your time out in the nature reserve.
 Please save a copy of this document, as you may be asked to display it to rangers
 The Haute Savoie nature reserves team wishes you a pleasant night!
 For further information: bivouac@cen-haute-savoie.org
+To cancel your booking : {cancel_url}
         """
 
         message = MIMEMultipart()
