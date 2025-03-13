@@ -252,9 +252,11 @@ async def get_number_tents_date_bivouac_zoning(
     """
     logger.info("get_number_tents_date_bivouac_zoning")
     try:
-        query_where_part = (
-            f"WHERE reservations.annule is false AND date = '{start_date}'::date"
-        )
+        query_where_part = f"""
+            WHERE reservations.annule is false
+            AND date BETWEEN '{start_date}'::date
+            AND '{start_date}'::date + INTERVAL '1 DAY'
+        """
         query = f"""
                 SELECT loc.date, loc.name_bivouac_zoning,
                 SUM(reservations.nb_tents) AS nb_tents

@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import { MapContainer, GeoJSON, TileLayer, useMap, Marker, CircleMarker, LayersControl } from 'react-leaflet';
+import { MapContainer, GeoJSON, TileLayer, useMap, Marker, LayersControl } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
@@ -19,6 +19,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import moment from 'moment';
 import * as turf from '@turf/turf';
+import { ListSubheader } from '@mui/material';
+import zoomLocation from '../assets/img/zoom_location.svg';
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -37,17 +39,17 @@ export default function Localisation() {
     const previousPage = "informations";
     let resultsLocalisationData = resultsData.localisation;
     let resultsNbTentsZoningDate = resultsData.nb_tents_zoning_date;
-    const [maxLocations, setMaxLocations] = useState(undefined);
+    const maxLocations = 2;
     const [nbTentsZoningDate, setNbTentsZoningDate] = useState(resultsNbTentsZoningDate);
     const minTentsReserved = 10;
 
     let mapData = store.getState().map.initialDisplay;
     const mapDataDefaultLayers = mapData.defaultLayers;
     const mapDataDefaultBaseLayers = mapData.defaultBaseLayers;
-    const mapDataDefaultSites = mapData.defaultSites;
+    const mapDataDefaultSitesZones = mapData.defaultSitesZones;
     var completeArea = false;
 
-    const [defaultSite, setDefaultSite] = useState("");
+    const [defaultSiteZone, setDefaultSiteZone] = useState("");
     const [enableAddLocation, setEnableAddLocation] = useState(false);
     const [geojsonData, setGeojsonData] = useState({});
     const [locationData, setLocationData] = useState(resultsLocalisationData.locations);
@@ -208,16 +210,6 @@ export default function Localisation() {
         // let nextPage = event.target.name;
         // navigate("/reservation-bivouac/" + nextPage)
     };
-
-
-    // Define the maximum number of locations based on the roaming (itinerance) entry
-    useEffect(() => {
-        if (resultsInfosData.itinerance === "Yes") {
-            setMaxLocations(3);
-        } else {
-            setMaxLocations(1);
-        }
-    }, [maxLocations, resultsInfosData])
 
     // Add the default layers
     useEffect(() => {
@@ -388,45 +380,84 @@ export default function Localisation() {
         }
     }
 
-    // Zoom to a site
-    const ZoomToSite = () => {
+    // Zoom to a site or zone
+    const ZoomToSiteZone = () => {
         const map = useMap();
 
-        const handleSiteChange = (e) => {
-            const siteName = e.target.value;
-            const siteAttributes = Object.values(mapDataDefaultSites).find(site => site.name === siteName);
-            if (siteAttributes) {
-                map.setView(siteAttributes.center, siteAttributes.zoom);
-                setDefaultSite(siteName);
+        const handleLocationChange = (e) => {
+            const locationName = e.target.value;
+            const locationAttributes = Object.values(mapDataDefaultSitesZones).find(loc => loc.name === locationName);
+            if (locationAttributes) {
+                map.setView(locationAttributes.center, locationAttributes.zoom);
+                setDefaultSiteZone(locationName);
             }
         };
 
         return (
-            <FormControl fullWidth sx={{
-                zIndex: 1000
-            }}>
-              <Select
-                id="demo-simple-select"
-                value={defaultSite}
-                displayEmpty
-                onChange={handleSiteChange}
-                sx={{
-                    backgroundColor: "white",
-                    height: 30,
-                    top: 10
+            <FormControl fullWidth sx={{ zIndex: 1000 }}>
+                <Select
+                    id="site-zone-select"
+                    value={defaultSiteZone}
+                    displayEmpty
+                    onChange={handleLocationChange}
+                    sx={{
+                        backgroundColor: "white",
+                        height: 30,
+                        top: 10,
+                    }}
+                    MenuProps={{
+                    PaperProps: {
+                        style: {
+                            maxHeight: 200,
+                            overflowY: 'auto',
+                            width: '250px',
+                        },
+                    },
+                    anchorOrigin: {
+                        vertical: 'top',
+                        horizontal: 'right',
+                    },
+                    transformOrigin: {
+                        vertical: 'top',
+                        horizontal: 'right',
+                    },
                 }}
-              >
-                <MenuItem value="">
-                <em>{t("Select site")}</em>
-                </MenuItem>
-                {Object.keys(mapDataDefaultSites).map((siteName, index) => (
-                    <MenuItem key={index} value={mapDataDefaultSites[siteName].name}>{mapDataDefaultSites[siteName].name}</MenuItem>)
-                )}
-              </Select>
-            </FormControl>
+                >
+                    <MenuItem value="">
+                        <em>{t("Select site/zone")}</em>
+                    </MenuItem>
 
+                    <ListSubheader>{t("Sites")}</ListSubheader>
+                    {Object.keys(mapDataDefaultSitesZones)
+                        .filter((location) => mapDataDefaultSitesZones[location].type === "site")
+                        .map((locationName, index) => (
+                            <MenuItem key={index} value={mapDataDefaultSitesZones[locationName].name}
+                                                        sx={{
+                                whiteSpace: 'normal',
+                                wordWrap: 'break-word',
+                                overflow: 'hidden',
+                            }}>
+                                {mapDataDefaultSitesZones[locationName].name}
+                            </MenuItem>
+                        ))}
+
+
+                    <ListSubheader>{t("Zones")}</ListSubheader>
+                    {Object.keys(mapDataDefaultSitesZones)
+                        .filter((location) => mapDataDefaultSitesZones[location].type === "zone")
+                        .map((locationName, index) => (
+                            <MenuItem key={index} value={mapDataDefaultSitesZones[locationName].name} sx={{
+                                whiteSpace: 'normal',
+                                wordWrap: 'break-word',
+                                overflow: 'hidden',
+                            }} >
+                                {mapDataDefaultSitesZones[locationName].name}
+                            </MenuItem>
+                        ))}
+                </Select>
+            </FormControl>
         );
-      };
+    };
 
     // Add a location
     const AddLocation = () => {
@@ -511,53 +542,67 @@ export default function Localisation() {
 
     // Legend map
     const MapLegend = () => {
-        if (completeArea === true) {
-            return (
-                <div className="legend-container">
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-limite-reserve-naturelle"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row1")}</p>
-                </div>
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-non-reservable"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row2")}</p>
-                </div>
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-tolere-reservable"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row3")}</p>
-                </div>
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-tolere-complet"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row4")}</p>
-                </div>
+        const map = useMap();
+        const [zoom, setZoom] = useState(map.getZoom());
 
-                </div>
-            );
-        } else {
-            return (
-                <div className="legend-container">
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-limite-reserve-naturelle"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row1")}</p>
-                </div>
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-non-reservable"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row2")}</p>
-                </div>
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-tolere-reservable"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row3")}</p>
-                </div>
+        useEffect(() => {
+            const handleZoom = () => {
+                setZoom(map.getZoom());
+            };
 
-                </div>
-            );
+            map.on('zoomend', handleZoom);
+
+            return () => {
+                map.off('zoomend', handleZoom);
+            };
+        }, [map]);
+
+        const legendItems = [
+            {
+                className: "legend-row-symbol-limite-reserve-naturelle",
+                text: t("Localisation Content.Legend.row1")
+            },
+            {
+                className: "legend-row-symbol-non-reservable",
+                text: t("Localisation Content.Legend.row2")
+            },
+            {
+                className: "legend-row-symbol-tolere-reservable",
+                text: t("Localisation Content.Legend.row3")
+            }
+        ];
+
+        // Additional elements added if completeArea is true
+        if (completeArea) {
+            legendItems.push({
+                className: "legend-row-symbol-tolere-complet",
+                text: t("Localisation Content.Legend.row4")
+            });
         }
 
-      };
+        //  Display only if zoom is lower or greater than 16
+        if (zoom <= 16) {
+            legendItems.push({
+                className: "legend-row-symbol-small-area",
+                text: t("Localisation Content.Legend.row5")
+            });
+        }
+
+        return (
+            <div className="legend-container">
+                {legendItems.map((item, index) => (
+                    <div key={index} className="legend-row-container">
+                        <p className={`legend-row-symbol ${item.className}`}></p>
+                        <p className="legend-row-text">{item.text}</p>
+                    </div>
+                ))}
+            </div>
+        );
+    };
 
     // Centroids on areas tolerated in the Contamines area (not very visible)
     const centroidesContaminesZonesTolerees = mapData.centroidesContaminesZonesTolerees;
-    const DynamicCircleMarkersCentroidsContaminesZonesTolerees = ( points ) => {
+    const DynamicIconMarkersCentroidsContaminesZonesTolerees = (points) => {
         const map = useMap();
         const [zoom, setZoom] = useState(map.getZoom());
 
@@ -572,19 +617,37 @@ export default function Localisation() {
             };
         }, [map]);
 
+
+        const calculateIconSizeAndAnchor = (zoomLevel) => {
+            console.log(zoomLevel)
+            const iconSize = 15 + zoomLevel * 2;
+            const iconAnchor = [iconSize / 2, iconSize * 0.88];
+            return { iconSize, iconAnchor };
+        };
+
         return (
             <>
-                {points.points.map((point, index) => (
-                    <CircleMarker
-                        key={index}
-                        center={[point.lat, point.lon]}
-                        radius={1 + zoom * 0.25}
-                        color="#27AE60"
-                        fillColor="#27AE60"
-                        fillOpacity={0.2}
-                    >
-                    </CircleMarker>
-                ))}
+            {points.points.map((point, index) => {
+                // Display only if the zoom is lower or equal to 16
+                if (zoom <= 16) {
+                    const { iconSize, iconAnchor } = calculateIconSizeAndAnchor(zoom);
+
+                    return (
+                        <Marker
+                            key={index}
+                            position={[point.lat, point.lon]}
+                            icon={L.icon({
+                                iconUrl: zoomLocation,
+                                iconSize: [iconSize, iconSize],
+                                iconAnchor: iconAnchor,
+                            })}
+                        />
+                    );
+                }
+
+                // If the zoom is greater than 16, display nothing
+                return null;
+            })}
             </>
         );
     };
@@ -594,8 +657,6 @@ export default function Localisation() {
         iconUrl: markerLocation,
         iconSize: [40, 40]
     });
-
-
 
     return (
         <>
@@ -615,7 +676,7 @@ export default function Localisation() {
             <div id="map">
                 <MapContainer key={key} ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true}>
 
-                    <DynamicCircleMarkersCentroidsContaminesZonesTolerees points={centroidesContaminesZonesTolerees} />
+                    <DynamicIconMarkersCentroidsContaminesZonesTolerees points={centroidesContaminesZonesTolerees} />
 
                     {/* Basemaps */}
                     <LayersControl position="bottomright">
@@ -653,8 +714,8 @@ export default function Localisation() {
                     {locationData.map((location, index) => (
                         <Marker key={index} position={location} icon={iconLocation} />
                     ))}
-                    <div className="container-site-location">
-                        <ZoomToSite />
+                    <div className="container-site-zone-location">
+                        <ZoomToSiteZone />
                         <AddClickEvent />
                     </div>
 
