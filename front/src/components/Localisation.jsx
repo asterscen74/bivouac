@@ -542,49 +542,63 @@ export default function Localisation() {
 
     // Legend map
     const MapLegend = () => {
-        if (completeArea === true) {
-            return (
-                <div className="legend-container">
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-limite-reserve-naturelle"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row1")}</p>
-                </div>
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-non-reservable"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row2")}</p>
-                </div>
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-tolere-reservable"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row3")}</p>
-                </div>
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-tolere-complet"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row4")}</p>
-                </div>
+        const map = useMap();
+        const [zoom, setZoom] = useState(map.getZoom());
 
-                </div>
-            );
-        } else {
-            return (
-                <div className="legend-container">
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-limite-reserve-naturelle"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row1")}</p>
-                </div>
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-non-reservable"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row2")}</p>
-                </div>
-                <div className="legend-row-container">
-                    <p className="legend-row-symbol legend-row-symbol-tolere-reservable"></p>
-                    <p className="legend-row-text">{t("Localisation Content.Legend.row3")}</p>
-                </div>
+        useEffect(() => {
+            const handleZoom = () => {
+                setZoom(map.getZoom());
+            };
 
-                </div>
-            );
+            map.on('zoomend', handleZoom);
+
+            return () => {
+                map.off('zoomend', handleZoom);
+            };
+        }, [map]);
+
+        const legendItems = [
+            {
+                className: "legend-row-symbol-limite-reserve-naturelle",
+                text: t("Localisation Content.Legend.row1")
+            },
+            {
+                className: "legend-row-symbol-non-reservable",
+                text: t("Localisation Content.Legend.row2")
+            },
+            {
+                className: "legend-row-symbol-tolere-reservable",
+                text: t("Localisation Content.Legend.row3")
+            }
+        ];
+
+        // Additional elements added if completeArea is true
+        if (completeArea) {
+            legendItems.push({
+                className: "legend-row-symbol-tolere-complet",
+                text: t("Localisation Content.Legend.row4")
+            });
         }
 
-      };
+        //  Display only if zoom is lower or greater than 16
+        if (zoom <= 16) {
+            legendItems.push({
+                className: "legend-row-symbol-small-area",
+                text: t("Localisation Content.Legend.row5")
+            });
+        }
+
+        return (
+            <div className="legend-container">
+                {legendItems.map((item, index) => (
+                    <div key={index} className="legend-row-container">
+                        <p className={`legend-row-symbol ${item.className}`}></p>
+                        <p className="legend-row-text">{item.text}</p>
+                    </div>
+                ))}
+            </div>
+        );
+    };
 
     // Centroids on areas tolerated in the Contamines area (not very visible)
     const centroidesContaminesZonesTolerees = mapData.centroidesContaminesZonesTolerees;

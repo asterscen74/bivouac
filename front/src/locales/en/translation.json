@@ -33,7 +33,8 @@
             "row1": "Edge of the nature reserve, bivouacs not recommended (except in specific areas).",
             "row2": "Bivouac prohibited, non bookable area",
             "row3": "Bivouacs tolerated, reservable area",
-            "row4": "Bivouacs tolerated, complete area for this date"
+            "row4": "Bivouacs tolerated, complete area for this date",
+            "row5": "Small area, zoom in for a better view"
         }
     },
     "Next step": "Next Step",

@@ -30,7 +30,8 @@
             "row1": "Limite de réserve naturelle, le bivouac déconseillé (hors zones spécifiques)",
             "row2": "Bivouac interdit, zone non réservable",
             "row3": "Bivouac toléré, zone réservable",
-            "row4": "Bivouac toléré, zone complète pour cette date"
+            "row4": "Bivouac toléré, zone complète pour cette date",
+            "row5": "Petite zone, zoomez pour une meilleure visualisation"
         }
     },
     "languageFrench": "Français",
