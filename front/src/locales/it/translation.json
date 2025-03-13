@@ -62,6 +62,11 @@
     "Reservation awaiting confirmation": "prenotazione in attesa di conferma",
     "Registration error": "Errore nella registrazione delle informazioni inserite. Riprovare più tardi o contattarci se il problema persiste.",
     "Summary sent": "La vostra prenotazione vi è stata appena inviata per e-mail. Dovrete mostrarla ai guardiani della riserva naturale. Non l'avete ricevuta? Controllate la cartella spam e contattateci. Grazie per aver trovato il tempo di rispondere!",
+    "Reservation cancelled": "Cancellazione della prenotazione",
+    "Cancel reservation": "Annullare la prenotazione",
+    "Cancellation error": "Errore durante la cancellazione della prenotazione. Controllare l'e-mail inserita. Si prega di riprovare più tardi o di contattarci se il problema persiste.",
+    "Cancellation confirmed": "La prenotazione è stata cancellata",
+    "Reservation not found": "Nessuna prenotazione trovata con le informazioni inserite",
     "This website uses cookies to enhance the user experience": "Sul nostro sito utilizziamo i cookie per migliorare la vostra esperienza di navigazione. Se volete saperne di più, consultate la nostra nota legale.",
     "I understand": "Capisco"
 }

@@ -7,11 +7,13 @@ export default function BivouacDeclaration() {
     const acceptedLocations = ["/reservation-bivouac/informations",
     "/reservation-bivouac/localisation",
     "/reservation-bivouac/quizz",
-    "/reservation-bivouac/thanks"]
+    "/reservation-bivouac/thanks",
+    ];
 
     useEffect(() => {
         if (
-            !acceptedLocations.includes(location.pathname)
+            !acceptedLocations.includes(location.pathname) &&
+            !location.pathname.startsWith("/reservation-bivouac/cancel/")
         ) {
             navigate("/reservation-bivouac/informations");
         }

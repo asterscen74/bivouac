@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
 
 from bivouacapi.logs import initLogger
-from bivouacapi.models import PostReservation
+from bivouacapi.models import PostCancelReservation, PostReservation
 from bivouacapi.settings import MAP_LAYERS_ENUM, session, settings
 from bivouacapi.utils import check_locations_argument, generate_pdf, send_summary_mail
 
@@ -165,12 +165,13 @@ async def create_reservation(
             INSERT INTO public.reservations(nb_tents,nb_people,email,fr_or_foreign,department,quizz_note)
             VALUES({nb_tents_reservation},{nb_people_reservation},'{email}','{fr_or_foreign_reservation}',
             '{department}', '{comment}' )
-            RETURNING id
+            RETURNING id, uuid
             """
         result = db.execute(text(query))
-        reservation_number = result.fetchone()[0]
+        reservation_number, reservation_uuid = result.fetchone()
         db.commit()
     except sqlalchemy.exc.ProgrammingError:
+
         db.rollback()
         logger.critical("Error during registration")
         return JSONResponse(
@@ -218,9 +219,14 @@ async def create_reservation(
             group by id, nb_people, email
             """
             result = db.execute(text(query)).mappings().one()
+
+            cancel_url = f"{settings.WEBSITE_DOMAIN}/reservation-bivouac/cancel/{reservation_uuid}"
+
             pdf_content, _pdf_name = await generate_pdf(attributes=result)
 
-            result = await send_summary_mail(result.email, BytesIO(pdf_content))
+            result = await send_summary_mail(
+                result.email, cancel_url, BytesIO(pdf_content)
+            )
             return result
     except sqlalchemy.exc.ProgrammingError:
         db.rollback()
@@ -246,7 +252,9 @@ async def get_number_tents_date_bivouac_zoning(
     """
     logger.info("get_number_tents_date_bivouac_zoning")
     try:
-        query_where_part = f"WHERE date = '{start_date}'::date"
+        query_where_part = (
+            f"WHERE reservations.annule is false AND date = '{start_date}'::date"
+        )
         query = f"""
                 SELECT loc.date, loc.name_bivouac_zoning,
                 SUM(reservations.nb_tents) AS nb_tents
@@ -274,6 +282,64 @@ async def get_number_tents_date_bivouac_zoning(
         logger.critical(
             "Error while retrieving the number of tents by date and bivouac zoning"
         )
+        return JSONResponse(
+            status_code=400,
+            content=jsonable_encoder({"content": "Error while retrieving data"}),
+        )
+
+
+@app.post(
+    "/reservations/cancel",
+    summary="Cancel a reservation",
+    tags=["Data"],
+)
+async def cancel_reservation(
+    request: PostCancelReservation, db: Session = Depends(get_db)
+) -> Response:
+    """Cancel a reservation
+
+    - **request**: request model
+    """
+    logger.info("cancel_reservation endpoint")
+    uuid_reservation = request.uuid
+    email_reservation = request.email
+
+    try:
+        query = f"""
+            SELECT COUNT(*)
+            FROM public.reservations
+            WHERE uuid = '{uuid_reservation}' AND email = '{email_reservation}' AND annule = false
+            """
+        result = db.execute(text(query))
+        count = result.scalar()
+
+        # No feature found
+        if count == 0:
+            logger.info("No reservation found with this uuid and this email address.")
+            return JSONResponse(
+                status_code=404,
+                content=jsonable_encoder(
+                    {
+                        "content": "No reservation found with this uuid and this email address."
+                    }
+                ),
+            )
+
+        # Cancel the reservation
+        update_query = f"""
+            UPDATE public.reservations
+            SET annule = true
+            WHERE uuid = '{uuid_reservation}' AND email = '{email_reservation}'
+        """
+        db.execute(text(update_query))
+        db.commit()
+        return JSONResponse(
+            status_code=200,
+            content=jsonable_encoder({"content": "Reservation successfully cancelled"}),
+        )
+    except sqlalchemy.exc.ProgrammingError:
+        db.rollback()
+        logger.critical("Error while canceling the reservation")
         return JSONResponse(
             status_code=400,
             content=jsonable_encoder({"content": "Error while retrieving data"}),
