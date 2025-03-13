@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import { MapContainer, GeoJSON, TileLayer, useMap, Marker, CircleMarker, LayersControl } from 'react-leaflet';
+import { MapContainer, GeoJSON, TileLayer, useMap, Marker, LayersControl } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
@@ -20,6 +20,7 @@ import FormControl from '@mui/material/FormControl';
 import moment from 'moment';
 import * as turf from '@turf/turf';
 import { ListSubheader } from '@mui/material';
+import zoomLocation from '../assets/img/zoom_location.svg';
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -587,7 +588,7 @@ export default function Localisation() {
 
     // Centroids on areas tolerated in the Contamines area (not very visible)
     const centroidesContaminesZonesTolerees = mapData.centroidesContaminesZonesTolerees;
-    const DynamicCircleMarkersCentroidsContaminesZonesTolerees = ( points ) => {
+    const DynamicIconMarkersCentroidsContaminesZonesTolerees = (points) => {
         const map = useMap();
         const [zoom, setZoom] = useState(map.getZoom());
 
@@ -602,19 +603,37 @@ export default function Localisation() {
             };
         }, [map]);
 
+
+        const calculateIconSizeAndAnchor = (zoomLevel) => {
+            console.log(zoomLevel)
+            const iconSize = 25 + zoomLevel * 2;
+            const iconAnchor = [iconSize / 2, iconSize * 0.88];
+            return { iconSize, iconAnchor };
+        };
+
         return (
             <>
-                {points.points.map((point, index) => (
-                    <CircleMarker
-                        key={index}
-                        center={[point.lat, point.lon]}
-                        radius={1 + zoom * 0.25}
-                        color="#27AE60"
-                        fillColor="#27AE60"
-                        fillOpacity={0.2}
-                    >
-                    </CircleMarker>
-                ))}
+            {points.points.map((point, index) => {
+                // Display only if the zoom is lower or equal to 16
+                if (zoom <= 16) {
+                    const { iconSize, iconAnchor } = calculateIconSizeAndAnchor(zoom);
+
+                    return (
+                        <Marker
+                            key={index}
+                            position={[point.lat, point.lon]}
+                            icon={L.icon({
+                                iconUrl: zoomLocation,
+                                iconSize: [iconSize, iconSize],
+                                iconAnchor: iconAnchor,
+                            })}
+                        />
+                    );
+                }
+
+                // If the zoom is greater than 16, display nothing
+                return null;
+            })}
             </>
         );
     };
@@ -643,7 +662,7 @@ export default function Localisation() {
             <div id="map">
                 <MapContainer key={key} ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true}>
 
-                    <DynamicCircleMarkersCentroidsContaminesZonesTolerees points={centroidesContaminesZonesTolerees} />
+                    <DynamicIconMarkersCentroidsContaminesZonesTolerees points={centroidesContaminesZonesTolerees} />
 
                     {/* Basemaps */}
                     <LayersControl position="bottomright">
