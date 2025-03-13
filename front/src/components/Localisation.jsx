@@ -19,6 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import moment from 'moment';
 import * as turf from '@turf/turf';
+import { ListSubheader } from '@mui/material';
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -37,17 +38,17 @@ export default function Localisation() {
     const previousPage = "informations";
     let resultsLocalisationData = resultsData.localisation;
     let resultsNbTentsZoningDate = resultsData.nb_tents_zoning_date;
-    const [maxLocations, setMaxLocations] = useState(undefined);
+    const maxLocations = 2;
     const [nbTentsZoningDate, setNbTentsZoningDate] = useState(resultsNbTentsZoningDate);
     const minTentsReserved = 10;
 
     let mapData = store.getState().map.initialDisplay;
     const mapDataDefaultLayers = mapData.defaultLayers;
     const mapDataDefaultBaseLayers = mapData.defaultBaseLayers;
-    const mapDataDefaultSites = mapData.defaultSites;
+    const mapDataDefaultSitesZones = mapData.defaultSitesZones;
     var completeArea = false;
 
-    const [defaultSite, setDefaultSite] = useState("");
+    const [defaultSiteZone, setDefaultSiteZone] = useState("");
     const [enableAddLocation, setEnableAddLocation] = useState(false);
     const [geojsonData, setGeojsonData] = useState({});
     const [locationData, setLocationData] = useState(resultsLocalisationData.locations);
@@ -208,16 +209,6 @@ export default function Localisation() {
         // let nextPage = event.target.name;
         // navigate("/reservation-bivouac/" + nextPage)
     };
-
-
-    // Define the maximum number of locations based on the roaming (itinerance) entry
-    useEffect(() => {
-        if (resultsInfosData.itinerance === "Yes") {
-            setMaxLocations(3);
-        } else {
-            setMaxLocations(1);
-        }
-    }, [maxLocations, resultsInfosData])
 
     // Add the default layers
     useEffect(() => {
@@ -388,45 +379,84 @@ export default function Localisation() {
         }
     }
 
-    // Zoom to a site
-    const ZoomToSite = () => {
+    // Zoom to a site or zone
+    const ZoomToSiteZone = () => {
         const map = useMap();
 
-        const handleSiteChange = (e) => {
-            const siteName = e.target.value;
-            const siteAttributes = Object.values(mapDataDefaultSites).find(site => site.name === siteName);
-            if (siteAttributes) {
-                map.setView(siteAttributes.center, siteAttributes.zoom);
-                setDefaultSite(siteName);
+        const handleLocationChange = (e) => {
+            const locationName = e.target.value;
+            const locationAttributes = Object.values(mapDataDefaultSitesZones).find(loc => loc.name === locationName);
+            if (locationAttributes) {
+                map.setView(locationAttributes.center, locationAttributes.zoom);
+                setDefaultSiteZone(locationName);
             }
         };
 
         return (
-            <FormControl fullWidth sx={{
-                zIndex: 1000
-            }}>
-              <Select
-                id="demo-simple-select"
-                value={defaultSite}
-                displayEmpty
-                onChange={handleSiteChange}
-                sx={{
-                    backgroundColor: "white",
-                    height: 30,
-                    top: 10
+            <FormControl fullWidth sx={{ zIndex: 1000 }}>
+                <Select
+                    id="site-zone-select"
+                    value={defaultSiteZone}
+                    displayEmpty
+                    onChange={handleLocationChange}
+                    sx={{
+                        backgroundColor: "white",
+                        height: 30,
+                        top: 10,
+                    }}
+                    MenuProps={{
+                    PaperProps: {
+                        style: {
+                            maxHeight: 200,
+                            overflowY: 'auto',
+                            width: '250px',
+                        },
+                    },
+                    anchorOrigin: {
+                        vertical: 'top',
+                        horizontal: 'right',
+                    },
+                    transformOrigin: {
+                        vertical: 'top',
+                        horizontal: 'right',
+                    },
                 }}
-              >
-                <MenuItem value="">
-                <em>{t("Select site")}</em>
-                </MenuItem>
-                {Object.keys(mapDataDefaultSites).map((siteName, index) => (
-                    <MenuItem key={index} value={mapDataDefaultSites[siteName].name}>{mapDataDefaultSites[siteName].name}</MenuItem>)
-                )}
-              </Select>
-            </FormControl>
+                >
+                    <MenuItem value="">
+                        <em>{t("Select site/zone")}</em>
+                    </MenuItem>
 
+                    <ListSubheader>{t("Sites")}</ListSubheader>
+                    {Object.keys(mapDataDefaultSitesZones)
+                        .filter((location) => mapDataDefaultSitesZones[location].type === "site")
+                        .map((locationName, index) => (
+                            <MenuItem key={index} value={mapDataDefaultSitesZones[locationName].name}
+                                                        sx={{
+                                whiteSpace: 'normal',
+                                wordWrap: 'break-word',
+                                overflow: 'hidden',
+                            }}>
+                                {mapDataDefaultSitesZones[locationName].name}
+                            </MenuItem>
+                        ))}
+
+
+                    <ListSubheader>{t("Zones")}</ListSubheader>
+                    {Object.keys(mapDataDefaultSitesZones)
+                        .filter((location) => mapDataDefaultSitesZones[location].type === "zone")
+                        .map((locationName, index) => (
+                            <MenuItem key={index} value={mapDataDefaultSitesZones[locationName].name} sx={{
+                                whiteSpace: 'normal',
+                                wordWrap: 'break-word',
+                                overflow: 'hidden',
+                            }} >
+                                {mapDataDefaultSitesZones[locationName].name}
+                            </MenuItem>
+                        ))}
+                </Select>
+            </FormControl>
         );
-      };
+    };
 
     // Add a location
     const AddLocation = () => {
@@ -595,8 +625,6 @@ export default function Localisation() {
         iconSize: [40, 40]
     });
 
-
-
     return (
         <>
             <h1>{t("Localisation")}</h1>
@@ -653,8 +681,8 @@ export default function Localisation() {
                     {locationData.map((location, index) => (
                         <Marker key={index} position={location} icon={iconLocation} />
                     ))}
-                    <div className="container-site-location">
-                        <ZoomToSite />
+                    <div className="container-site-zone-location">
+                        <ZoomToSiteZone />
                         <AddClickEvent />
                     </div>
 
