@@ -620,7 +620,7 @@ export default function Localisation() {
 
         const calculateIconSizeAndAnchor = (zoomLevel) => {
             console.log(zoomLevel)
-            const iconSize = 25 + zoomLevel * 2;
+            const iconSize = 15 + zoomLevel * 2;
             const iconAnchor = [iconSize / 2, iconSize * 0.88];
             return { iconSize, iconAnchor };
         };
