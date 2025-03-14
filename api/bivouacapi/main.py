@@ -1,5 +1,6 @@
 """Main module"""
 
+from datetime import datetime, timedelta
 from io import BytesIO
 
 import sqlalchemy
@@ -161,13 +162,22 @@ async def create_reservation(
         return check_locations
 
     try:
-        query = f"""
-            INSERT INTO public.reservations(nb_tents,nb_people,email,fr_or_foreign,department,quizz_note)
-            VALUES({nb_tents_reservation},{nb_people_reservation},'{email}','{fr_or_foreign_reservation}',
-            '{department}', '{comment}' )
-            RETURNING id, uuid
+        query = text(
             """
-        result = db.execute(text(query))
+            INSERT INTO public.reservations (nb_tents, nb_people, email, fr_or_foreign, department, quizz_note)
+            VALUES (:nb_tents, :nb_people, :email, :fr_or_foreign, :department, :quizz_note)
+            RETURNING id, uuid
+        """
+        )
+        params = {
+            "nb_tents": nb_tents_reservation,
+            "nb_people": nb_people_reservation,
+            "email": email,
+            "fr_or_foreign": fr_or_foreign_reservation,
+            "department": department,
+            "quizz_note": comment,
+        }
+        result = db.execute(query, params)
         reservation_number, reservation_uuid = result.fetchone()
         db.commit()
     except sqlalchemy.exc.ProgrammingError:
@@ -185,40 +195,46 @@ async def create_reservation(
             content=jsonable_encoder({"content": "Error during registration"}),
         )
 
-    queries = []
     for nb, location in enumerate(locations_reservation):
-        location_geom = f"POINT({location[1]} {location[0]})"
-        query = f"""
-            INSERT INTO public.reservations_locations(reservation,date,geom)
-            VALUES('{reservation_number}', '{date_reservation}'::date + INTERVAL '{nb} DAY',ST_GeomFromText('{location_geom}'))
+        new_date = date_reservation + timedelta(days=nb)
+        query = text(
             """
-        queries.append(query)
+            INSERT INTO public.reservations_locations (reservation, date, geom)
+            VALUES (:reservation_number, :new_date, ST_GeomFromText(:location_geom))
+            """
+        )
+        params = {
+            "reservation_number": reservation_number,
+            "new_date": new_date,
+            "location_geom": f"POINT({location[1]} {location[0]})",
+        }
+        db.execute(query, params)
+    db.commit()
+    logger.info(f"Reservation {reservation_number} successfully registered")
 
     try:
-        for query in queries:
-            print(text(query))
-            result = db.execute(text(query))
-            db.commit()
-        logger.info(f"Reservation {reservation_number} successfully registered")
-
         # Send summary by e-mail
         if send_summary:
-            query = f"""With s as (
-                SELECT rl.date::text as date, nb_people, email,
-                    zb.commune, rl.name_bivouac_zoning, r.id
-                FROM public.reservations r
-                join public.reservations_locations rl on rl.reservation = r.id
-                join public.zonage_bivouac zb on zb.nom = rl.name_bivouac_zoning
-                WHERE r.id = {reservation_number}
-                order by date
-            )
-            SELECT string_agg(s.date::text, ',') as date, nb_people, email,
-                    string_agg(s.commune, ',') as communes
-                    ,string_agg(s.name_bivouac_zoning, ',') as reserves
-            FROM s
-            group by id, nb_people, email
+            query = text(
+                """
+                WITH s AS (
+                    SELECT rl.date::text AS date, nb_people, email,
+                        zb.commune, rl.name_bivouac_zoning, r.id
+                    FROM public.reservations r
+                    JOIN public.reservations_locations rl ON rl.reservation = r.id
+                    JOIN public.zonage_bivouac zb ON zb.nom = rl.name_bivouac_zoning
+                    WHERE r.id = :reservation_number
+                    ORDER BY date
+                )
+                SELECT string_agg(s.date::text, ',') AS date, nb_people, email,
+                    string_agg(s.commune, ',') AS communes,
+                    string_agg(s.name_bivouac_zoning, ',') AS reserves
+                FROM s
+                GROUP BY id, nb_people, email
             """
-            result = db.execute(text(query)).mappings().one()
+            )
+            params = {"reservation_number": reservation_number}
+            result = db.execute(query, params).mappings().one()
 
             cancel_url = f"{settings.WEBSITE_DOMAIN}/reservation-bivouac/cancel/{reservation_uuid}"
 
@@ -252,23 +268,23 @@ async def get_number_tents_date_bivouac_zoning(
     """
     logger.info("get_number_tents_date_bivouac_zoning")
     try:
-        query_where_part = f"""
-            WHERE reservations.annule is false
-            AND date BETWEEN '{start_date}'::date
-            AND '{start_date}'::date + INTERVAL '1 DAY'
-        """
-        query = f"""
-                SELECT loc.date, loc.name_bivouac_zoning,
-                SUM(reservations.nb_tents) AS nb_tents
-                FROM reservations_locations AS loc
-                LEFT JOIN reservations
-                ON loc.reservation = reservations.id
-                {query_where_part}
-                GROUP BY loc.date, loc.name_bivouac_zoning
-                ORDER BY loc.date
+        start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+        end_date = start_date + timedelta(days=1)
+        query = text(
             """
-
-        result = db.execute(text(query))
+            SELECT loc.date, loc.name_bivouac_zoning,
+            SUM(reservations.nb_tents) AS nb_tents
+            FROM reservations_locations AS loc
+            LEFT JOIN reservations
+            ON loc.reservation = reservations.id
+            WHERE reservations.annule is false
+            AND loc.date BETWEEN :start_date AND :end_date
+            GROUP BY loc.date, loc.name_bivouac_zoning
+            ORDER BY loc.date
+        """
+        )
+        params = {"start_date": start_date, "end_date": end_date}
+        result = db.execute(query, params)
 
         data = {}
         for row in result.fetchall():
@@ -307,12 +323,18 @@ async def cancel_reservation(
     email_reservation = request.email
 
     try:
-        query = f"""
+        query = text(
+            """
             SELECT COUNT(*)
             FROM public.reservations
-            WHERE uuid = '{uuid_reservation}' AND email = '{email_reservation}' AND annule = false
-            """
-        result = db.execute(text(query))
+            WHERE uuid = :uuid_reservation AND email = :email_reservation AND annule = false
+        """
+        )
+        params = {
+            "uuid_reservation": uuid_reservation,
+            "email_reservation": email_reservation,
+        }
+        result = db.execute(query, params)
         count = result.scalar()
 
         # No feature found
@@ -328,12 +350,18 @@ async def cancel_reservation(
             )
 
         # Cancel the reservation
-        update_query = f"""
+        update_query = text(
+            """
             UPDATE public.reservations
             SET annule = true
-            WHERE uuid = '{uuid_reservation}' AND email = '{email_reservation}'
+            WHERE uuid = :uuid_reservation AND email = :email_reservation
         """
-        db.execute(text(update_query))
+        )
+        params = {
+            "uuid_reservation": uuid_reservation,
+            "email_reservation": email_reservation,
+        }
+        db.execute(update_query, params)
         db.commit()
         return JSONResponse(
             status_code=200,
