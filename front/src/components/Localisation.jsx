@@ -21,6 +21,7 @@ import moment from 'moment';
 import * as turf from '@turf/turf';
 import { ListSubheader } from '@mui/material';
 import zoomLocation from '../assets/img/zoom_location.svg';
+import { Dialog, DialogContent, DialogActions } from "@mui/material";
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -53,6 +54,11 @@ export default function Localisation() {
     const [enableAddLocation, setEnableAddLocation] = useState(false);
     const [geojsonData, setGeojsonData] = useState({});
     const [locationData, setLocationData] = useState(resultsLocalisationData.locations);
+    // Reember : you can't reserve the same zone twice
+    const [nameAreaFirstLocation, setNameAreaFirstLocation] = useState("");
+    const [popupWrongLocationShow, setPopupWrongLocationShow] = useState(false);
+
+
     const [displayMaximumLocationReached, setDisplayMaximumLocationReached] = useState(false);
     const [clickCoordinates, setClickCoordinates] = useState([]);
 
@@ -119,6 +125,11 @@ export default function Localisation() {
             if (locationData.length < maxLocations) {
                 setDisplayMaximumLocationReached(false);
                 setEnableAddLocation(true);
+
+                // Reset the first zone reservation name
+                if (locationData.length === 0 && nameAreaFirstLocation !== "") {
+                    setNameAreaFirstLocation("");
+                }
             } else {
                 setDisplayMaximumLocationReached(true);
                 setEnableAddLocation(false);
@@ -136,6 +147,7 @@ export default function Localisation() {
                 let countFalseIntersection = 0;
                 const turfPoint = turf.point([clickCoordinates[1], clickCoordinates[0]]);
                 const featuresZonageBivouac = geojsonData["zonage_bivouac"].features;
+                let nameAreaNewLocation = "";
                 for (const feature of featuresZonageBivouac) {
                     const featureReservable = feature.properties.reservable;
                     const featureQuotas = feature.properties.quotas;
@@ -143,6 +155,7 @@ export default function Localisation() {
                     const turfPolygon = turf.multiPolygon(feature.geometry.coordinates);
                     const resultIntersectionPointInPolygon = turf.booleanPointInPolygon(turfPoint, turfPolygon);
                     if (resultIntersectionPointInPolygon === true) {
+                        nameAreaNewLocation = featurePropertiesNom;
                         // Feature not reservable
                         if (featureReservable === false) {
                             locationReservable = false;
@@ -184,7 +197,20 @@ export default function Localisation() {
             // Location in a reservable zone
             if (locationReservable === true) {
                 const newLocationData = [...locationData, clickCoordinates ];
-                setLocationData(newLocationData);
+                // First location
+                if (locationData.length === 0) {
+                    setLocationData(newLocationData);
+                    setNameAreaFirstLocation(nameAreaNewLocation);
+                } else {
+                    // Second location in a different zone
+                    if (nameAreaNewLocation !== nameAreaFirstLocation) {
+                        setLocationData(newLocationData);
+                    }
+                    // Second location in the same zone
+                    else {
+                        setPopupWrongLocationShow(true);
+                    }
+                }
             }
         }
         }
@@ -513,6 +539,10 @@ export default function Localisation() {
         const removeLastLocation = () => {
             const newLocationData = locationData.slice(0, -1);
             setLocationData(newLocationData);
+            // Reset the first zone reservation name
+            if (locationData.length === 1) {
+                setNameAreaFirstLocation("")
+            }
         }
 
         return (
@@ -717,6 +747,36 @@ export default function Localisation() {
                         <ZoomToSiteZone />
                         <AddClickEvent />
                     </div>
+
+                    {/* Popup when wrong location (2 locations in the same zone) */}
+                    <Dialog
+                        open={popupWrongLocationShow}
+                        onClose={() => setPopupWrongLocationShow(false)}
+                        maxWidth="xs"
+                        fullWidth={false}
+                        PaperProps={{
+                        style: {
+                            position: 'fixed',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            maxWidth: '250px'
+                        },
+            }}
+                    >
+                        <DialogContent style={{ padding: "0px 15px" }}>
+                            <p>{t("Invalid location")}</p>
+                        </DialogContent>
+                        <DialogActions style={{ justifyContent: "center" }}>
+                            <Button
+                                onClick={() => setPopupWrongLocationShow(false)}
+                                style={{ backgroundColor: "#007854", color: "#ffffff" }}
+                                variant="contained"
+                            >
+                                OK
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
 
                     <MapLegend />
                     <SetMapProperties />
