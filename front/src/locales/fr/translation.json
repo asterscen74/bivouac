@@ -55,6 +55,7 @@
     "Maximum number location reached": "Nombre maximum d'emplacements atteint",
     "Incomplete location": "Vous devez indiquer votre emplacement de bivouac",
     "Invalid location": "Vous ne pouvez pas réserver 2 fois la même zone de bivouac.",
+    "Invalid location next date available": "Zone complète pour cette date. Prochaine date disponible : ",
     "Thanks": "Merci",
     "The good practices quiz": "Le Quiz des bonnes pratiques",
     "Please answer this little quiz": "Merci de répondre au quiz",

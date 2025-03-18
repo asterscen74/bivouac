@@ -43,7 +43,9 @@ export default function Localisation() {
     let resultsTwoNextAvailableDatesZoning = resultsData.two_next_available_dates_zoning;
     const maxLocations = 2;
     const [nbTentsZoningDate, setNbTentsZoningDate] = useState(resultsNbTentsZoningDate);
+    const [nameCurrentAreaSelected, setNameCurrentAreaSelected] = useState("");
     const [twoNextAvailableDatesZoning, setTwoNextAvailableDatesZoning] = useState(resultsTwoNextAvailableDatesZoning);
+    const [popupFullBookingNextAvailableDateShow, setPopupFullBookingNextAvailableDateShow] = useState(false);
     const minTentsReserved = 10;
 
     let mapData = store.getState().map.initialDisplay;
@@ -179,6 +181,7 @@ export default function Localisation() {
                     const resultIntersectionPointInPolygon = turf.booleanPointInPolygon(turfPoint, turfPolygon);
                     if (resultIntersectionPointInPolygon === true) {
                         nameAreaNewLocation = featurePropertiesNom;
+                        setNameCurrentAreaSelected(nameAreaNewLocation);
                         // Feature not reservable
                         if (featureReservable === false) {
                             locationReservable = false;
@@ -201,6 +204,7 @@ export default function Localisation() {
                                     let nbTents = nbTentsZoningDate[featurePropertiesNom][dateReserved];
                                     // Quota reached
                                     if (nbTents >= featureQuotas) {
+                                        setPopupFullBookingNextAvailableDateShow(true);
                                         locationReservable = false;
                                     }
                                 }
@@ -796,6 +800,37 @@ export default function Localisation() {
                         <DialogActions style={{ justifyContent: "center" }}>
                             <Button
                                 onClick={() => setPopupWrongLocationShow(false)}
+                                style={{ backgroundColor: "#007854", color: "#ffffff" }}
+                                variant="contained"
+                            >
+                                OK
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+
+                    {/* Popup when quota reached, suggestion of next available date */}
+                    <Dialog
+                        open={popupFullBookingNextAvailableDateShow}
+                        onClose={() => setPopupFullBookingNextAvailableDateShow(false)}
+                        maxWidth="xs"
+                        fullWidth={false}
+                        PaperProps={{
+                        style: {
+                            position: 'fixed',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            maxWidth: '250px'
+                        },
+            }}
+                    >
+                        <DialogContent style={{ padding: "0px 15px" }}>
+                            <p>{t("Invalid location next date available")}</p>
+                            <p>{twoNextAvailableDatesZoning && nameCurrentAreaSelected !== "" && moment(twoNextAvailableDatesZoning[nameCurrentAreaSelected][locationData.length === 0 ? 0 : 1]).format('DD/MM/YYYY')}</p>
+                        </DialogContent>
+                        <DialogActions style={{ justifyContent: "center" }}>
+                            <Button
+                                onClick={() => setPopupFullBookingNextAvailableDateShow(false)}
                                 style={{ backgroundColor: "#007854", color: "#ffffff" }}
                                 variant="contained"
                             >
