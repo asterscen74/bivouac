@@ -306,6 +306,85 @@ async def get_number_tents_date_bivouac_zoning(
         )
 
 
+@app.get(
+    "/reservations/next-availability/",
+    summary="Get the next available bivouac dates by zoning",
+    tags=["Data"],
+)
+async def get_next_available_dates_bivouac_zoning(
+    start_date: str,
+    db: Session = Depends(get_db),
+):
+    """Get the next available dates for each bivouac zone.
+
+    - **start_date**: The starting date (YYYY-MM-DD)
+    """
+    logger.info("get_next_available_dates_bivouac_zoning")
+    try:
+        start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+        end_date = start_date + timedelta(days=30)
+
+        query = text(
+            """
+            -- Générer les dates de start_date à dans un mois pour chaque zone de bivouac
+            WITH dates_generees AS (
+                SELECT zb.nom AS name_bivouac_zoning, gs.date::DATE
+                FROM zonage_bivouac zb
+                CROSS JOIN generate_series(:start_date, :end_date, '1 day'::INTERVAL) AS gs(date)
+            ),
+            -- Calculer les tentes réservées par zone et par date
+            tentes_par_date AS (
+                SELECT rl.name_bivouac_zoning, rl.date, SUM(r.nb_tents) AS total_tentes_reservees
+                FROM reservations r
+                JOIN reservations_locations rl ON r.id = rl.reservation
+                WHERE rl.date >= :start_date
+                GROUP BY rl.name_bivouac_zoning, rl.date
+            ),
+            -- Trouver les dates disponibles
+            dates_disponibles AS (
+                SELECT dg.name_bivouac_zoning, dg.date
+                FROM dates_generees dg
+                LEFT JOIN tentes_par_date tpd
+                    ON dg.name_bivouac_zoning = tpd.name_bivouac_zoning
+                    AND dg.date = tpd.date
+                WHERE tpd.total_tentes_reservees < (
+                    SELECT quotas FROM zonage_bivouac zb WHERE zb.nom = dg.name_bivouac_zoning
+                ) OR tpd.total_tentes_reservees IS NULL
+            ),
+            -- Ajouter un numéro de ligne pour filtrer les deux premières dates
+            dates_ordonnees AS (
+                SELECT name_bivouac_zoning, date,
+                    ROW_NUMBER() OVER (PARTITION BY name_bivouac_zoning ORDER BY date) AS row_num
+                FROM dates_disponibles
+            )
+            -- Sélectionner les deux premières dates sous forme de tableau
+            SELECT name_bivouac_zoning,
+                   ARRAY_AGG(date ORDER BY date) FILTER (WHERE row_num <= 2) AS prochaines_dates_disponibles
+            FROM dates_ordonnees
+            GROUP BY name_bivouac_zoning;
+            """
+        )
+
+        params = {"start_date": start_date, "end_date": end_date}
+        result = db.execute(query, params)
+
+        data = {row[0]: row[1] for row in result.fetchall()}
+
+        logger.info(
+            "The next available dates for each bivouac zoning successfully retrieved"
+        )
+        return JSONResponse(content=jsonable_encoder({"content": data}))
+
+    except sqlalchemy.exc.ProgrammingError:
+        logger.critical(
+            "Error while retrieving the next available dates for each bivouac zoning"
+        )
+        return JSONResponse(
+            status_code=400,
+            content=jsonable_encoder({"content": "Error while retrieving data"}),
+        )
+
+
 @app.post(
     "/reservations/cancel",
     summary="Cancel a reservation",
