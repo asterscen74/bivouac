@@ -11,8 +11,8 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
 import store from "../store";
 import api_url from "../settings-server.js";
-import { useDispatch } from "react-redux";
-import { updateLocalisationPositions, updateResults } from "../stores/Results";
+import { useDispatch, useSelector } from "react-redux";
+import { updateLocalisationPositions, updateResults, updateLocalisationCapturedImages, clearLocalisationCapturedImages } from "../stores/Results";
 import markerLocation from '../assets/img/marker_location.svg'
 import Select from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
@@ -22,6 +22,8 @@ import * as turf from '@turf/turf';
 import { ListSubheader } from '@mui/material';
 import zoomLocation from '../assets/img/zoom_location.svg';
 import { Dialog, DialogContent, DialogActions } from "@mui/material";
+import html2canvas from "html2canvas";
+// import leafletImage from 'leaflet-image';
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -65,6 +67,9 @@ export default function Localisation() {
 
     const [displayMaximumLocationReached, setDisplayMaximumLocationReached] = useState(false);
     const [clickCoordinates, setClickCoordinates] = useState([]);
+
+    const capturedImages = useSelector((state) => state.results.localisation.capturedImages);
+
 
     // Listen for language changes
     useEffect(() => {
@@ -160,6 +165,38 @@ export default function Localisation() {
                 setEnableAddLocation(false);
             }
         }
+
+        // const captureMapImage = async () => {
+        //     if (mapRef.current) {
+        //       const mapElement = document.getElementById("map"); // Assure-toi que l'ID est correct
+        //       if (mapElement) {
+        //         // On attend encore plus longtemps pour être sûr que tous les marqueurs sont affichés
+        //         const canvas = await html2canvas(mapElement, {
+        //           useCORS: true, // Utilisation de CORS si nécessaire pour les images externes
+        //           allowTaint: true, // Permet d'inclure des éléments extérieurs
+        //         });
+        //         const imageUrl = canvas.toDataURL("image/png");
+
+        //         // Ajoute l'image capturée dans Redux
+        //         dispatch(updateLocalisationCapturedImages({
+        //           data: [...capturedImages, imageUrl],
+        //         }));
+        //       }
+        //     }
+        //   };
+
+
+        // if (locationData.length > 0 && mapRef.current) {
+        //     const map = mapRef.current;
+        //     locationData.forEach((location, index) => {
+        //         console.log(location);
+        //         setTimeout(() => {
+        //             map.setView(location, 13); // Zoom sur l'emplacement
+        //             setTimeout(captureMapImage, 1000); // Capture après un délai
+        //         }, index * 1500);
+        //     });
+        // }
+
     }, [locationData, dispatch]);
 
     // Save the coordinates of the click
@@ -252,17 +289,84 @@ export default function Localisation() {
     const nextStep = (event) => {
         let nextPage = event.target.name;
         const localisationData = store.getState().results.localisation;
-        const nbLocations = localisationData.locations.length
+        const nbLocations = localisationData.locations.length;
+
+        // Vérifier s'il y a des emplacements
         if (nbLocations === 0) {
-            setDisplayAlert(true);
+            setDisplayAlert(true); // Afficher une alerte si aucun emplacement n'est trouvé
         } else {
-            setDisplayAlert(false);
-            navigate("/reservation-bivouac/" + nextPage);
+            setDisplayAlert(false); // Masquer l'alerte
+
+            // Effacer les images capturées précédentes du store Redux
+            dispatch(clearLocalisationCapturedImages());
+
+            // Fonction pour capturer l'image de la carte avec html2canvas
+            const captureMapImage = () => {
+                return new Promise((resolve) => {  // Ne pas utiliser async ici
+                    if (mapRef.current) {
+                        const mapElement = document.getElementById("map");
+                        if (mapElement) {
+                            // Forcer un redraw de la carte pour s'assurer que tout est bien rendu
+                            mapRef.current.invalidateSize();
+
+                            // Attendre un peu pour que la carte se stabilise
+                            setTimeout(async () => {
+                                // Capturer l'élément de la carte avec html2canvas
+                                const canvas = await html2canvas(mapElement, {
+                                    useCORS: true, // Autoriser les ressources externes
+                                    allowTaint: true, // Permettre l'inclusion d'éléments externes
+                                });
+
+                                // Convertir le canvas en URL d'image
+                                const imageUrl = canvas.toDataURL("image/png");
+
+                                // Ajouter l'image capturée dans Redux
+                                dispatch(updateLocalisationCapturedImages({
+                                    data: [...capturedImages, imageUrl],
+                                }));
+
+                                resolve();
+                            }, 1000); // Attente avant la capture
+                        }
+                    }
+                });
+            };
+
+            // Si des emplacements sont présents et que la carte est prête
+            if (localisationData.locations.length > 0 && mapRef.current) {
+                const map = mapRef.current;
+
+                // Créer un tableau de promesses pour capturer chaque emplacement
+                const capturePromises = localisationData.locations.map((location, index) => {
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            // Zoomer et centrer la carte sur l'emplacement actuel
+                            map.setView(location, 10, {
+                                animate: true, // Animation pour le zoom
+                                pan: { animate: true }, // Animation pour centrer
+                            });
+
+                            // Attendre que la carte ait fini de se déplacer
+                            map.once('moveend', async () => {
+                                // Capturer l'image de la carte
+                                await captureMapImage();
+
+                                // Résoudre la promesse une fois la capture terminée
+                                resolve();
+                            });
+                        }, index * 1500); // Espacer les captures de 1,5 seconde
+                    });
+                });
+
+                // Attendre que toutes les captures soient terminées
+                Promise.all(capturePromises).then(() => {
+                    navigate("/reservation-bivouac/" + nextPage);
+                });
+            }
         }
-        // // // comment above and uncomment below to move through the steps quickly without filling in the form or using routing
-        // let nextPage = event.target.name;
-        // navigate("/reservation-bivouac/" + nextPage)
     };
+
+
 
     // Add the default layers
     useEffect(() => {

@@ -6,7 +6,8 @@ export const general = createSlice({
     infos: {},
     nb_tents_zoning_date: {},
     localisation: {
-        locations: []
+        locations: [],
+        capturedImages: [],
     },
     quizz: {},
     reservation: {
@@ -45,18 +46,26 @@ export const general = createSlice({
         const data = props.payload.data;
         state.localisation.locations = data;
     },
+    updateLocalisationCapturedImages: (state, props) => {
+        const data = props.payload.data;
+        state.localisation.capturedImages = data;
+    },
+    clearLocalisationCapturedImages: (state) => {
+        state.localisation.capturedImages = [];
+    },
     resetResults: (state) => {
         state.infos = {};
         state.nb_tents_zoning_date = {};
         state.two_next_available_dates_zoning = {};
         state.localisation = {
-            locations: []
+            locations: [],
+            capturedImages: []
         };
         state.quizz = {};
   },
 }
 });
 
-export const { updateResults, updateReservation, updateLocalisationPositions, resetResults } = general.actions;
+export const { updateResults, updateReservation, updateLocalisationPositions, updateLocalisationCapturedImages, clearLocalisationCapturedImages, resetResults } = general.actions;
 
 export default general.reducer;

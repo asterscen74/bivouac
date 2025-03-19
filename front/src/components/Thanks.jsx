@@ -7,7 +7,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import store from "../store";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { resetResults } from "../stores/Results";
 import CircularProgress from '@mui/material/CircularProgress';
 import { updateReservation } from "../stores/Results";
@@ -27,6 +27,8 @@ export default function Thanks() {
     const [alertText, setAlertText] = useState("");
 
     const resultsInfosData = store.getState().results.infos;
+
+    const capturedImages = useSelector((state) => state.results.localisation.capturedImages);
 
     const backToHome = (event) => {
         navigate("/" + event.target.name);
@@ -142,6 +144,20 @@ export default function Thanks() {
                         <span className="label">Nombre de personnes :</span> <span className="value">{resultsInfosData.nb_people}</span>
                     </div>
                 </div>
+            }
+
+                {/* Display captured images */}
+                {
+                capturedImages.length > 0 && (
+                    <div className="captured-images">
+                        <h2>{t("Captured Images")}</h2>
+                        <div className="images-container">
+                            {capturedImages.map((image, index) => (
+                                <img key={index} src={image} alt={`Captured ${index}`} className="captured-image" />
+                            ))}
+                        </div>
+                    </div>
+                )
             }
 
             {/* Buttons */}
