@@ -11,7 +11,7 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef, useState } from 'react';
 import store from "../store";
 import api_url from "../settings-server.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateLocalisationPositions, updateResults, updateLocalisationCapturedImages, clearLocalisationCapturedImages } from "../stores/Results";
 import markerLocation from '../assets/img/marker_location.svg'
 import Select from "@mui/material/Select";
@@ -67,9 +67,6 @@ export default function Localisation() {
 
     const [displayMaximumLocationReached, setDisplayMaximumLocationReached] = useState(false);
     const [clickCoordinates, setClickCoordinates] = useState([]);
-
-    const capturedImages = useSelector((state) => state.results.localisation.capturedImages);
-
 
     // Listen for language changes
     useEffect(() => {
@@ -147,16 +144,13 @@ export default function Localisation() {
 
     // Save positions in the store
     useEffect(() => {
-        dispatch(updateLocalisationPositions({
-                data: locationData,
-            }))
+        dispatch(updateLocalisationPositions({ data: locationData }));
 
         if (maxLocations) {
             if (locationData.length < maxLocations) {
                 setDisplayMaximumLocationReached(false);
                 setEnableAddLocation(true);
 
-                // Reset the first zone reservation name
                 if (locationData.length === 0 && nameAreaFirstLocation !== "") {
                     setNameAreaFirstLocation("");
                 }
@@ -165,37 +159,6 @@ export default function Localisation() {
                 setEnableAddLocation(false);
             }
         }
-
-        // const captureMapImage = async () => {
-        //     if (mapRef.current) {
-        //       const mapElement = document.getElementById("map"); // Assure-toi que l'ID est correct
-        //       if (mapElement) {
-        //         // On attend encore plus longtemps pour être sûr que tous les marqueurs sont affichés
-        //         const canvas = await html2canvas(mapElement, {
-        //           useCORS: true, // Utilisation de CORS si nécessaire pour les images externes
-        //           allowTaint: true, // Permet d'inclure des éléments extérieurs
-        //         });
-        //         const imageUrl = canvas.toDataURL("image/png");
-
-        //         // Ajoute l'image capturée dans Redux
-        //         dispatch(updateLocalisationCapturedImages({
-        //           data: [...capturedImages, imageUrl],
-        //         }));
-        //       }
-        //     }
-        //   };
-
-
-        // if (locationData.length > 0 && mapRef.current) {
-        //     const map = mapRef.current;
-        //     locationData.forEach((location, index) => {
-        //         console.log(location);
-        //         setTimeout(() => {
-        //             map.setView(location, 13); // Zoom sur l'emplacement
-        //             setTimeout(captureMapImage, 1000); // Capture après un délai
-        //         }, index * 1500);
-        //     });
-        // }
 
     }, [locationData, dispatch]);
 
@@ -285,88 +248,85 @@ export default function Localisation() {
         navigate("/reservation-bivouac/" + previousPage);
     };
 
-    // Navigate to quizz page
+    // Capture the locations and navigate to quizz page
     const nextStep = (event) => {
         let nextPage = event.target.name;
         const localisationData = store.getState().results.localisation;
         const nbLocations = localisationData.locations.length;
 
-        // Vérifier s'il y a des emplacements
         if (nbLocations === 0) {
-            setDisplayAlert(true); // Afficher une alerte si aucun emplacement n'est trouvé
+            setDisplayAlert(true);
         } else {
-            setDisplayAlert(false); // Masquer l'alerte
+            setDisplayAlert(false);
 
-            // Effacer les images capturées précédentes du store Redux
+            // Delete previous captured images from the Redux store
             dispatch(clearLocalisationCapturedImages());
 
-            // Fonction pour capturer l'image de la carte avec html2canvas
+            // Temporary array to store captured images before dispatching
+            let capturedImagesArray = [];
+
+            // Capture the map using html2canvas
             const captureMapImage = () => {
-                return new Promise((resolve) => {  // Ne pas utiliser async ici
+                return new Promise((resolve) => {
                     if (mapRef.current) {
                         const mapElement = document.getElementById("map");
+                        const selectSiteZoneElement = document.getElementById("site-zone-select");
+                        const legendElement = document.querySelector(".legend-container");
                         if (mapElement) {
-                            // Forcer un redraw de la carte pour s'assurer que tout est bien rendu
+                            if (selectSiteZoneElement) selectSiteZoneElement.style.display = "none";
+                            if (legendElement) legendElement.style.display = "none";
+                            // Force the redrawing of the map
                             mapRef.current.invalidateSize();
 
-                            // Attendre un peu pour que la carte se stabilise
                             setTimeout(async () => {
-                                // Capturer l'élément de la carte avec html2canvas
                                 const canvas = await html2canvas(mapElement, {
-                                    useCORS: true, // Autoriser les ressources externes
-                                    allowTaint: true, // Permettre l'inclusion d'éléments externes
+                                    useCORS: true,
+                                    allowTaint: true,
                                 });
+                                    const imageUrl = canvas.toDataURL("image/png");
 
-                                // Convertir le canvas en URL d'image
-                                const imageUrl = canvas.toDataURL("image/png");
-
-                                // Ajouter l'image capturée dans Redux
-                                dispatch(updateLocalisationCapturedImages({
-                                    data: [...capturedImages, imageUrl],
-                                }));
-
+                                capturedImagesArray.push(imageUrl);
                                 resolve();
-                            }, 1000); // Attente avant la capture
+                            }, 750);
                         }
                     }
                 });
             };
 
-            // Si des emplacements sont présents et que la carte est prête
-            if (localisationData.locations.length > 0 && mapRef.current) {
+            if (nbLocations > 0 && mapRef.current) {
                 const map = mapRef.current;
 
-                // Créer un tableau de promesses pour capturer chaque emplacement
+                // Create an array of promises to capture each location
                 const capturePromises = localisationData.locations.map((location, index) => {
                     return new Promise((resolve) => {
                         setTimeout(() => {
-                            // Zoomer et centrer la carte sur l'emplacement actuel
-                            map.setView(location, 10, {
-                                animate: true, // Animation pour le zoom
-                                pan: { animate: true }, // Animation pour centrer
+                            map.setView(location, 12, {
+                                animate: true,
+                                pan: { animate: true },
                             });
 
-                            // Attendre que la carte ait fini de se déplacer
+                            // Wait until the map movement is finished
                             map.once('moveend', async () => {
-                                // Capturer l'image de la carte
+                                // Capture the map image
                                 await captureMapImage();
-
-                                // Résoudre la promesse une fois la capture terminée
                                 resolve();
                             });
-                        }, index * 1500); // Espacer les captures de 1,5 seconde
+                        }, index * 1500); // Delay between captures
                     });
                 });
 
-                // Attendre que toutes les captures soient terminées
+                // Once all captures are done, dispatch the images in one batch
                 Promise.all(capturePromises).then(() => {
+                    dispatch(updateLocalisationCapturedImages({
+                        data: capturedImagesArray,
+                    }));
+
+                    // Navigate to the quiz page once captures are completed
                     navigate("/reservation-bivouac/" + nextPage);
                 });
             }
         }
     };
-
-
 
     // Add the default layers
     useEffect(() => {
@@ -837,7 +797,7 @@ export default function Localisation() {
             </div>
 
             <div id="map">
-                <MapContainer key={key} ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true}>
+                <MapContainer key={key} ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true} renderer={L.canvas()}>
 
                     <DynamicIconMarkersCentroidsContaminesZonesTolerees points={centroidesContaminesZonesTolerees} />
 
@@ -865,17 +825,19 @@ export default function Localisation() {
                         data={data}
                         style={styleGeoJSON}
                         onEachFeature={popupGeoJSON}
+                        renderer={L.canvas()}
                         />
                     ))}
                     {enableAddLocation === true && Object.values(geojsonData).map((data, index) => (
                         <GeoJSON key={index}
                         data={data}
                         style={styleGeoJSON}
+                        renderer={L.canvas()}
                         />
                     ))}
                     {/* Layer with the bivouac locations */}
                     {locationData.map((location, index) => (
-                        <Marker key={index} position={location} icon={iconLocation} />
+                        <Marker key={index} position={location} icon={iconLocation} renderer={L.canvas()} />
                     ))}
                     <div className="container-site-zone-location">
                         <ZoomToSiteZone />
