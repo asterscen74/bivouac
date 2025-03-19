@@ -40,8 +40,12 @@ export default function Localisation() {
     const previousPage = "informations";
     let resultsLocalisationData = resultsData.localisation;
     let resultsNbTentsZoningDate = resultsData.nb_tents_zoning_date;
+    let resultsTwoNextAvailableDatesZoning = resultsData.two_next_available_dates_zoning;
     const maxLocations = 2;
     const [nbTentsZoningDate, setNbTentsZoningDate] = useState(resultsNbTentsZoningDate);
+    const [nameCurrentAreaSelected, setNameCurrentAreaSelected] = useState("");
+    const [twoNextAvailableDatesZoning, setTwoNextAvailableDatesZoning] = useState(resultsTwoNextAvailableDatesZoning);
+    const [popupFullBookingNextAvailableDateShow, setPopupFullBookingNextAvailableDateShow] = useState(false);
     const minTentsReserved = 10;
 
     let mapData = store.getState().map.initialDisplay;
@@ -97,12 +101,33 @@ export default function Localisation() {
                     setNbTentsZoningDate(dataContent);
                 }
             } catch (error) {
-              console.error("Error fetching endpoint to retrieve the number of points:", error);
+              console.error("Error fetching endpoint to retrieve the number of tents per bivouac zone:", error);
+            }
+        };
+
+        const fetchTwoNextAvailableDatesZoning = async (start_date) => {
+            try {
+                let urlSource = `${api_url}reservations/next-availability/?start_date=${start_date}`;
+                const response = await fetch(urlSource);
+                if (response.status === 200) {
+                    const data = await response.json();
+                    const dataContent = data.content;
+                    dispatch(
+                        updateResults({
+                            part: "two_next_available_dates_zoning",
+                            data: dataContent,
+                        })
+                    );
+                    setTwoNextAvailableDatesZoning(dataContent);
+                }
+            } catch (error) {
+              console.error("Error fetching endpoint to retrieve the next two dates available by zoning:", error);
             }
         };
 
         if (infoDate) {
             fetchNbTentsZoningDate(infoDate);
+            fetchTwoNextAvailableDatesZoning(infoDate);
         }
 
     }, [resultsInfosData]);
@@ -156,6 +181,7 @@ export default function Localisation() {
                     const resultIntersectionPointInPolygon = turf.booleanPointInPolygon(turfPoint, turfPolygon);
                     if (resultIntersectionPointInPolygon === true) {
                         nameAreaNewLocation = featurePropertiesNom;
+                        setNameCurrentAreaSelected(nameAreaNewLocation);
                         // Feature not reservable
                         if (featureReservable === false) {
                             locationReservable = false;
@@ -178,6 +204,7 @@ export default function Localisation() {
                                     let nbTents = nbTentsZoningDate[featurePropertiesNom][dateReserved];
                                     // Quota reached
                                     if (nbTents >= featureQuotas) {
+                                        setPopupFullBookingNextAvailableDateShow(true);
                                         locationReservable = false;
                                     }
                                 }
@@ -361,7 +388,10 @@ export default function Localisation() {
 
                             // Quota reached
                             if (finalNbTents >= featurePropertiesQuotas) {
-                                textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")}</p>`;
+                                let firstDateAvailable = moment(twoNextAvailableDatesZoning[featurePropertiesNom][0]).format('DD/MM/YYYY');
+                                let secondDateAvailable = moment(twoNextAvailableDatesZoning[featurePropertiesNom][1]).format('DD/MM/YYYY');
+
+                                textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")} <br><br> <strong>${t("Localisation Content.Next available date")} <ul><li>${firstDateAvailable}</li><li>${secondDateAvailable}</li></ul>.</strong></p>`;
                             }
                             else {
                                 textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Less than")} ${estimatedTents} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}</p>`;
@@ -770,6 +800,37 @@ export default function Localisation() {
                         <DialogActions style={{ justifyContent: "center" }}>
                             <Button
                                 onClick={() => setPopupWrongLocationShow(false)}
+                                style={{ backgroundColor: "#007854", color: "#ffffff" }}
+                                variant="contained"
+                            >
+                                OK
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+
+                    {/* Popup when quota reached, suggestion of next available date */}
+                    <Dialog
+                        open={popupFullBookingNextAvailableDateShow}
+                        onClose={() => setPopupFullBookingNextAvailableDateShow(false)}
+                        maxWidth="xs"
+                        fullWidth={false}
+                        PaperProps={{
+                        style: {
+                            position: 'fixed',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            maxWidth: '250px'
+                        },
+            }}
+                    >
+                        <DialogContent style={{ padding: "0px 15px" }}>
+                            <p>{t("Invalid location next date available")}</p>
+                            <p>{twoNextAvailableDatesZoning && nameCurrentAreaSelected !== "" && moment(twoNextAvailableDatesZoning[nameCurrentAreaSelected][locationData.length === 0 ? 0 : 1]).format('DD/MM/YYYY')}</p>
+                        </DialogContent>
+                        <DialogActions style={{ justifyContent: "center" }}>
+                            <Button
+                                onClick={() => setPopupFullBookingNextAvailableDateShow(false)}
                                 style={{ backgroundColor: "#007854", color: "#ffffff" }}
                                 variant="contained"
                             >

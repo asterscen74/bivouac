@@ -20,8 +20,12 @@ export const general = createSlice({
         const data = props.payload.data;
         if (part === "infos") {
             state.infos = data;
-        } else if (part === "nb_tents_zoning_date") {
+        }
+        else if (part === "nb_tents_zoning_date") {
             state.nb_tents_zoning_date = data;
+        }
+        else if (part === "two_next_available_dates_zoning") {
+            state.two_next_available_dates_zoning = data;
         }
         else if (part === "localisation") {
             state.localisation = data;
@@ -44,6 +48,7 @@ export const general = createSlice({
     resetResults: (state) => {
         state.infos = {};
         state.nb_tents_zoning_date = {};
+        state.two_next_available_dates_zoning = {};
         state.localisation = {
             locations: []
         };
