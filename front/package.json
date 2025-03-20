@@ -21,6 +21,7 @@
     "@react-email/link": "^0.0.8",
     "@reduxjs/toolkit": "^1.8.2",
     "@turf/turf": "^6.5.0",
+    "html2canvas": "^1.4.1",
     "i18next": "^23.8.1",
     "leaflet": "^1.9.4",
     "moment": "^2.30.1",

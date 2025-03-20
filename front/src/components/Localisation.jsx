@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import store from "../store";
 import api_url from "../settings-server.js";
 import { useDispatch } from "react-redux";
-import { updateLocalisationPositions, updateResults } from "../stores/Results";
+import { updateLocalisationPositions, updateResults, updateLocalisationCapturedImages, clearLocalisationCapturedImages } from "../stores/Results";
 import markerLocation from '../assets/img/marker_location.svg'
 import Select from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
@@ -22,6 +22,8 @@ import * as turf from '@turf/turf';
 import { ListSubheader } from '@mui/material';
 import zoomLocation from '../assets/img/zoom_location.svg';
 import { Dialog, DialogContent, DialogActions } from "@mui/material";
+import html2canvas from "html2canvas";
+// import leafletImage from 'leaflet-image';
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -142,16 +144,13 @@ export default function Localisation() {
 
     // Save positions in the store
     useEffect(() => {
-        dispatch(updateLocalisationPositions({
-                data: locationData,
-            }))
+        dispatch(updateLocalisationPositions({ data: locationData }));
 
         if (maxLocations) {
             if (locationData.length < maxLocations) {
                 setDisplayMaximumLocationReached(false);
                 setEnableAddLocation(true);
 
-                // Reset the first zone reservation name
                 if (locationData.length === 0 && nameAreaFirstLocation !== "") {
                     setNameAreaFirstLocation("");
                 }
@@ -160,6 +159,7 @@ export default function Localisation() {
                 setEnableAddLocation(false);
             }
         }
+
     }, [locationData, dispatch]);
 
     // Save the coordinates of the click
@@ -248,20 +248,84 @@ export default function Localisation() {
         navigate("/reservation-bivouac/" + previousPage);
     };
 
-    // Navigate to quizz page
+    // Capture the locations and navigate to quizz page
     const nextStep = (event) => {
         let nextPage = event.target.name;
         const localisationData = store.getState().results.localisation;
-        const nbLocations = localisationData.locations.length
+        const nbLocations = localisationData.locations.length;
+
         if (nbLocations === 0) {
             setDisplayAlert(true);
         } else {
             setDisplayAlert(false);
-            navigate("/reservation-bivouac/" + nextPage);
+
+            // Delete previous captured images from the Redux store
+            dispatch(clearLocalisationCapturedImages());
+
+            // Temporary array to store captured images before dispatching
+            let capturedImagesArray = [];
+
+            // Capture the map using html2canvas
+            const captureMapImage = () => {
+                return new Promise((resolve) => {
+                    if (mapRef.current) {
+                        const mapElement = document.getElementById("map");
+                        const selectSiteZoneElement = document.getElementById("site-zone-select");
+                        const legendElement = document.querySelector(".legend-container");
+                        if (mapElement) {
+                            if (selectSiteZoneElement) selectSiteZoneElement.style.display = "none";
+                            if (legendElement) legendElement.style.display = "none";
+                            // Force the redrawing of the map
+                            mapRef.current.invalidateSize();
+
+                            setTimeout(async () => {
+                                const canvas = await html2canvas(mapElement, {
+                                    useCORS: true,
+                                    allowTaint: true,
+                                });
+                                    const imageUrl = canvas.toDataURL("image/png");
+
+                                capturedImagesArray.push(imageUrl);
+                                resolve();
+                            }, 750);
+                        }
+                    }
+                });
+            };
+
+            if (nbLocations > 0 && mapRef.current) {
+                const map = mapRef.current;
+
+                // Create an array of promises to capture each location
+                const capturePromises = localisationData.locations.map((location, index) => {
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            map.setView(location, 12, {
+                                animate: true,
+                                pan: { animate: true },
+                            });
+
+                            // Wait until the map movement is finished
+                            map.once('moveend', async () => {
+                                // Capture the map image
+                                await captureMapImage();
+                                resolve();
+                            });
+                        }, index * 1500); // Delay between captures
+                    });
+                });
+
+                // Once all captures are done, dispatch the images in one batch
+                Promise.all(capturePromises).then(() => {
+                    dispatch(updateLocalisationCapturedImages({
+                        data: capturedImagesArray,
+                    }));
+
+                    // Navigate to the quiz page once captures are completed
+                    navigate("/reservation-bivouac/" + nextPage);
+                });
+            }
         }
-        // // // comment above and uncomment below to move through the steps quickly without filling in the form or using routing
-        // let nextPage = event.target.name;
-        // navigate("/reservation-bivouac/" + nextPage)
     };
 
     // Add the default layers
@@ -733,7 +797,7 @@ export default function Localisation() {
             </div>
 
             <div id="map">
-                <MapContainer key={key} ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true}>
+                <MapContainer key={key} ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true} renderer={L.canvas()}>
 
                     <DynamicIconMarkersCentroidsContaminesZonesTolerees points={centroidesContaminesZonesTolerees} />
 
@@ -761,17 +825,19 @@ export default function Localisation() {
                         data={data}
                         style={styleGeoJSON}
                         onEachFeature={popupGeoJSON}
+                        renderer={L.canvas()}
                         />
                     ))}
                     {enableAddLocation === true && Object.values(geojsonData).map((data, index) => (
                         <GeoJSON key={index}
                         data={data}
                         style={styleGeoJSON}
+                        renderer={L.canvas()}
                         />
                     ))}
                     {/* Layer with the bivouac locations */}
                     {locationData.map((location, index) => (
-                        <Marker key={index} position={location} icon={iconLocation} />
+                        <Marker key={index} position={location} icon={iconLocation} renderer={L.canvas()} />
                     ))}
                     <div className="container-site-zone-location">
                         <ZoomToSiteZone />
