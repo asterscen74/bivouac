@@ -1,5 +1,16 @@
+/* Conteneur principal */
+.summary-and-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 800px; /* Plus large pour permettre l'affichage en ligne */
+    margin: auto;
+}
+
+/* Récapitulatif */
 .reservation-summary {
-    max-width: 400px;
+    width: 100%;
     background: #f9f9f9;
     border-radius: 10px;
     padding: 20px;
@@ -7,48 +18,68 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: auto;
 }
 
+/* Titre du récapitulatif */
 .reservation-summary h2 {
-font-size: 1.2rem;
-margin-bottom: 15px;
-color: #333;
-text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
 }
 
+/* Élément du récapitulatif */
 .summary-item {
-display: flex;
-justify-content: space-between;
-padding: 10px 0;
-border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
 }
 
 .summary-item:last-child {
-border-bottom: none;
+    border-bottom: none;
 }
 
 .label {
-font-weight: bold;
-color: #555;
+    font-weight: bold;
+    color: #555;
 }
 
 .value {
-color: #222;
+    color: #222;
 }
 
 .captured-images {
-    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.captured-images h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
 }
 
 .images-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
+    justify-content: center;
 }
 
 .captured-image {
-    /* width: 100px;
-    height: 100px; */
+    width: 400px;
+    height: 400px;
     object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+}
+
+@media (max-width: 850px) {
+    .images-container {
+        flex-direction: column; /* Images en colonne sur mobile */
+        align-items: center;
+    }
 }

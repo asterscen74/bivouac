@@ -132,33 +132,32 @@ export default function Thanks() {
                 </Alert>
             </div>}
 
-            {/* Booking summary */}
-            {
-                displaySummaryBooking &&
-                <div className="reservation-summary">
-                    <h2>Récapitulatif de votre réservation</h2>
-                    <div className="summary-item">
-                        <span className="label">Date :</span> <span className="value">{resultsInfosData.date}</span>
+            <div className="summary-and-images">
+                {/* Booking summary */}
+                {displaySummaryBooking && (
+                    <div className="reservation-summary">
+                        <h2>{t("Summary of your booking")}</h2>
+                        <div className="summary-item">
+                            <span className="label">{t("Date")}</span> <span className="value">{resultsInfosData.date}</span>
+                        </div>
+                        <div className="summary-item">
+                            <span className="label">{t("Number of people")}</span> <span className="value">{resultsInfosData.nb_people}</span>
+                        </div>
                     </div>
-                    <div className="summary-item">
-                        <span className="label">Nombre de personnes :</span> <span className="value">{resultsInfosData.nb_people}</span>
-                    </div>
-                </div>
-            }
+                )}
 
                 {/* Display captured images */}
-                {
-                capturedImages.length > 0 && (
+                {capturedImages.length > 0 && (
                     <div className="captured-images">
-                        <h2>{t("Captured Images")}</h2>
+                        <h2>{t("Reminder of reserved areas")}</h2>
                         <div className="images-container">
                             {capturedImages.map((image, index) => (
                                 <img key={index} src={image} alt={`Captured ${index}`} className="captured-image" />
                             ))}
                         </div>
                     </div>
-                )
-            }
+                )}
+            </div>
 
             {/* Buttons */}
             <Box sx={{ display: 'flex', flexDirection: 'row-reverse', p: 2}}>
