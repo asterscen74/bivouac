@@ -764,6 +764,11 @@ export default function Localisation() {
                                 iconSize: [iconSize, iconSize],
                                 iconAnchor: iconAnchor,
                             })}
+                            eventHandlers={{
+                                click: () => {
+                                    map.flyTo([point.lat, point.lon], 18, {duration: 1.2});
+                                },
+                            }}
                         />
                     );
                 }
