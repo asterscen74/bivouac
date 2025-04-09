@@ -33,6 +33,9 @@ export default function Localisation() {
     const [displayAlert, setDisplayAlert] = useState(
         false
     );
+    const [disableButtonNextStep, setDisableButtonNextStep] = useState(false);
+    // Overlay to prevent interaction with the map during the capture
+    const [displayOverlayCaptureImages, setDisplayOverlayCaptureImages] = useState(false);
 
     let resultsData = store.getState().results;
     let resultsInfosData = resultsData.infos
@@ -259,6 +262,11 @@ export default function Localisation() {
         } else {
             setDisplayAlert(false);
 
+            // Set the overlay to prevent interaction with the map during the capture
+            setDisplayOverlayCaptureImages(true)
+            setDisableButtonNextStep(true);
+
+
             // Delete previous captured images from the Redux store
             dispatch(clearLocalisationCapturedImages());
 
@@ -270,11 +278,7 @@ export default function Localisation() {
                 return new Promise((resolve) => {
                     if (mapRef.current) {
                         const mapElement = document.getElementById("map");
-                        const selectSiteZoneElement = document.getElementById("site-zone-select");
-                        const legendElement = document.querySelector(".legend-container");
                         if (mapElement) {
-                            if (selectSiteZoneElement) selectSiteZoneElement.style.display = "none";
-                            if (legendElement) legendElement.style.display = "none";
                             // Force the redrawing of the map
                             mapRef.current.invalidateSize();
 
@@ -295,6 +299,13 @@ export default function Localisation() {
 
             if (nbLocations > 0 && mapRef.current) {
                 const map = mapRef.current;
+
+                mapRef.current.dragging.disable();
+                mapRef.current.scrollWheelZoom.disable();
+                mapRef.current.doubleClickZoom.disable();
+                mapRef.current.boxZoom.disable();
+                mapRef.current.keyboard.disable();
+                mapRef.current.touchZoom.disable();
 
                 // Create an array of promises to capture each location
                 const capturePromises = localisationData.locations.map((location, index) => {
@@ -320,6 +331,15 @@ export default function Localisation() {
                     dispatch(updateLocalisationCapturedImages({
                         data: capturedImagesArray,
                     }));
+
+                    setDisableButtonNextStep(false);
+                    setDisplayOverlayCaptureImages(false);
+                    mapRef.current.dragging.enable();
+                    mapRef.current.scrollWheelZoom.enable();
+                    mapRef.current.doubleClickZoom.enable();
+                    mapRef.current.boxZoom.enable();
+                    mapRef.current.keyboard.enable();
+                    mapRef.current.touchZoom.enable();
 
                     // Navigate to the quiz or summary page once captures are completed
                     navigate("/reservation-bivouac/" + nextPage);
@@ -845,7 +865,8 @@ export default function Localisation() {
                         <Marker key={index} position={location} icon={iconLocation} renderer={L.canvas()} />
                     ))}
                     <div className="container-site-zone-location">
-                        <ZoomToSiteZone />
+                        {/* Hide site zone drop-down during the capture phase */}
+                        {!displayOverlayCaptureImages && <ZoomToSiteZone />}
                         <AddClickEvent />
                     </div>
 
@@ -910,8 +931,24 @@ export default function Localisation() {
                         </DialogActions>
                     </Dialog>
 
-                    <MapLegend />
+                    {/* Hide legend during the capture phase */}
+                    {!displayOverlayCaptureImages && <MapLegend />}
                     <SetMapProperties />
+
+                    {/* Overlay to prevent interaction with the map during the capture */}
+                    <div
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            zIndex: 9999,
+                            display: displayOverlayCaptureImages ? 'block' : 'none',
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    />
                 </MapContainer>
             </div>
 
@@ -925,6 +962,7 @@ export default function Localisation() {
                 <Button
                     variant="outlined"
                     onClick={nextStep}
+                    disabled={disableButtonNextStep}
                     name={resultsQuizzCompleted ? "thanks" : "quizz"}
                 >
                     {t("Next step")}
