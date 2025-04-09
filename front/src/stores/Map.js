@@ -76,54 +76,6 @@ export const map = createSlice({
                 zoom: 13,
                 type: "zone"
             },
-            "col_montets": {
-                name: "Col des Montets",
-                center: [45.9971, 6.9193],
-                zoom: 13,
-                type: "zone"
-            },
-            "combe_barme": {
-                name: "Combe de Barme",
-                center: [45.9814, 6.8525],
-                zoom: 13,
-                type: "zone"
-            },
-            "vallorcine": {
-                name: "Commune de Vallorcine",
-                center: [46.0301, 6.9263],
-                zoom: 13,
-                type: "zone"
-            },
-            "envers_aiguilles_rouges": {
-                name: "Envers des Aiguilles Rouges",
-                center: [45.9550, 6.8372],
-                zoom: 13,
-                type: "zone"
-            },
-            "foret_carlaveyron": {
-                name: "Forêt de Carlaveyron",
-                center: [45.9313, 6.8013],
-                zoom: 13,
-                type: "zone"
-            },
-            "foret_joux": {
-                name: "Forêt de la Joux",
-                center: [45.9757, 6.9067],
-                zoom: 13,
-                type: "zone"
-            },
-            "foret_vallorcine": {
-                name: "Forêt de Vallorcine",
-                center: [46.0111, 6.8990],
-                zoom: 13,
-                type: "zone"
-            },
-            "lac_blanc": {
-                name: "Lac Blanc",
-                center: [45.9819, 6.8906],
-                zoom: 13,
-                type: "zone"
-            },
             "lac_cornu_lacs_noirs": {
                 name: "Lac Cornu et Lacs Noirs",
                 center: [45.9610, 6.8495],
@@ -133,42 +85,6 @@ export const map = createSlice({
             "cheserys": {
                 name: "Les Cheserys",
                 center: [45.9784, 6.8984],
-                zoom: 13,
-                type: "zone"
-            },
-            "lacs_jovet": {
-                name: "Les Lacs Jovet",
-                center: [45.7545, 6.7299],
-                zoom: 13,
-                type: "zone"
-            },
-            "montjus": {
-                name: "Montjus",
-                center: [45.9957, 6.8435],
-                zoom: 13,
-                type: "zone"
-            },
-            "plateau_carlaveyron": {
-                name: "Plateau de Carlaveyron",
-                center: [45.9253, 6.8156],
-                zoom: 13,
-                type: "zone"
-            },
-            "posettes": {
-                name: "Posettes",
-                center: [46.0032, 6.9299],
-                zoom: 13,
-                type: "zone"
-            },
-            "praz_torrent": {
-                name: "Praz Torrent",
-                center: [46.0055, 6.9104],
-                zoom: 13,
-                type: "zone"
-            },
-            "remuaz": {
-                name: "Remuaz",
-                center: [45.9940, 6.9106],
                 zoom: 13,
                 type: "zone"
             },
@@ -196,24 +112,6 @@ export const map = createSlice({
                 zoom: 13,
                 type: "zone"
             },
-            "secteur_perseverance": {
-                name: "Secteur Persévérance",
-                center: [45.9939, 6.8939],
-                zoom: 13,
-                type: "zone"
-            },
-            "vallon_berard": {
-                name: "Vallon de Bérard",
-                center: [45.9980, 6.8728],
-                zoom: 13,
-                type: "zone"
-            },
-            "vallon_berard_replat": {
-                name: "Vallon de Bérard replat",
-                center: [46.0043, 6.8712],
-                zoom: 13,
-                type: "zone"
-            }
         },
         centroidesContaminesZonesTolerees: [
             { lat: 45.7587242404128, lon: 6.70966921430888 },
