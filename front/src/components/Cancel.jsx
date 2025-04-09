@@ -1,6 +1,6 @@
 import "../styles/Cancel.css";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { TextField, Button, Box, Alert } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -8,12 +8,14 @@ import api_url from "../settings-server.js";
 
 export default function Cancel() {
     const { uuid } = useParams();
+    const navigate = useNavigate();
     const { t } = useTranslation();
     const [email, setEmail] = useState("");
     const [alertSeverity, setAlertSeverity] = useState("");
     const [alertText, setAlertText] = useState("");
     const [cancelReservation, setCancelReservation] = useState(false);  // Etat pour gérer l'annulation
     const [displayCircularProgress, setDisplayCircularProgress] = useState(false);
+    const homePage = "impacts-bivouac"
 
     const handleCancel = () => {
         setDisplayCircularProgress(true);
@@ -46,6 +48,11 @@ export default function Cancel() {
             else {
                 setAlertSeverity("success");
                 setAlertText(t("Cancellation confirmed"))
+
+                // Navigate to the bivouac impacts page once cancellation has been confirmed
+                setTimeout(() => {
+                    navigate(`/${homePage}`);
+                  }, 3000);
 
             }
             setDisplayCircularProgress(false);
