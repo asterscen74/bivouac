@@ -10,6 +10,7 @@ server {
 
     ssl_certificate /etc/letsencrypt/live/{{ nginx_server_name }}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/{{ nginx_server_name }}/privkey.pem;
+    client_max_body_size 20M;
 
     location /api/ {
         proxy_pass http://127.0.0.1:{{ api_fastapi_server_port }}/;
