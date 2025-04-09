@@ -10,6 +10,7 @@ export const general = createSlice({
         capturedImages: [],
     },
     quizz: {},
+    quizzCompleted: false,
     reservation: {
         confirmed: false,
         output_message: ""
@@ -53,6 +54,9 @@ export const general = createSlice({
     clearLocalisationCapturedImages: (state) => {
         state.localisation.capturedImages = [];
     },
+    updateQuizzCompleted: (state) => {
+        state.quizzCompleted = true;
+    },
     resetResults: (state) => {
         state.infos = {};
         state.nb_tents_zoning_date = {};
@@ -62,10 +66,11 @@ export const general = createSlice({
             capturedImages: []
         };
         state.quizz = {};
+        state.quizzCompleted = false;
   },
 }
 });
 
-export const { updateResults, updateReservation, updateLocalisationPositions, updateLocalisationCapturedImages, clearLocalisationCapturedImages, resetResults } = general.actions;
+export const { updateResults, updateReservation, updateLocalisationPositions, updateLocalisationCapturedImages, clearLocalisationCapturedImages, updateQuizzCompleted, resetResults } = general.actions;
 
 export default general.reducer;

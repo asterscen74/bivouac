@@ -23,7 +23,6 @@ import { ListSubheader } from '@mui/material';
 import zoomLocation from '../assets/img/zoom_location.svg';
 import { Dialog, DialogContent, DialogActions } from "@mui/material";
 import html2canvas from "html2canvas";
-// import leafletImage from 'leaflet-image';
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -43,6 +42,7 @@ export default function Localisation() {
     let resultsLocalisationData = resultsData.localisation;
     let resultsNbTentsZoningDate = resultsData.nb_tents_zoning_date;
     let resultsTwoNextAvailableDatesZoning = resultsData.two_next_available_dates_zoning;
+    let resultsQuizzCompleted = resultsData.quizzCompleted
     const maxLocations = 2;
     const [nbTentsZoningDate, setNbTentsZoningDate] = useState(resultsNbTentsZoningDate);
     const [nameCurrentAreaSelected, setNameCurrentAreaSelected] = useState("");
@@ -248,7 +248,7 @@ export default function Localisation() {
         navigate("/reservation-bivouac/" + previousPage);
     };
 
-    // Capture the locations and navigate to quizz page
+    // Capture the locations and navigate to quizz or summary page
     const nextStep = (event) => {
         let nextPage = event.target.name;
         const localisationData = store.getState().results.localisation;
@@ -321,7 +321,7 @@ export default function Localisation() {
                         data: capturedImagesArray,
                     }));
 
-                    // Navigate to the quiz page once captures are completed
+                    // Navigate to the quiz or summary page once captures are completed
                     navigate("/reservation-bivouac/" + nextPage);
                 });
             }
@@ -925,7 +925,7 @@ export default function Localisation() {
                 <Button
                     variant="outlined"
                     onClick={nextStep}
-                    name="quizz"
+                    name={resultsQuizzCompleted ? "thanks" : "quizz"}
                 >
                     {t("Next step")}
                 </Button>
