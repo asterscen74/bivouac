@@ -61,7 +61,7 @@ export const map = createSlice({
             "aire_bivouac_balme": {
                 name: "Aire de bivouac de la Balme",
                 center: [45.7587, 6.7097],
-                zoom: 13,
+                zoom: 15,
                 type: "zone"
             },
             "aire_bivouac_giettaz": {
