@@ -46,7 +46,7 @@ export default function Localisation() {
     let resultsNbTentsZoningDate = resultsData.nb_tents_zoning_date;
     let resultsTwoNextAvailableDatesZoning = resultsData.two_next_available_dates_zoning;
     let resultsQuizzCompleted = resultsData.quizzCompleted
-    const maxLocations = 2;
+    const maxLocations = 1;
     const [nbTentsZoningDate, setNbTentsZoningDate] = useState(resultsNbTentsZoningDate);
     const [nameCurrentAreaSelected, setNameCurrentAreaSelected] = useState("");
     const [twoNextAvailableDatesZoning, setTwoNextAvailableDatesZoning] = useState(resultsTwoNextAvailableDatesZoning);
@@ -63,11 +63,6 @@ export default function Localisation() {
     const [enableAddLocation, setEnableAddLocation] = useState(false);
     const [geojsonData, setGeojsonData] = useState({});
     const [locationData, setLocationData] = useState(resultsLocalisationData.locations);
-    // Reember : you can't reserve the same zone twice
-    const [nameAreaFirstLocation, setNameAreaFirstLocation] = useState("");
-    const [popupWrongLocationShow, setPopupWrongLocationShow] = useState(false);
-
-
     const [displayMaximumLocationReached, setDisplayMaximumLocationReached] = useState(false);
     const [clickCoordinates, setClickCoordinates] = useState([]);
 
@@ -153,10 +148,6 @@ export default function Localisation() {
             if (locationData.length < maxLocations) {
                 setDisplayMaximumLocationReached(false);
                 setEnableAddLocation(true);
-
-                if (locationData.length === 0 && nameAreaFirstLocation !== "") {
-                    setNameAreaFirstLocation("");
-                }
             } else {
                 setDisplayMaximumLocationReached(true);
                 setEnableAddLocation(false);
@@ -230,16 +221,6 @@ export default function Localisation() {
                 // First location
                 if (locationData.length === 0) {
                     setLocationData(newLocationData);
-                    setNameAreaFirstLocation(nameAreaNewLocation);
-                } else {
-                    // Second location in a different zone
-                    if (nameAreaNewLocation !== nameAreaFirstLocation) {
-                        setLocationData(newLocationData);
-                    }
-                    // Second location in the same zone
-                    else {
-                        setPopupWrongLocationShow(true);
-                    }
                 }
             }
         }
@@ -653,10 +634,6 @@ export default function Localisation() {
         const removeLastLocation = () => {
             const newLocationData = locationData.slice(0, -1);
             setLocationData(newLocationData);
-            // Reset the first zone reservation name
-            if (locationData.length === 1) {
-                setNameAreaFirstLocation("")
-            }
         }
 
         return (
@@ -869,36 +846,6 @@ export default function Localisation() {
                         {!displayOverlayCaptureImages && <ZoomToSiteZone />}
                         <AddClickEvent />
                     </div>
-
-                    {/* Popup when wrong location (2 locations in the same zone) */}
-                    <Dialog
-                        open={popupWrongLocationShow}
-                        onClose={() => setPopupWrongLocationShow(false)}
-                        maxWidth="xs"
-                        fullWidth={false}
-                        PaperProps={{
-                        style: {
-                            position: 'fixed',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            maxWidth: '250px'
-                        },
-            }}
-                    >
-                        <DialogContent style={{ padding: "0px 15px" }}>
-                            <p>{t("Invalid location")}</p>
-                        </DialogContent>
-                        <DialogActions style={{ justifyContent: "center" }}>
-                            <Button
-                                onClick={() => setPopupWrongLocationShow(false)}
-                                style={{ backgroundColor: "#007854", color: "#ffffff" }}
-                                variant="contained"
-                            >
-                                OK
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
 
                     {/* Popup when quota reached, suggestion of next available date */}
                     <Dialog
