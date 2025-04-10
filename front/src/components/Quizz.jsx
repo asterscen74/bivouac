@@ -8,10 +8,13 @@ import AlertTitle from '@mui/material/AlertTitle';
 import QuizzComponent from "./QuizzComponent";
 import store from "../store";
 import { useEffect, useState } from "react";
+import { updateQuizzCompleted } from "../stores/Results";
+import { useDispatch } from "react-redux";
 
 export default function Quizz() {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const dispatch = useDispatch();
     const numberAnswersExpected = 6;
     const [displayAlert, setDisplayAlert] = useState(
         false
@@ -47,6 +50,9 @@ export default function Quizz() {
             setDisplayAlert(true);
         } else {
             setDisplayAlert(false);
+
+            // Quizz completed store update
+            dispatch(updateQuizzCompleted());
             navigate("/reservation-bivouac/" + nameNextPage)
         }
     };
