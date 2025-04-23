@@ -243,6 +243,9 @@ export default function Localisation() {
         } else {
             setDisplayAlert(false);
 
+            // Fix a freeze bug on export
+            mapRef.current.setView([45.86, 6.79], 10);
+
             // Set the overlay to prevent interaction with the map during the capture
             setDisplayOverlayCaptureImages(true)
             setDisableButtonNextStep(true);
@@ -268,7 +271,7 @@ export default function Localisation() {
                                     useCORS: true,
                                     allowTaint: true,
                                 });
-                                    const imageUrl = canvas.toDataURL("image/png");
+                                const imageUrl = canvas.toDataURL("image/png");
 
                                 capturedImagesArray.push(imageUrl);
                                 resolve();
