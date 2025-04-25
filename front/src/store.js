@@ -8,6 +8,7 @@ import Impacts from "./stores/Impacts";
 import LegalNotices from "./stores/LegalNotices";
 import GoodPractices from "./stores/GoodPractices";
 import NatureReserve from "./stores/NatureReserve";
+import Faq from "./stores/Faq";
 
 export default configureStore({
     reducer: {
@@ -20,5 +21,6 @@ export default configureStore({
         legalNotices: LegalNotices,
         goodPractices: GoodPractices,
         natureReserve: NatureReserve,
+        faq: Faq,
     },
 });

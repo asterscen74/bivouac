@@ -23,6 +23,8 @@ import { ListSubheader } from '@mui/material';
 import zoomLocation from '../assets/img/zoom_location.svg';
 import { Dialog, DialogContent, DialogActions } from "@mui/material";
 import html2canvas from "html2canvas";
+import ReactDOM from 'react-dom/client';
+import PropTypes from 'prop-types';
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -60,11 +62,11 @@ export default function Localisation() {
     var completeArea = false;
 
     const [defaultSiteZone, setDefaultSiteZone] = useState("");
-    const [enableAddLocation, setEnableAddLocation] = useState(false);
     const [geojsonData, setGeojsonData] = useState({});
     const [locationData, setLocationData] = useState(resultsLocalisationData.locations);
-    const [displayMaximumLocationReached, setDisplayMaximumLocationReached] = useState(false);
     const [clickCoordinates, setClickCoordinates] = useState([]);
+    const popupClickCoordsRef = useRef(null);
+
 
     // Listen for language changes
     useEffect(() => {
@@ -143,23 +145,12 @@ export default function Localisation() {
     // Save positions in the store
     useEffect(() => {
         dispatch(updateLocalisationPositions({ data: locationData }));
-
-        if (maxLocations) {
-            if (locationData.length < maxLocations) {
-                setDisplayMaximumLocationReached(false);
-                setEnableAddLocation(true);
-            } else {
-                setDisplayMaximumLocationReached(true);
-                setEnableAddLocation(false);
-            }
-        }
-
     }, [locationData, dispatch]);
+
 
     // Save the coordinates of the click
     useEffect(() => {
         if (clickCoordinates.length > 0 ) {
-            if (enableAddLocation === true) {
                 // Check if the location is in a reservable zone
                 // Check if the quota for the number of tents has been reached
                 let locationReservable = true;
@@ -216,16 +207,19 @@ export default function Localisation() {
             }
 
             // Location in a reservable zone
-            if (locationReservable === true) {
-                const newLocationData = [...locationData, clickCoordinates ];
-                // First location
-                if (locationData.length === 0) {
-                    setLocationData(newLocationData);
+            if (locationReservable) {
+                let updatedLocationData = [...locationData];
+
+                if (maxLocations && updatedLocationData.length >= maxLocations) {
+                    updatedLocationData = updatedLocationData.slice(0, maxLocations - 1);
                 }
+
+                updatedLocationData.push(clickCoordinates);
+                setLocationData(updatedLocationData);
+
             }
-        }
-        }
-    }, [clickCoordinates, dispatch]);
+            }
+        }, [clickCoordinates]);
 
     // Navigate to informations page
     const previousStep = () => {
@@ -419,12 +413,93 @@ export default function Localisation() {
 
     };
 
+
+    const LocationPopupNoLocation = ({ zoneType, nom, reglementation }) => {
+        return (
+            <div>
+              <p><strong>{zoneType} - {nom}</strong></p>
+              <p>{reglementation}</p>
+          </div>
+        );
+      };
+
+    LocationPopupNoLocation.propTypes = {
+        zoneType: PropTypes.string.isRequired,
+        nom: PropTypes.string.isRequired,
+        reglementation: PropTypes.string.isRequired,
+      };
+
+    const LocationPopupAddLocation = ({ reservable, zoneType, nom, reglementation, capacity, reservation, nextDate, firstDate, secondDate, report, onAddLocation, buttonText }) => {
+        return (
+          <div>
+            <p><strong>{zoneType} - {nom}</strong></p>
+            <p>{reglementation}</p>
+            <p>{capacity}</p>
+            <div>
+                <p className="paragraph-nb-tents-reserved">
+                <div>
+                {reservation}
+                </div>
+                {nextDate && (
+                    <strong>
+                    {nextDate}
+                    <ul>
+                        <li>{firstDate}</li>
+                        <li>{secondDate}</li>
+                    </ul>
+                    </strong>
+                )}
+                </p>
+            </div>
+            {report && (
+                <div
+                className="report"
+                dangerouslySetInnerHTML={{ __html: report }}
+                />
+            )}
+            {reservable === true &&(
+                <div className="container-buttons-location">
+                    <Button onClick={onAddLocation} variant="contained">
+                    {buttonText}
+                    </Button>
+                </div>
+            )}
+          </div>
+        );
+      };
+
+    LocationPopupAddLocation.propTypes = {
+        reservable: PropTypes.bool.isRequired,
+        zoneType: PropTypes.string.isRequired,
+        nom: PropTypes.string.isRequired,
+        reglementation: PropTypes.string.isRequired,
+        capacity: PropTypes.string.isRequired,
+        reservation: PropTypes.string.isRequired,
+        nextDate: PropTypes.string.isRequired,
+        firstDate: PropTypes.string.isRequired,
+        secondDate: PropTypes.string.isRequired,
+        report: PropTypes.string.isRequired,
+        onAddLocation: PropTypes.func.isRequired,
+        buttonText: PropTypes.string.isRequired,
+      };
+
     // Customize the popup
     const popupGeoJSON = (feature, layer) => {
         const featureLayerName = feature.layername;
         const featureProperties = feature.properties;
 
-        let popupContent = "";
+        layer.on('click', (e) => {
+            const { lat, lng } = e.latlng;
+            popupClickCoordsRef.current = [lat, lng];
+          });
+
+        const onAddLocation = () => {
+            const coords = popupClickCoordsRef.current;
+            if (!coords) return;
+            setClickCoordinates(coords);
+            layer.closePopup();
+        };
+
         // Layer zonage_bivouac
         if (featureLayerName === "zonage_bivouac") {
 
@@ -432,18 +507,40 @@ export default function Localisation() {
             const featurePropertiesNom = featureProperties["nom"];
             const featurePropertiesReglementation = featureProperties["reglementation"];
             const featurePropertiesQuotas = featureProperties["quotas"];
+            const featurePropertiesReservable = featureProperties["reservable"];
             // Déconseillé
             if (featurePropertiesBivouac === "Déconseillé") {
-                popupContent = `<div>
-                <p><strong>${t("Localisation Content.Not recommended area")} - ${featurePropertiesNom}</strong></p>
-                <p>${t("Localisation Content.Reglementation." + featurePropertiesReglementation)}</p>
-                </div>`;
-                layer.bindPopup(popupContent);
+                const popupContainer = document.createElement('div');
+                const root = ReactDOM.createRoot(popupContainer);
+
+                layer.bindPopup(popupContainer);
+
+                layer.on('popupopen', () => {
+                    root.render(
+                    <LocationPopupAddLocation
+                        reservable={featurePropertiesReservable}
+                        zoneType={t("Localisation Content.Not recommended area")}
+                        nom={featurePropertiesNom}
+                        reglementation={t("Localisation Content.Reglementation." + featurePropertiesReglementation)}
+                        capacity=''
+                        reservation=''
+                        nextDate=''
+                        firstDate=''
+                        secondDate=''
+                        report=''
+                        onAddLocation={onAddLocation}
+                        buttonText={t("Add location")}
+                    />
+                    );
+                });
             // Toléré
             } else if (featurePropertiesBivouac === "Toléré") {
                 // Number of tents reserved
                 let featurePropertiesNbTentsReserved = "";
                 let textNbTentsReserved = "";
+                let textNextAvailableDate = "";
+                let textFirstAvailableDate = "";
+                let textSecondAvailableDate = "";
 
                 let datesReserved = [momentInfoDate.format('YYYY-MM-DD')];
                 for (const dateReserved of datesReserved) {
@@ -459,47 +556,100 @@ export default function Localisation() {
                                 let firstDateAvailable = moment(twoNextAvailableDatesZoning[featurePropertiesNom][0]).format('DD/MM/YYYY');
                                 let secondDateAvailable = moment(twoNextAvailableDatesZoning[featurePropertiesNom][1]).format('DD/MM/YYYY');
 
-                                textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")} <br><br> <strong>${t("Localisation Content.Next available date")} <ul><li>${firstDateAvailable}</li><li>${secondDateAvailable}</li></ul>.</strong></p>`;
+                                textNbTentsReserved += `${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")}`;
+                                textNextAvailableDate += `${t("Localisation Content.Next available date")}`;
+                                textFirstAvailableDate += `${firstDateAvailable}`;
+                                textSecondAvailableDate += `${secondDateAvailable}`;
                             }
                             else {
-                                textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Less than")} ${estimatedTents} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}</p>`;
+                                textNbTentsReserved += `${t("Localisation Content.Less than")} ${estimatedTents} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}`;
                             }
                         } else {
-                            textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Less than")} ${minTentsReserved} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}</p>`;
+                            textNbTentsReserved += `${t("Localisation Content.Less than")} ${minTentsReserved} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}`;
                         }
                     } else {
-                        textNbTentsReserved += `<p class="paragraph-nb-tents-reserved">${t("Localisation Content.Less than")} ${minTentsReserved} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}</p>`;
+                        textNbTentsReserved += `${t("Localisation Content.Less than")} ${minTentsReserved} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}`;
                     }
                 }
-                featurePropertiesNbTentsReserved = `<div>${textNbTentsReserved}</div>`;
+                featurePropertiesNbTentsReserved = `${textNbTentsReserved}`;
 
                 // Report
                 const featurePropertiesReport = featureProperties["report"];
                 let textZoneReport = "";
                 if (featurePropertiesReport !== "") {
-                    textZoneReport = `<p>${t("Localisation Content.Possible transfer zone")} : ${featurePropertiesReport}</p>`
+                    textZoneReport = `${t("Localisation Content.Possible transfer zone")} : ${featurePropertiesReport}`
                 }
 
                 const featurePropertiesCapacite = featureProperties["capacite"];
-                popupContent = `<div>
-                <p><strong>${t("Localisation Content.Tolerated area")} - ${featurePropertiesNom}</strong></p>
-                <p>${t("Localisation Content.Reglementation." + featurePropertiesReglementation)}</p>
-                <p>${t("Localisation Content.Maximum capacity")} : ${featurePropertiesCapacite} ${t("Localisation Content.Tents")}</p>
-                ${featurePropertiesNbTentsReserved}
-                ${textZoneReport}
-                </div>
-                `;
-                layer.bindPopup(popupContent);
+
+                const popupContainer = document.createElement('div');
+                const root = ReactDOM.createRoot(popupContainer);
+
+                layer.bindPopup(popupContainer);
+
+                layer.on('popupopen', () => {
+                    root.render(
+                    <LocationPopupAddLocation
+                        reservable={featurePropertiesReservable}
+                        zoneType={t("Localisation Content.Tolerated area")}
+                        nom={featurePropertiesNom}
+                        reglementation={t("Localisation Content.Reglementation." + featurePropertiesReglementation)}
+                        capacity={t("Localisation Content.Maximum capacity") + " : " + featurePropertiesCapacite + " " + t("Localisation Content.Tents")}
+                        reservation={featurePropertiesNbTentsReserved}
+                        nextDate={textNextAvailableDate}
+                        firstDate={textFirstAvailableDate}
+                        secondDate={textSecondAvailableDate}
+                        report={textZoneReport}
+                        onAddLocation={onAddLocation}
+                        buttonText={t("Add location")}
+                    />
+                    );
+                });
             }
             // Interdite
             else if (featurePropertiesBivouac === "Interdit") {
-                popupContent = `<div>
-                <p><strong>${t("Localisation Content.Forbidden area")} - ${featurePropertiesNom}</strong></p>
-                <p>${t("Localisation Content.Reglementation." + featurePropertiesReglementation)}</p>
-                </div>
-                `;
-                layer.bindPopup(popupContent);
+
+                const popupContainer = document.createElement('div');
+                const root = ReactDOM.createRoot(popupContainer);
+
+                layer.bindPopup(popupContainer);
+
+                layer.on('popupopen', () => {
+                    root.render(
+                    <LocationPopupNoLocation
+                        zoneType={t("Localisation Content.Forbidden area")}
+                        nom={featurePropertiesNom}
+                        reglementation={t("Localisation Content.Reglementation." + featurePropertiesReglementation)}
+                    />
+                    );
+                });
             }
+            else if (featurePropertiesBivouac === "Spécifique") {
+
+                const popupContainer = document.createElement('div');
+                const root = ReactDOM.createRoot(popupContainer);
+
+                layer.bindPopup(popupContainer);
+
+                layer.on('popupopen', () => {
+                    root.render(
+                    <LocationPopupAddLocation
+                        reservable={featurePropertiesReservable}
+                        zoneType={t("Localisation Content.Not recommended area")}
+                        nom={featurePropertiesNom}
+                        reglementation=''
+                        capacity=''
+                        reservation=''
+                        nextDate=''
+                        firstDate=''
+                        secondDate=''
+                        report=''
+                        onAddLocation={onAddLocation}
+                        buttonText={t("Add location")}
+                    />
+                    );
+                });
+                }
 
         }
     }
@@ -583,81 +733,12 @@ export default function Localisation() {
         );
     };
 
-    // Add a location
-    const AddLocation = () => {
-        const updateAddLocationStatus = () => {
-            setEnableAddLocation(true);
-        }
-
-        return (
-            displayMaximumLocationReached === false && locationData.length !== maxLocations && enableAddLocation === false &&
-            <Button
-            variant="contained"
-            size="small"
-            className="button-add-location"
-            onClick={updateAddLocationStatus}
-            >
-                {t("Add location")}
-            </Button>
-        );
-      };
-
-    // Stop adding a location
-    const StopAddLocation = () => {
-        const disableAddLocation = () => {
-            setEnableAddLocation(false);
-        }
-
-        return (
-            displayMaximumLocationReached === false && enableAddLocation === true &&
-            <Button
-            variant="contained"
-            size="small"
-            className="button-stop-add-location"
-            onClick={disableAddLocation}
-            >
-                {t("Stop Add location")}
-            </Button>
-        );
-      };
-
-    // Add event when the user clicks on the map
-    const AddClickEvent = () => {
-        const map = useMap();
-        map.on('click', (e) => {
-            const clickCoordinates = e.latlng;
-            setClickCoordinates([clickCoordinates.lat, clickCoordinates.lng])
-        })
-        return null
-      };
-
-
-    // Delete the last location
-    const DeleteLastLocation = () => {
-        const removeLastLocation = () => {
-            const newLocationData = locationData.slice(0, -1);
-            setLocationData(newLocationData);
-        }
-
-        return (
-            locationData.length > 0 &&
-            <Button
-                variant="outlined"
-                size="small"
-                className="button-delete-last-location"
-                onClick={removeLastLocation}
-                >
-                    {t("Delete last location")}
-            </Button>
-        );
-      };
-
     // Map properties
     function SetMapProperties() {
         const map = useMap();
         map.setMaxBounds([
-            [45.64667860570071412, 6.31042310515216265],
-            [46.2431276285698587, 7.29443215087411545],
+            [45.6466786057007141, 6.31042310515216265],
+            [46.50312762856985, 7.29443215087411545],
           ]);
         map.setMinZoom(10);
         map.setMaxZoom(18);
@@ -794,13 +875,6 @@ export default function Localisation() {
                 {t("Point bivouac locations")}
             </Alert>
 
-            <div className="container-buttons-location">
-                <AddLocation />
-                <StopAddLocation />
-                {(locationData.length === maxLocations || displayMaximumLocationReached === true) && <p className="p-maximum-locations-reached">{t("Maximum number location reached")}</p>}
-                <DeleteLastLocation />
-            </div>
-
             <div id="map">
                 <MapContainer key={key} ref={mapRef} center={mapData.defaultCenter} zoom={mapData.defaultZoom} scrollWheelZoom={true} renderer={L.canvas()}>
 
@@ -825,18 +899,11 @@ export default function Localisation() {
                     </LayersControl>
 
                     {/* Disable popup when the user is adding a location. Ternary operator does not work */}
-                    {enableAddLocation === false && Object.values(geojsonData).map((data, index) => (
+                    {Object.values(geojsonData).map((data, index) => (
                         <GeoJSON key={index}
                         data={data}
                         style={styleGeoJSON}
                         onEachFeature={popupGeoJSON}
-                        renderer={L.canvas()}
-                        />
-                    ))}
-                    {enableAddLocation === true && Object.values(geojsonData).map((data, index) => (
-                        <GeoJSON key={index}
-                        data={data}
-                        style={styleGeoJSON}
                         renderer={L.canvas()}
                         />
                     ))}
@@ -847,7 +914,6 @@ export default function Localisation() {
                     <div className="container-site-zone-location">
                         {/* Hide site zone drop-down during the capture phase */}
                         {!displayOverlayCaptureImages && <ZoomToSiteZone />}
-                        <AddClickEvent />
                     </div>
 
                     {/* Popup when quota reached, suggestion of next available date */}

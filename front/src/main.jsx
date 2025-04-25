@@ -23,6 +23,7 @@ import GoodPractices from './components/GoodPractices';
 import BivouacDeclaration from './components/BivouacDeclaration';
 import LegalNotices from './components/LegalNotices';
 import NatureReserve from './components/NatureReserve';
+import Faq from './components/Faq';
 import Cancel from './components/Cancel';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -44,6 +45,7 @@ root.render(
                 <Route path="*" element={<BivouacDeclaration />} />
               </Route>
               <Route path="/reserve-naturelle-haute-savoie" exact element={<NatureReserve />} />
+              <Route path="/faq" exact element={<Faq />} />
               <Route path="/mentions-legales" exact element={<LegalNotices />} />
               <Route path="*" element={<Navigate replace to="/reservation-bivouac" />} />
           </Routes>

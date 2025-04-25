@@ -142,3 +142,7 @@
     background-repeat: no-repeat;
     display: inline-block;
 }
+
+.leaflet-popup-content{
+    width: 301px !important;
+}
