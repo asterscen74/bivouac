@@ -5,13 +5,13 @@ import store from "../store";
 export default function Faq() {
     const {t, i18n } = useTranslation();
 
-    let faq = store.getState().faq[i18n.resolvedLanguage];
+    let faqData = store.getState().faq[i18n.resolvedLanguage];
 
     return (
         <div>
             <h1>{t("Tab faq")}</h1>
             <div dangerouslySetInnerHTML={{
-            __html: faq,
+            __html: faqData,
         }}>
             </div>
         </div>

@@ -8,6 +8,7 @@ import Impacts from "./stores/Impacts";
 import LegalNotices from "./stores/LegalNotices";
 import GoodPractices from "./stores/GoodPractices";
 import NatureReserve from "./stores/NatureReserve";
+import BeforeLeaving from "./stores/BeforeLeaving";
 import Faq from "./stores/Faq";
 
 export default configureStore({
@@ -21,6 +22,7 @@ export default configureStore({
         legalNotices: LegalNotices,
         goodPractices: GoodPractices,
         natureReserve: NatureReserve,
+        beforeLeaving: BeforeLeaving,
         faq: Faq,
     },
 });
