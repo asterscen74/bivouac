@@ -25,6 +25,7 @@ import { Dialog, DialogContent, DialogActions } from "@mui/material";
 import html2canvas from "html2canvas";
 import ReactDOM from 'react-dom/client';
 import PropTypes from 'prop-types';
+import { useMediaQuery } from 'react-responsive';
 
 export default function Localisation() {
     const navigate = useNavigate();
@@ -66,7 +67,7 @@ export default function Localisation() {
     const [locationData, setLocationData] = useState(resultsLocalisationData.locations);
     const [clickCoordinates, setClickCoordinates] = useState([]);
     const popupClickCoordsRef = useRef(null);
-
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
     // Listen for language changes
     useEffect(() => {
@@ -504,7 +505,7 @@ export default function Localisation() {
         layer.on('click', (e) => {
             const { lat, lng } = e.latlng;
             popupClickCoordsRef.current = [lat, lng];
-            mapRef.current.flyTo([lat, lng]);
+            mapRef.current.flyTo([lat+0.0004, lng]);
           });
 
         const onAddLocation = () => {
@@ -750,7 +751,7 @@ export default function Localisation() {
 
 
     // Legend map
-    const MapLegend = () => {
+    const MapLegendDesktop = () => {
         const map = useMap();
         const [zoom, setZoom] = useState(map.getZoom());
 
@@ -769,15 +770,15 @@ export default function Localisation() {
         const legendItems = [
             {
                 className: "legend-row-symbol-limite-reserve-naturelle",
-                text: t("Localisation Content.Legend.row1")
+                text: t("Localisation Content.Legend_desktop.row1")
             },
             {
                 className: "legend-row-symbol-non-reservable",
-                text: t("Localisation Content.Legend.row2")
+                text: t("Localisation Content.Legend_desktop.row2")
             },
             {
                 className: "legend-row-symbol-tolere-reservable",
-                text: t("Localisation Content.Legend.row3")
+                text: t("Localisation Content.Legend_desktop.row3")
             }
         ];
 
@@ -785,7 +786,7 @@ export default function Localisation() {
         if (completeArea) {
             legendItems.push({
                 className: "legend-row-symbol-tolere-complet",
-                text: t("Localisation Content.Legend.row4")
+                text: t("Localisation Content.Legend_desktop.row4")
             });
         }
 
@@ -793,7 +794,66 @@ export default function Localisation() {
         if (zoom <= 16) {
             legendItems.push({
                 className: "legend-row-symbol-small-area",
-                text: t("Localisation Content.Legend.row5")
+                text: t("Localisation Content.Legend_desktop.row5")
+            });
+        }
+
+        return (
+            <div className="legend-container">
+                {legendItems.map((item, index) => (
+                    <div key={index} className="legend-row-container">
+                        <p className={`legend-row-symbol ${item.className}`}></p>
+                        <p className="legend-row-text">{item.text}</p>
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    const MapLegendMobile = () => {
+        const map = useMap();
+        const [zoom, setZoom] = useState(map.getZoom());
+
+        useEffect(() => {
+            const handleZoom = () => {
+                setZoom(map.getZoom());
+            };
+
+            map.on('zoomend', handleZoom);
+
+            return () => {
+                map.off('zoomend', handleZoom);
+            };
+        }, [map]);
+
+        const legendItems = [
+            {
+                className: "legend-row-symbol-limite-reserve-naturelle",
+                text: t("Localisation Content.Legend_mobile.row1")
+            },
+            {
+                className: "legend-row-symbol-non-reservable",
+                text: t("Localisation Content.Legend_mobile.row2")
+            },
+            {
+                className: "legend-row-symbol-tolere-reservable",
+                text: t("Localisation Content.Legend_mobile.row3")
+            }
+        ];
+
+        // Additional elements added if completeArea is true
+        if (completeArea) {
+            legendItems.push({
+                className: "legend-row-symbol-tolere-complet",
+                text: t("Localisation Content.Legend_mobile.row4")
+            });
+        }
+
+        //  Display only if zoom is lower or greater than 16
+        if (zoom <= 16) {
+            legendItems.push({
+                className: "legend-row-symbol-small-area",
+                text: t("Localisation Content.Legend_mobile.row5")
             });
         }
 
@@ -952,7 +1012,11 @@ export default function Localisation() {
                     </Dialog>
 
                     {/* Hide legend during the capture phase */}
-                    {!displayOverlayCaptureImages && <MapLegend />}
+                    {isMobile ? (
+                        <MapLegendMobile />
+                    ) : (
+                        <MapLegendDesktop />
+                    )}
                     <SetMapProperties />
 
                     {/* Overlay to prevent interaction with the map during the capture */}
