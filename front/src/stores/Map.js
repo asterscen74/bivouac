@@ -42,7 +42,13 @@ export const map = createSlice({
               name: "IGN Scan 25",
               layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR",
               attribution: '&copy; <a href="https://geoservices.ign.fr/">IGN</a>',
-              url: 'https://wxs.ign.fr/0sm9hm0lu0i25mqne5p5s85r/geoportail/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/jpeg'
+              url: 'https://data.geopf.fr/private/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&STYLE=normal&TILEMATRIXSET=PM_6_16&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/jpeg&APIKEY=ign_scan_ws&crs=EPSG:3857'
+            },
+            {
+              name: "ORTHO IGN",
+              layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+              attribution: '&copy; <a href="https://geoservices.ign.fr/">IGN</a>',
+              url: 'https://data.geopf.fr/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/jpeg&crs=EPSG:3857'
             }
         ],
         defaultSitesZones: {
