@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import General from "./stores/General";
+import Home from "./stores/Home";
 import Quizz from "./stores/Quizz";
 import Infos from "./stores/Infos";
 import Results from "./stores/Results";
@@ -14,6 +15,7 @@ import Faq from "./stores/Faq";
 export default configureStore({
     reducer: {
         general: General,
+        home: Home,
         quizz: Quizz,
         infos: Infos,
         results: Results,

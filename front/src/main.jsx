@@ -10,7 +10,6 @@ import Quizz from './components/Quizz';
 import Thanks from './components/Thanks';
 
 import { Route, Routes } from "react-router";
-import { Navigate } from "react-router-dom";
 import './i18n';
 
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,6 +17,7 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import Home from './components/Home';
 import About from './components/Impacts';
 import GoodPractices from './components/GoodPractices';
 import BivouacDeclaration from './components/BivouacDeclaration';
@@ -43,13 +43,12 @@ root.render(
                 <Route path='quizz' element={<Quizz />}/>
                 <Route path='thanks' element={<Thanks />}/>
                 <Route path="cancel/:uuid" element={<Cancel />} />
-                <Route path="*" element={<BivouacDeclaration />} />
               </Route>
               <Route path="/reserve-naturelle-haute-savoie" exact element={<NatureReserve />} />
               <Route path="/avant-de-partir" exact element={<BeforeLeaving />} />
               <Route path="/faq" exact element={<Faq />} />
               <Route path="/mentions-legales" exact element={<LegalNotices />} />
-              <Route path="*" element={<Navigate replace to="/reservation-bivouac" />} />
+              <Route path="*" element={<Home />} />
           </Routes>
           <Divider variant="full" />
           <Footer/>

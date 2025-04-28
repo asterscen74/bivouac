@@ -151,55 +151,56 @@ export default function Localisation() {
     // Save the coordinates of the click
     useEffect(() => {
         if (clickCoordinates.length > 0 ) {
-                // Check if the location is in a reservable zone
-                // Check if the quota for the number of tents has been reached
-                let locationReservable = true;
-                let countFalseIntersection = 0;
-                const turfPoint = turf.point([clickCoordinates[1], clickCoordinates[0]]);
-                const featuresZonageBivouac = geojsonData["zonage_bivouac"].features;
-                let nameAreaNewLocation = "";
-                for (const feature of featuresZonageBivouac) {
-                    const featureReservable = feature.properties.reservable;
-                    const featureQuotas = feature.properties.quotas;
-                    const featurePropertiesNom = feature.properties.nom;
-                    const turfPolygon = turf.multiPolygon(feature.geometry.coordinates);
-                    const resultIntersectionPointInPolygon = turf.booleanPointInPolygon(turfPoint, turfPolygon);
-                    if (resultIntersectionPointInPolygon === true) {
-                        nameAreaNewLocation = featurePropertiesNom;
-                        setNameCurrentAreaSelected(nameAreaNewLocation);
-                        // Feature not reservable
-                        if (featureReservable === false) {
-                            locationReservable = false;
-                            break;
-                        }
-                        // Feature reservable : check the quota
-                        else {
-                            if (featurePropertiesNom in nbTentsZoningDate) {
-                                let dateReserved = "";""
-                                if ( locationData.length === 0 ) {
-                                    dateReserved = momentInfoDate.format('YYYY-MM-DD');
-                                } else if ( locationData.length === 1) {
-                                    dateReserved = momentInfoDate.clone().add(1, 'days').format('YYYY-MM-DD');
-                                } else {
-                                    dateReserved = momentInfoDate.clone().add(2, 'days').format('YYYY-MM-DD');
-                                }
 
-                                // At least one reservation at this date in this bivouac zoning
-                                if (Object.keys(nbTentsZoningDate[featurePropertiesNom]).includes(dateReserved)) {
-                                    let nbTents = nbTentsZoningDate[featurePropertiesNom][dateReserved];
-                                    // Quota reached
-                                    if (nbTents >= featureQuotas) {
-                                        setPopupFullBookingNextAvailableDateShow(true);
-                                        locationReservable = false;
-                                    }
+            // Check if the location is in a reservable zone
+            // Check if the quota for the number of tents has been reached
+            let locationReservable = true;
+            let countFalseIntersection = 0;
+            const turfPoint = turf.point([clickCoordinates[1], clickCoordinates[0]]);
+            const featuresZonageBivouac = geojsonData["zonage_bivouac"].features;
+            let nameAreaNewLocation = "";
+            for (const feature of featuresZonageBivouac) {
+                const featureReservable = feature.properties.reservable;
+                const featureQuotas = feature.properties.quotas;
+                const featurePropertiesNom = feature.properties.nom;
+                const turfPolygon = turf.multiPolygon(feature.geometry.coordinates);
+                const resultIntersectionPointInPolygon = turf.booleanPointInPolygon(turfPoint, turfPolygon);
+                if (resultIntersectionPointInPolygon === true) {
+                    nameAreaNewLocation = featurePropertiesNom;
+                    setNameCurrentAreaSelected(nameAreaNewLocation);
+                    // Feature not reservable
+                    if (featureReservable === false) {
+                        locationReservable = false;
+                        break;
+                    }
+                    // Feature reservable : check the quota
+                    else {
+                        if (featurePropertiesNom in nbTentsZoningDate) {
+                            let dateReserved = "";""
+                            if ( locationData.length === 0 ) {
+                                dateReserved = momentInfoDate.format('YYYY-MM-DD');
+                            } else if ( locationData.length === 1) {
+                                dateReserved = momentInfoDate.clone().add(1, 'days').format('YYYY-MM-DD');
+                            } else {
+                                dateReserved = momentInfoDate.clone().add(2, 'days').format('YYYY-MM-DD');
+                            }
+
+                            // At least one reservation at this date in this bivouac zoning
+                            if (Object.keys(nbTentsZoningDate[featurePropertiesNom]).includes(dateReserved)) {
+                                let nbTents = nbTentsZoningDate[featurePropertiesNom][dateReserved];
+                                // Quota reached
+                                if (nbTents >= featureQuotas) {
+                                    setPopupFullBookingNextAvailableDateShow(true);
+                                    locationReservable = false;
                                 }
                             }
                         }
-
-                    } else {
-                        countFalseIntersection += 1
                     }
+
+                } else {
+                    countFalseIntersection += 1
                 }
+            }
 
             // The location is not located in a bivouac zone
             if (countFalseIntersection === featuresZonageBivouac.length) {
@@ -503,6 +504,7 @@ export default function Localisation() {
         layer.on('click', (e) => {
             const { lat, lng } = e.latlng;
             popupClickCoordsRef.current = [lat, lng];
+            mapRef.current.flyTo([lat, lng]);
           });
 
         const onAddLocation = () => {
@@ -521,12 +523,12 @@ export default function Localisation() {
             const featurePropertiesQuotas = featureProperties["quotas"];
             const featurePropertiesReservable = featureProperties["reservable"];
             const featurePropertiesReport = featureProperties["report"];
+            const popupContainer = document.createElement('div');
+            const root = ReactDOM.createRoot(popupContainer);
+
+            layer.bindPopup(popupContainer);
             // Déconseillé
             if (featurePropertiesBivouac === "Déconseillé") {
-                const popupContainer = document.createElement('div');
-                const root = ReactDOM.createRoot(popupContainer);
-
-                layer.bindPopup(popupContainer);
 
                 layer.on('popupopen', () => {
                     root.render(
@@ -594,11 +596,6 @@ export default function Localisation() {
 
                 const featurePropertiesCapacite = featureProperties["capacite"];
 
-                const popupContainer = document.createElement('div');
-                const root = ReactDOM.createRoot(popupContainer);
-
-                layer.bindPopup(popupContainer);
-
                 layer.on('popupopen', () => {
                     root.render(
                     <LocationPopupAddLocation
@@ -625,11 +622,6 @@ export default function Localisation() {
                     textZoneReport = `${t("Localisation Content.Possible transfer zone")} : ${featurePropertiesReport}`
                 }
 
-                const popupContainer = document.createElement('div');
-                const root = ReactDOM.createRoot(popupContainer);
-
-                layer.bindPopup(popupContainer);
-
                 layer.on('popupopen', () => {
                     root.render(
                     <LocationPopupNoLocation
@@ -642,11 +634,6 @@ export default function Localisation() {
                 });
             }
             else if (featurePropertiesBivouac === "Spécifique") {
-
-                const popupContainer = document.createElement('div');
-                const root = ReactDOM.createRoot(popupContainer);
-
-                layer.bindPopup(popupContainer);
 
                 layer.on('popupopen', () => {
                     root.render(
@@ -754,8 +741,8 @@ export default function Localisation() {
     function SetMapProperties() {
         const map = useMap();
         map.setMaxBounds([
-            [45.6466786057007141, 6.31042310515216265],
-            [46.50312762856985, 7.29443215087411545],
+            [45.30667860570071, 5.800423105152162],
+            [46.803127628569, 8.304432150874115],
           ]);
         map.setMinZoom(10);
         map.setMaxZoom(18);
