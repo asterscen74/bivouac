@@ -751,7 +751,7 @@ export default function Localisation() {
 
 
     // Legend map
-    const MapLegendDesktop = () => {
+    const MapLegend = () => {
         const map = useMap();
         const [zoom, setZoom] = useState(map.getZoom());
 
@@ -766,95 +766,69 @@ export default function Localisation() {
                 map.off('zoomend', handleZoom);
             };
         }, [map]);
+        let legendItems;
+        if (isMobile){
+            legendItems = [
+                {
+                    className: "legend-row-symbol-limite-reserve-naturelle",
+                    text: t("Localisation Content.Legend_mobile.row1")
+                },
+                {
+                    className: "legend-row-symbol-non-reservable",
+                    text: t("Localisation Content.Legend_mobile.row2")
+                },
+                {
+                    className: "legend-row-symbol-tolere-reservable",
+                    text: t("Localisation Content.Legend_mobile.row3")
+                }
+            ];
 
-        const legendItems = [
-            {
-                className: "legend-row-symbol-limite-reserve-naturelle",
-                text: t("Localisation Content.Legend_desktop.row1")
-            },
-            {
-                className: "legend-row-symbol-non-reservable",
-                text: t("Localisation Content.Legend_desktop.row2")
-            },
-            {
-                className: "legend-row-symbol-tolere-reservable",
-                text: t("Localisation Content.Legend_desktop.row3")
+            // Additional elements added if completeArea is true
+            if (completeArea) {
+                legendItems.push({
+                    className: "legend-row-symbol-tolere-complet",
+                    text: t("Localisation Content.Legend_mobile.row4")
+                });
             }
-        ];
 
-        // Additional elements added if completeArea is true
-        if (completeArea) {
-            legendItems.push({
-                className: "legend-row-symbol-tolere-complet",
-                text: t("Localisation Content.Legend_desktop.row4")
-            });
-        }
-
-        //  Display only if zoom is lower or greater than 16
-        if (zoom <= 16) {
-            legendItems.push({
-                className: "legend-row-symbol-small-area",
-                text: t("Localisation Content.Legend_desktop.row5")
-            });
-        }
-
-        return (
-            <div className="legend-container">
-                {legendItems.map((item, index) => (
-                    <div key={index} className="legend-row-container">
-                        <p className={`legend-row-symbol ${item.className}`}></p>
-                        <p className="legend-row-text">{item.text}</p>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    const MapLegendMobile = () => {
-        const map = useMap();
-        const [zoom, setZoom] = useState(map.getZoom());
-
-        useEffect(() => {
-            const handleZoom = () => {
-                setZoom(map.getZoom());
-            };
-
-            map.on('zoomend', handleZoom);
-
-            return () => {
-                map.off('zoomend', handleZoom);
-            };
-        }, [map]);
-
-        const legendItems = [
-            {
-                className: "legend-row-symbol-limite-reserve-naturelle",
-                text: t("Localisation Content.Legend_mobile.row1")
-            },
-            {
-                className: "legend-row-symbol-non-reservable",
-                text: t("Localisation Content.Legend_mobile.row2")
-            },
-            {
-                className: "legend-row-symbol-tolere-reservable",
-                text: t("Localisation Content.Legend_mobile.row3")
+            //  Display only if zoom is lower or greater than 16
+            if (zoom <= 16) {
+                legendItems.push({
+                    className: "legend-row-symbol-small-area",
+                    text: t("Localisation Content.Legend_mobile.row5")
+                });
             }
-        ];
+        } else {
+            legendItems = [
+                {
+                    className: "legend-row-symbol-limite-reserve-naturelle",
+                    text: t("Localisation Content.Legend_desktop.row1")
+                },
+                {
+                    className: "legend-row-symbol-non-reservable",
+                    text: t("Localisation Content.Legend_desktop.row2")
+                },
+                {
+                    className: "legend-row-symbol-tolere-reservable",
+                    text: t("Localisation Content.Legend_desktop.row3")
+                }
+            ];
 
-        // Additional elements added if completeArea is true
-        if (completeArea) {
-            legendItems.push({
-                className: "legend-row-symbol-tolere-complet",
-                text: t("Localisation Content.Legend_mobile.row4")
-            });
-        }
+            // Additional elements added if completeArea is true
+            if (completeArea) {
+                legendItems.push({
+                    className: "legend-row-symbol-tolere-complet",
+                    text: t("Localisation Content.Legend_desktop.row4")
+                });
+            }
 
-        //  Display only if zoom is lower or greater than 16
-        if (zoom <= 16) {
-            legendItems.push({
-                className: "legend-row-symbol-small-area",
-                text: t("Localisation Content.Legend_mobile.row5")
-            });
+            //  Display only if zoom is lower or greater than 16
+            if (zoom <= 16) {
+                legendItems.push({
+                    className: "legend-row-symbol-small-area",
+                    text: t("Localisation Content.Legend_desktop.row5")
+                });
+            }
         }
 
         return (
@@ -1012,11 +986,7 @@ export default function Localisation() {
                     </Dialog>
 
                     {/* Hide legend during the capture phase */}
-                    {isMobile ? (
-                        <MapLegendMobile />
-                    ) : (
-                        <MapLegendDesktop />
-                    )}
+                    {!displayOverlayCaptureImages && <MapLegend />}
                     <SetMapProperties />
 
                     {/* Overlay to prevent interaction with the map during the capture */}
