@@ -505,7 +505,7 @@ export default function Localisation() {
         layer.on('click', (e) => {
             const { lat, lng } = e.latlng;
             popupClickCoordsRef.current = [lat, lng];
-            mapRef.current.flyTo([lat+0.0004, lng]);
+            mapRef.current.flyTo([lat+0.0004, lng], mapRef.current.getZoom(), {duration: 1.2});
           });
 
         const onAddLocation = () => {
