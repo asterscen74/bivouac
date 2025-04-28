@@ -414,11 +414,17 @@ export default function Localisation() {
     };
 
 
-    const LocationPopupNoLocation = ({ zoneType, nom, reglementation }) => {
+    const LocationPopupNoLocation = ({ zoneType, nom, reglementation, report }) => {
         return (
             <div>
               <p><strong>{zoneType} - {nom}</strong></p>
               <p>{reglementation}</p>
+              {report && (
+                <div
+                className="report"
+                dangerouslySetInnerHTML={{ __html: report }}
+                />
+            )}
           </div>
         );
       };
@@ -427,6 +433,7 @@ export default function Localisation() {
         zoneType: PropTypes.string.isRequired,
         nom: PropTypes.string.isRequired,
         reglementation: PropTypes.string.isRequired,
+        report: PropTypes.string.isRequired,
       };
 
     const LocationPopupAddLocation = ({ reservable, zoneType, nom, reglementation, capacity, reservation, nextDate, firstDate, secondDate, report, onAddLocation, buttonText }) => {
@@ -434,12 +441,16 @@ export default function Localisation() {
           <div>
             <p><strong>{zoneType} - {nom}</strong></p>
             <p>{reglementation}</p>
-            <p>{capacity}</p>
+            {reservable === true &&(
+                <p>{capacity}</p>
+            )}
             <div>
                 <p className="paragraph-nb-tents-reserved">
+                {reservable === true &&(
                 <div>
                 {reservation}
                 </div>
+                )}
                 {nextDate && (
                     <strong>
                     {nextDate}
@@ -451,6 +462,7 @@ export default function Localisation() {
                 )}
                 </p>
             </div>
+
             {report && (
                 <div
                 className="report"
@@ -508,6 +520,7 @@ export default function Localisation() {
             const featurePropertiesReglementation = featureProperties["reglementation"];
             const featurePropertiesQuotas = featureProperties["quotas"];
             const featurePropertiesReservable = featureProperties["reservable"];
+            const featurePropertiesReport = featureProperties["report"];
             // Déconseillé
             if (featurePropertiesBivouac === "Déconseillé") {
                 const popupContainer = document.createElement('div');
@@ -574,7 +587,6 @@ export default function Localisation() {
                 featurePropertiesNbTentsReserved = `${textNbTentsReserved}`;
 
                 // Report
-                const featurePropertiesReport = featureProperties["report"];
                 let textZoneReport = "";
                 if (featurePropertiesReport !== "") {
                     textZoneReport = `${t("Localisation Content.Possible transfer zone")} : ${featurePropertiesReport}`
@@ -608,6 +620,10 @@ export default function Localisation() {
             }
             // Interdite
             else if (featurePropertiesBivouac === "Interdit") {
+                let textZoneReport = "";
+                if (featurePropertiesReport !== "") {
+                    textZoneReport = `${t("Localisation Content.Possible transfer zone")} : ${featurePropertiesReport}`
+                }
 
                 const popupContainer = document.createElement('div');
                 const root = ReactDOM.createRoot(popupContainer);
@@ -620,6 +636,7 @@ export default function Localisation() {
                         zoneType={t("Localisation Content.Forbidden area")}
                         nom={featurePropertiesNom}
                         reglementation={t("Localisation Content.Reglementation." + featurePropertiesReglementation)}
+                        report={textZoneReport}
                     />
                     );
                 });
