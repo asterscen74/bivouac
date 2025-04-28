@@ -160,6 +160,16 @@ export const infos = createSlice({
                         ],
                     "visibleIf": "{fr_or_foreign} = France",
                 },
+                {
+                    "name": "tmb",
+                    "type": "boolean",
+                    "title": "Faites-vous (une partie ou) le tour du Mont-Blanc ?",
+                    "maxLength": 25,
+                    "isRequired": true,
+                    "valueTrue": "Yes",
+                    "valueFalse": "No",
+                    "defaultValue": "false",
+                }
             ],
             "showQuestionNumbers": false
         },
@@ -315,6 +325,16 @@ export const infos = createSlice({
                         ],
                     "visibleIf": "{fr_or_foreign} = France",
                 },
+                {
+                    "name": "tmb",
+                    "type": "boolean",
+                    "title": "Faites-vous (une partie ou) le tour du Mont-Blanc ?",
+                    "maxLength": 25,
+                    "isRequired": true,
+                    "valueTrue": "Yes",
+                    "valueFalse": "No",
+                    "defaultValue": "false",
+                }
             ],
             "showQuestionNumbers": false
         },
@@ -470,6 +490,16 @@ export const infos = createSlice({
                         ],
                     "visibleIf": "{fr_or_foreign} = Francia",
                 },
+                {
+                    "name": "tmb",
+                    "type": "boolean",
+                    "title": "Faites-vous (une partie ou) le tour du Mont-Blanc ?",
+                    "maxLength": 25,
+                    "isRequired": true,
+                    "valueTrue": "Yes",
+                    "valueFalse": "No",
+                    "defaultValue": "false",
+                }
             ],
             "showQuestionNumbers": false
         }

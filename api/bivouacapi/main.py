@@ -155,6 +155,7 @@ async def create_reservation(
         comment = quizz_note_reservation.replace("'", " ")
     else:
         comment = None
+    tmb = request.tmb
     nb_tents_reservation = 1
 
     check_locations = await check_locations_argument(locations_reservation)
@@ -164,8 +165,8 @@ async def create_reservation(
     try:
         query = text(
             """
-            INSERT INTO public.reservations (nb_tents, nb_people, email, fr_or_foreign, department, quizz_note)
-            VALUES (:nb_tents, :nb_people, :email, :fr_or_foreign, :department, :quizz_note)
+            INSERT INTO public.reservations (nb_tents, nb_people, email, fr_or_foreign, department, quizz_note, tmb)
+            VALUES (:nb_tents, :nb_people, :email, :fr_or_foreign, :department, :quizz_note, :tmb)
             RETURNING id, uuid
         """
         )
@@ -176,6 +177,7 @@ async def create_reservation(
             "fr_or_foreign": fr_or_foreign_reservation,
             "department": department,
             "quizz_note": comment,
+            "tmb": tmb,
         }
         result = db.execute(query, params)
         reservation_number, reservation_uuid = result.fetchone()
