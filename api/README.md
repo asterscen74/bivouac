@@ -32,6 +32,7 @@ Sur la base du fichier `.env.sample`, créez un fichier `.env` et modifiez les d
 - `SMTP_LOGIN` : Identifiant de l'utilisateur
 - `SMTP_PASSWORD` : Mot de passe associé à l'utilisateur
 - `SMTP_SENDER_EMAIL` : Adresse e-mail de l'expéditeur
+- `WEBSITE_DOMAIN` : Url de la plateforme de réservation
 
 ## Lancement de l'API
 

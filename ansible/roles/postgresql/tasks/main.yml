@@ -71,6 +71,16 @@
     port: "{{ pg_port }}"
     path: "{{ path_data }}/sql/001_init-db.sql"
 
+- name: Run sql migration script
+  community.postgresql.postgresql_script:
+    db: "{{ pg_db }}"
+    login_user: "{{ pg_user }}"
+    login_password: "{{ pg_password }}"
+    login_host: "{{ pg_host }}"
+    port: "{{ pg_port }}"
+    path: "{{ path_data }}/sql/002_migrations-db.sql"
+
+
 - name: List all data files for the Bivouac application
   ansible.builtin.find:
     paths: "{{ path_data }}/sql/"

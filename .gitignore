@@ -149,3 +149,8 @@ markdown-lint-report.txt
 markdown-lint-report-added.txt
 yarn.lock
 .vagrant
+
+
+# Ansible
+ansible/host_vars/bivouac_client.cen74.com.yml
+ansible/host_vars/bivouac_remote.cen74.com.yml

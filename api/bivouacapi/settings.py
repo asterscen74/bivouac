@@ -34,6 +34,7 @@ class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
     SMTP_LOGIN: str = Field(..., validation_alias="SMTP_LOGIN")
     SMTP_PASSWORD: str = Field(..., validation_alias="SMTP_PASSWORD")
     SMTP_SENDER_EMAIL: str = Field(..., validation_alias="SMTP_SENDER_EMAIL")
+    WEBSITE_DOMAIN: str = Field(..., validation_alias="WEBSITE_DOMAIN")
     openapi_url: str = Field(
         default="/docs/openapi.json", validation_alias="API_OPENAPI_URL"
     )
@@ -44,7 +45,7 @@ class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
 
 @lru_cache
 def get_settings() -> Settings:
-    return Settings(".env")
+    return Settings()
 
 
 settings = get_settings()
@@ -58,6 +59,5 @@ MAP_LAYERS_ENUM = Enum(
     [
         ("aires_de_protection", "aires_de_protection"),
         ("zonage_bivouac", "zonage_bivouac"),
-        ("reservations", "reservations"),
     ],
 )

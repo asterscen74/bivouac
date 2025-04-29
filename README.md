@@ -1,6 +1,16 @@
-# Bivouac
+# Outil de réservation pour encadrer la pratique du bivouac dans les réserves naturelles de Haute-Savoie
 
-Ce projet a pour objectif de créer une plateforme de réservation de Bivouac en Haute-Savoie.
+Suite à la une hausse de la pratique du bivouac en réserves naturelles, Asters, le conservatoire d'espaces naturels de Haute-Savoie, a développé avec ses partenaires un outil de réservation du bivouac.
+
+Cette plateforme en ligne est composé d’un outil cartographique et un quizz de sensibilisation.
+
+L'objectif est de mieux gérer cette pratique et ces effets sur la biodiversité grâce à une meilleure connaissance des pratiquants (suivi quantitatif et sensibilisation ludique).
+
+*Développement*
+
+*Asters-CEN74 : Jules Grillot et Juliette Buret*
+
+*Oslandia : Sylvain Beorchia et Vincent Bré*
 
 ## Installation & Configuration
 
@@ -21,8 +31,8 @@ Dans ce fichier, sont définies les variables suivantes :
 - `POSTGRES_DB` : Nom de la base de données
 - `POSTGRES_HOST` : Adresse de la base de données
 - `POSTGRES_PORT` : Port utilisé par la base de données
-- `API_FLASK_SERVER_HOST` : Adresse de l'API
-- `API_FLASK_SERVER_PORT` : Port de l'API lorsqu'elle est lancée en mode production
+- `API_FASTAPI_SERVER_HOST` : Adresse de l'API
+- `API_FASTAPI_SERVER_PORT` : Port de l'API lorsqu'elle est lancée en mode production
 - `API_OPENAPI_URL` : Chemin vers le fichier openapi.json
 - `API_DOCS_URL` : Chemin vers la documentation Swagger
 - `FRONT_PORT` : Port utilisé par l'application React
@@ -31,6 +41,7 @@ Dans ce fichier, sont définies les variables suivantes :
 - `SMTP_LOGIN` : Identifiant de l'utilisateur
 - `SMTP_PASSWORD` : Mot de passe associé à l'utilisateur
 - `SMTP_SENDER_EMAIL` : Adresse e-mail de l'expéditeur
+- `WEBSITE_DOMAIN` : Url de la plateforme de réservation
 
 Afin de garantir une qualité entre les différentes contributions, une série de _git hooks_ (à travers l'outil [pre-commit](https://pre-commit.com/)) est disponible.
 

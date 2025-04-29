@@ -13,15 +13,15 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "horaires",
-                            "title": "Pour bivouaquer, je peux installer une tente légère",
+                            "title": "Bivouaquer c’est planter ma tente…",
                             "choices": [
-                                "De 19h à 9h",
-                                "Pendant plusieurs jours",
-                                "Toute la journée"
+                                "toute une semaine.",
+                                "une seule nuit, sur un même emplacement, entre 19h et 9h.",
+                                "toute la journée pour faire la sieste."
                             ],
                             "isRequired": true,
-                            "correctAnswer": "De 19h à 9h",
-                            "infos": "Le camping est interdit dans les réserves naturelles. Seul le bivouac est toléré pour une seule nuit, avec ou sans abri, entre 19h et 9h."
+                            "correctAnswer": "une seule nuit, sur un même emplacement, entre 19h et 9h.",
+                            "infos": "Le camping est interdit dans les réserves naturelles. Seul le bivouac est toléré pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h."
                         }
                     ]
                 },
@@ -30,15 +30,15 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "bruits",
-                            "title": "Ma soirée dehors s'accompagne :",
+                            "title": "Lors de ma soirée en extérieur, je peux…",
                             "choices": [
-                                "De musique sur mon enceinte portable",
-                                "Des bruits de la nature",
-                                "D'un instrument de musique"
+                                "organiser un karaoké géant.",
+                                "écouter les bruits de la nature.",
+                                "écouter ma musique sur une enceinte."
                             ],
                             "isRequired": true,
-                            "correctAnswer": "Des bruits de la nature",
-                            "infos": "L'utilisation d'instrument sonore est formellement interdite dans les réserves naturelles pour la quiétude de la faune et de vos voisins bivouaqueurs. Ta belle chanson est entendue par tous les chamois du coin ! Ce bruit augmente leur stress et modifie leur comportement. Respectons l'espace de vie des espèces sauvages."
+                            "correctAnswer": "écouter les bruits de la nature.",
+                            "infos": "L'utilisation d'instrument sonore et de drones est formellement interdite dans les réserves naturelles pour la quiétude de la faune et de vos voisins bivouaqueurs. Ta belle chanson est entendue par tous les chamois du coin ! Ce bruit augmente leur stress et modifie leur comportement. Respectons l'espace de vie des espèces sauvages."
                         }
                     ]
                 },
@@ -47,14 +47,14 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "feu",
-                            "title": "Je peux faire du feu",
+                            "title": "Je peux faire du feu...",
                             "choices": [
-                                "Pour me réchauffer",
-                                "Pour manger un repas chaud",
-                                "Jamais, je peux uniquement utiliser un réchaud"
+                                "quand « Allumez le feu » est ma chanson préférée.",
+                                "avec du bois mort pour ne pas manger mes saucisses crues.",
+                                "jamais, je peux uniquement utiliser un réchaud."
                             ],
                             "isRequired": true,
-                            "correctAnswer": "Jamais, je peux uniquement utiliser un réchaud",
+                            "correctAnswer": "jamais, je peux uniquement utiliser un réchaud.",
                             "infos": "Pour limiter le risque incendie, les détériorations de la flore et le dérangement de la faune, il est interdit de faire du feu. Seul les réchauds sont tolérés."
                         }
                     ]
@@ -64,15 +64,15 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "eau",
-                            "title": "A proximité d'un lac ou d'un cours d'eau, je peux :",
+                            "title": "A proximité d'un lac ou d'un cours d'eau, je peux...",
                             "choices": [
-                                "Faire ma vaisselle ou ma toilette dans le lac",
-                                "Le contempler et ne pas me baigner",
-                                "Pêcher sans permis"
+                                "pêcher à la dynamite.",
+                                "nettoyer les Tupperware que je ne rendrai jamais à ma mère.",
+                                "le contempler et ne pas me baigner."
                             ],
                             "isRequired": true,
-                            "correctAnswer": "Le contempler et ne pas me baigner",
-                            "infos": "Les lacs d'altitude sont des écosystèmes sensibles aux apports extérieurs (crème solaire, dentifrice...). Ne rien y tremper, c'est les préserver ! Pour pêcher, un permis de pêche est obligatoire."
+                            "correctAnswer": "le contempler et ne pas me baigner.",
+                            "infos": "Les lacs d'altitude sont des écosystèmes sensibles aux apports extérieurs (crème solaire, dentifrice...)et ils sont mis en péril lorsque l’eau est troublée par des actions humaines. Ne rien y tremper, c'est les préserver ! Quant à la pêche, un permis de pêche est obligatoire (on parle bien de pêche avec une canne, reposez ce bâton de dynamite…)."
                         }
                     ]
                 },
@@ -81,15 +81,50 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "dechets",
-                            "title": "Que faire de mes déchets ?",
+                            "title": "Pour mes déchets, je peux…",
                             "choices": [
-                                "Je remporte mon papier toilette et tous mes déchets avec moi",
-                                "Je peux laisser le papier toilette sous un caillou",
-                                "Je laisse les déchets biodégradables"
+                                "les remporter avec moi, y compris le papier toilette et les trognons de pommes.",
+                                "les cacher sous un caillou, ni vu, ni connu !",
+                                "les arroser d’essence et les brûler."
                             ],
                             "isRequired": true,
-                            "correctAnswer": "Je remporte mon papier toilette et tous mes déchets avec moi",
-                            "infos": "En montagne, la décomposition des déchets est très lente. Pour éviter à la faune de se nourrir d'aliments inhabituels qui les fragilisent, remportons tous nos déchets, y compris le papier toilette et les trognons de pomme !"
+                            "correctAnswer": "les remporter avec moi, y compris le papier toilette et les trognons de pommes.",
+                            "infos": "En montagne, la décomposition des déchets est très lente. Pour éviter à la faune de se nourrir d'aliments inhabituels qui les fragilisent, remportons tous nos déchets, y compris le papier toilette et les trognons de pomme et votre fameux taboulé aux choux de Bruxelles et gencives de porc. Enfin, brûler son papier toilette est une très mauvaise idée car cela crée des départs d’incendie plus vite que vous ne le croyez."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "drones",
+                            "title": "Je peux utiliser mon drone pour…",
+                            "choices": [
+                                "espionner les autres bivouaqueurs.",
+                                "pousser des marmottes au suicide.",
+                                "rien. Je ne peux pas utiliser mon drone."
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "rien. Je ne peux pas utiliser mon drone.",
+                            "infos": "Les drones sont un dérangement majeur pour la faune et une source de stress pour tous les animaux, qui les identifient à des prédateurs aériens. En respectant l’interdiction de l’usage de drones dans les réserves naturelles, vous agissez pour préserver un écrin de nature fragile."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "photos",
+                            "title": "Je peux prendre de belles photos pour les…",
+                            "choices": [
+                                "Poster en story, live, photo, mon unique tente face aux montagnes.",
+                                "Publier sur Instagram et lancer ma carrière d’influenceur.se internationale.",
+                                "Partager sur tous les réseaux sociaux pour être sûr d’être encore plus nombreux la prochaine fois.",
+                                "Profiter du moment présent, gardez un souvenir, sans localiser mes photos."
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "Profiter du moment présent, gardez un souvenir, sans localiser mes photos.",
+                            "infos": "La protection des espaces naturels se fait aussi de manière digitale. Vos belles images véhiculent et donnent envie ! Modérez vos partages et gardez précieusement vos souvenirs pour limiter la fréquentation. Un afflux constant et à toutes heures des visiteurs dégrade les milieux et perturbent la faune sauvage."
                         }
                     ]
                 },
@@ -124,14 +159,14 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "horaires",
-                            "title": "To bivy, I may pitch a light shelter",
+                            "title": "Bivouac is…",
                             "choices": [
-                                "From 7pm to 9am",
-                                "For multiple days in a row",
-                                "For the whole day"
+                                "All the week",
+                                "One night only,same area, between 7pm and 9am",
+                                "All day long for my nap"
                             ],
                             "isRequired": true,
-                            "correctAnswer": "From 7pm to 9am",
+                            "correctAnswer": "One night only,same area, between 7pm and 9am",
                             "infos": "Camping is forbidden in nature reserves. You may only pitch your tent for one night between 7pm and 9 am."
                         }
                     ]
@@ -141,15 +176,15 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "bruits",
-                            "title": "My evening outdoor is lulled by :",
+                            "title": "During my outdoor evening, I can…",
                             "choices": [
-                                "Music coming out of my portable speakerdes",
-                                "The sounds of nature",
-                                "A music instrument"
+                                "organize a giant karaoke.",
+                                "listen to the sounds of nature.",
+                                "listen to music on my speaker."
                             ],
                             "isRequired": true,
-                            "correctAnswer": "The sounds of nature",
-                            "infos": "The use of any type of sonorous device is forbidden within the nature reserves for the quietness of wildlife. Noise increases stress level and influences its behaviour. In order to respect their living area, keep quiet !"
+                            "correctAnswer": "listen to the sounds of nature.",
+                            "infos": "The use of any type of sonorous device and drone is forbidden within the nature reserves for the quietness of wildlife and your fellow bivouackers. Imagine if a neighbor came to sing every night in your living room... Well, it's the same for the ibex! Your noise increases their stress and changes their behavior. Let's respect the living space of wild species."
                         }
                     ]
                 },
@@ -160,12 +195,12 @@ export const quizz = createSlice({
                             "name": "feu",
                             "title": "I may light a fire :",
                             "choices": [
-                                "To warm up",
-                                "To eat a warm meal",
-                                "Never, I may nevertheless use a stove to cook my food"
+                                "when -Light My Fire- is my favorite song.",
+                                "never, I can only use a stove.",
+                                "with dead wood so I don't eat my sausages raw."
                             ],
                             "isRequired": true,
-                            "correctAnswer": "Never, I may nevertheless use a stove to cook my food",
+                            "correctAnswer": "never, I can only use a stove.",
                             "infos": "To limit starting a wildfire, damaging flora and disturbing wildlife, it is forbidden to light a fire. Stoves are tolerated."
                         }
                     ]
@@ -175,14 +210,14 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "eau",
-                            "title": "Close to a lake or a stream, I may :",
+                            "title": "Near a lake or a stream, I can…",
                             "choices": [
-                                "Wash my dishes and/or myself",
-                                "Look at it without taking a dip",
-                                "Fish without a licence"
+                                "fish with dynamite.",
+                                "look at it without taking a dip.",
+                                "fish with dynamite."
                             ],
                             "isRequired": true,
-                            "correctAnswer": "Look at it without taking a dip",
+                            "correctAnswer": "look at it without taking a dip.",
                             "infos": "Altitude lakes are sensitive ecosystems that can't absorb external inputs (such as sunscreen, toothpaste,...). Do not dip anything into it, to help keep them safe! Fishing requires a local licence."
                         }
                     ]
@@ -192,15 +227,50 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "dechets",
-                            "title": "What to do with my trash ?",
+                            "title": "For my waste, I can…",
                             "choices": [
-                                "I take all my litter down with me, including toilet paper",
-                                "I can leave my toilet paper under a rock",
-                                "I can leave my biodegradable waste"
+                                "I take all my litter down with me, including toilet paper.",
+                                "hide them under a pebble, just like that!",
+                                "Douse it in gasoline and burn it."
                             ],
                             "isRequired": true,
-                            "correctAnswer": "I take all my litter down with me, including toilet paper",
-                            "infos": "Up high, waste decays very slowly. To prevent animals feeding on unsuitable food, take all your trash back down with you. That includes toilet paper and leftover food."
+                            "correctAnswer": "I take all my litter down with me, including toilet paper.",
+                            "infos": "Up high, waste decays very slowly. To prevent animals feeding on unsuitable food, take all your trash back down with you. That includes toilet paper and leftover food.Lastly, burning your toilet paper is a very bad idea as it can start fires faster than you might think. "
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "drones",
+                            "title": "I can use my drone to…",
+                            "choices": [
+                                "spy on other campers.",
+                                "drive marmots to suicide.",
+                                "nothing. I cannot use my drone."
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "nothing. I cannot use my drone.",
+                            "infos": "Drones are a major disturbance for wildlife and a huge source of stress for all animals, which identify them as aerial predators. The same goes for birds, which, in trying to protect their nests, can get injured or leave their young unattended for too long. By respecting the ban on drone use in nature reserves, you are helping to preserve a fragile and already endangered environment."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "photos",
+                            "title": "Je peux prendre de belles photos pour les…",
+                            "choices": [
+                                "Poster en story, live, photo, mon unique tente face aux montagnes.",
+                                "Publier sur Instagram et lancer ma carrière d’influenceur.se internationale.",
+                                "Partager sur tous les réseaux sociaux pour être sûr d’être encore plus nombreux la prochaine fois.",
+                                "Profiter du moment présent, gardez un souvenir, sans localiser mes photos."
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "Profiter du moment présent, gardez un souvenir, sans localiser mes photos.",
+                            "infos": "La protection des espaces naturels se fait aussi de manière digitale. Vos belles images véhiculent et donnent envie ! Modérez vos partages et gardez précieusement vos souvenirs pour limiter la fréquentation. Un afflux constant et à toutes heures des visiteurs dégrade les milieux et perturbent la faune sauvage."
                         }
                     ]
                 },
@@ -272,7 +342,7 @@ export const quizz = createSlice({
                             "title": "Potrei accendere un fuoco:",
                             "choices": [
                                 "Per riscaldarsi",
-                                "Mangiare un pasto caldo",
+                                "Con legno morto per non mangiare le mie salsicce crude",
                                 "Mai, ma posso comunque usare un fornello per cucinare i miei cibi."
                             ],
                             "isRequired": true,
@@ -305,13 +375,48 @@ export const quizz = createSlice({
                             "name": "dechets",
                             "title": "Cosa fare con i miei rifiuti?",
                             "choices": [
-                                "",
-                                "Posso lasciare la mia carta igienica sotto una roccia",
+                                "Porto con me tutta la mia spazzatura, compresa la carta igienica",
+                                "nascondeteli sotto un sasso, così!",
                                 "Posso lasciare i miei rifiuti biodegradabili"
                             ],
                             "isRequired": true,
-                            "correctAnswer": "Porto con me tutta la mia spazzatura, compresa la carta igienica.",
+                            "correctAnswer": "Porto con me tutta la mia spazzatura, compresa la carta igienica",
                             "infos": "In alto i rifiuti si decompongono molto lentamente. Per evitare che gli animali si nutrano di cibo inadatto, portate giù tutti i rifiuti. Questo include la carta igienica e gli avanzi di cibo."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "drones",
+                            "title": "Posso usare il mio drone per...",
+                            "choices": [
+                                "spiare gli altri campeggiatori.",
+                                "spingere le marmotte al suicidio.",
+                                "niente. Non posso usare il mio drone."
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "niente. Non posso usare il mio drone.",
+                            "infos": "I droni sono un grande disturbo per la fauna selvatica e un'enorme fonte di stress per tutti gli animali, che li identificano come predatori aerei. Lo stesso vale per gli uccelli che, nel tentativo di proteggere i loro nidi, possono ferirsi o lasciare i loro piccoli incustoditi per troppo tempo. Rispettando il divieto di utilizzo dei droni nelle riserve naturali, si contribuisce a preservare un ambiente fragile e già in pericolo."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "photos",
+                            "title": "Je peux prendre de belles photos pour les…",
+                            "choices": [
+                                "Poster en story, live, photo, mon unique tente face aux montagnes.",
+                                "Publier sur Instagram et lancer ma carrière d’influenceur.se internationale.",
+                                "Partager sur tous les réseaux sociaux pour être sûr d’être encore plus nombreux la prochaine fois.",
+                                "Profiter du moment présent, gardez un souvenir, sans localiser mes photos."
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "Profiter du moment présent, gardez un souvenir, sans localiser mes photos.",
+                            "infos": "La protection des espaces naturels se fait aussi de manière digitale. Vos belles images véhiculent et donnent envie ! Modérez vos partages et gardez précieusement vos souvenirs pour limiter la fréquentation. Un afflux constant et à toutes heures des visiteurs dégrade les milieux et perturbent la faune sauvage."
                         }
                     ]
                 },
