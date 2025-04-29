@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const nextYear = new Date().getFullYear() + 1;
+const maxDate = `${nextYear}-12-31`;
+
+const minDate = new Date().toISOString().split("T")[0];
+
 export const infos = createSlice({
     name: "infos",
     initialState: {
@@ -11,7 +16,9 @@ export const infos = createSlice({
                     "title": "Date du bivouac",
                     "inputType": "date",
                     "defaultValueExpression": "currentDate()",
-                    "isRequired": true
+                    "isRequired": true,
+                    "max": maxDate,
+                    "min": minDate
                 },
                 {
                     "name": "nb_people",
@@ -153,6 +160,16 @@ export const infos = createSlice({
                         ],
                     "visibleIf": "{fr_or_foreign} = France",
                 },
+                {
+                    "name": "tmb",
+                    "type": "boolean",
+                    "title": "Faites-vous (une partie ou) le tour du Mont-Blanc ?",
+                    "maxLength": 25,
+                    "isRequired": true,
+                    "valueTrue": "Yes",
+                    "valueFalse": "No",
+                    "defaultValue": "false",
+                }
             ],
             "showQuestionNumbers": false
         },
@@ -164,7 +181,9 @@ export const infos = createSlice({
                     "title": "Date of bivouac",
                     "inputType": "date",
                     "defaultValueExpression": "currentDate()",
-                    "isRequired": true
+                    "isRequired": true,
+                    "max": maxDate,
+                    "min": minDate
                 },
                 {
                     "name": "nb_people",
@@ -306,6 +325,16 @@ export const infos = createSlice({
                         ],
                     "visibleIf": "{fr_or_foreign} = France",
                 },
+                {
+                    "name": "tmb",
+                    "type": "boolean",
+                    "title": "Faites-vous (une partie ou) le tour du Mont-Blanc ?",
+                    "maxLength": 25,
+                    "isRequired": true,
+                    "valueTrue": "Yes",
+                    "valueFalse": "No",
+                    "defaultValue": "false",
+                }
             ],
             "showQuestionNumbers": false
         },
@@ -317,7 +346,9 @@ export const infos = createSlice({
                     "title": "Data del bivacco",
                     "inputType": "date",
                     "defaultValueExpression": "currentDate()",
-                    "isRequired": true
+                    "isRequired": true,
+                    "max": maxDate,
+                    "min": minDate
                 },
                 {
                     "name": "nb_people",
@@ -459,6 +490,16 @@ export const infos = createSlice({
                         ],
                     "visibleIf": "{fr_or_foreign} = Francia",
                 },
+                {
+                    "name": "tmb",
+                    "type": "boolean",
+                    "title": "Faites-vous (une partie ou) le tour du Mont-Blanc ?",
+                    "maxLength": 25,
+                    "isRequired": true,
+                    "valueTrue": "Yes",
+                    "valueFalse": "No",
+                    "defaultValue": "false",
+                }
             ],
             "showQuestionNumbers": false
         }

@@ -1,8 +1,11 @@
 {
+    "Tab homepage": "Accueil",
     "Tab impact bivouacs": "Impatto dei bivacchi",
     "Tab good practices": "Buona pratica",
     "Tab bivouac declaration": "Riserva di bivacco",
     "Tab nature reserves": "Riserve naturali in Alta Savoia",
+    "Tab before leaving": "Before you leave",
+    "Tab faq": "FAQ",
     "Tab contacts": "bivouac@cen-haute-savoie.org",
     "Tab legal notices": "Avvisi legali",
     "languageFrench": "Francese",
@@ -30,12 +33,19 @@
             "Dans cette zone, le bivouac est déconseillé et les tentes sont interdites avant 19h et après 9 heures le lendemain. Les feux et le survol en drone sont interdits.": "In questa zona, i bivacchi sono sconsigliati e le tende sono vietate prima delle 19:00 e dopo le 9:00 del giorno successivo. Sono vietati gli incendi e i voli di droni.",
             "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de la Pierre à Bérard pour le bivouac. Tél : 04.50.54.62.08.": "Per preservare l'ambiente naturale, in quest'area sono vietati il bivacco e la balneazione. Sono vietati i fuochi e i voli di droni. Contattare il rifugio Pierre à Bérard per i bivacchi. Tel: 07.86.17.47.15."
         },
-        "Legend": {
+        "Legend_desktop": {
             "row1": "Ai margini della riserva naturale, i bivacchi non raccomandata (tranne che in aree specifiche).",
             "row2": "Bivacchi pribita, area non prenotabile",
             "row3": "Bivacchi tollerati, area riservabile",
             "row4": "Bivacchi tollerati, area completa per questa data",
             "row5": "Area piccola, zoomare per una visione migliore"
+        },
+        "Legend_mobile": {
+            "row1": "Non raccomandata",
+            "row2": "Pribita",
+            "row3": "Tollerati",
+            "row4": "Completa",
+            "row5": "Area piccola"
         }
     },
     "Next step": "Passo successivo",
@@ -48,7 +58,7 @@
     "Select site/zone": "Selezionare un sito/area",
     "Sites": "Siti",
     "Zones": "Zone",
-    "Point bivouac locations": "Inserite il vostro sito di bivacco nelle Riserve Natural Aiguilles Rouges, Contamines-Montjoie e Sixt-Fer-à-Cheval/Passy cliccando sul pulsante Aggiungere una posizione e poi sulla mappa.",
+    "Point bivouac locations": "Inserite il vostro sito di bivacco nelle Riserve Natural Aiguilles Rouges, Contamines-Montjoie e Sixt-Fer-à-Cheval/Passy cliccando sulla mappa e poi sul pulsante Aggiungere una posizione.",
     "Add location": "Aggiungere una posizione",
     "Stop Add location": "smettere di aggiungere posizione",
     "Delete last location": "Eliminare l'ultima posizione",

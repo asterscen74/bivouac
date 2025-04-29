@@ -1,8 +1,11 @@
 {
+    "Tab homepage": "Accueil",
     "Tab impact bivouacs": "Impacts du bivouac",
     "Tab good practices": "Bonnes pratiques",
     "Tab bivouac declaration": "Réservation bivouac",
     "Tab nature reserves": "Réserves Naturelles de Haute-Savoie",
+    "Tab before leaving": "Avant de partir",
+    "Tab faq": "FAQ",
     "Tab contacts": "bivouac@cen-haute-savoie.org",
     "Tab legal notices": "Mentions légales",
     "Informations": "Renseignements",
@@ -27,13 +30,21 @@
             "Dans cette zone, le bivouac est déconseillé et les tentes sont interdites avant 19h et après 9 heures le lendemain. Les feux et le survol en drone sont interdits.": "Dans cette zone, le bivouac est déconseillé et les tentes sont interdites avant 19h et après 9 heures le lendemain. Les feux et le survol en drone sont interdits.",
             "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de la Pierre à Bérard pour le bivouac. Tél : 04.50.54.62.08.": "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de la Pierre à Bérard pour le bivouac. Tél : 07.86.17.47.15."
         },
-        "Legend": {
+        "Legend_desktop": {
             "row1": "Limite de réserve naturelle, le bivouac déconseillé (hors zones spécifiques)",
             "row2": "Bivouac interdit, zone non réservable",
             "row3": "Bivouac toléré, zone réservable",
             "row4": "Bivouac toléré, zone complète pour cette date",
             "row5": "Petite zone, zoomez pour une meilleure visualisation"
+        },
+        "Legend_mobile": {
+            "row1": "Déconseillé",
+            "row2": "Interdit",
+            "row3": "Toléré",
+            "row4": "Complet",
+            "row5": "Petite zone"
         }
+
     },
     "languageFrench": "Français",
     "languageEnglish": "Anglais",
@@ -48,7 +59,7 @@
     "Select site/zone": "Sélectionner un site / une zone",
     "Sites": "Sites",
     "Zones": "Zones",
-    "Point bivouac locations": "Saisissez votre emplacement de bivouac au sein des Réserves naturelles du massif des Aiguilles Rouges, des Contamines-Montjoie et de Sixt-Fer-à-Cheval/Passy en cliquant sur le bouton Ajouter un emplacement puis sur la carte.",
+    "Point bivouac locations": "Saisissez votre emplacement de bivouac au sein des Réserves naturelles du massif des Aiguilles Rouges, des Contamines-Montjoie et de Sixt-Fer-à-Cheval/Passy en cliquant sur la carte puis sur le bouton Placer ma tente.",
     "Add location": "Placer ma tente",
     "Stop Add location": "Arrêter le placement de ma tente",
     "Delete last location": "Supprimer le dernier emplacement",

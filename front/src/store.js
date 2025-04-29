@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import General from "./stores/General";
+import Home from "./stores/Home";
 import Quizz from "./stores/Quizz";
 import Infos from "./stores/Infos";
 import Results from "./stores/Results";
@@ -8,10 +9,13 @@ import Impacts from "./stores/Impacts";
 import LegalNotices from "./stores/LegalNotices";
 import GoodPractices from "./stores/GoodPractices";
 import NatureReserve from "./stores/NatureReserve";
+import BeforeLeaving from "./stores/BeforeLeaving";
+import Faq from "./stores/Faq";
 
 export default configureStore({
     reducer: {
         general: General,
+        home: Home,
         quizz: Quizz,
         infos: Infos,
         results: Results,
@@ -20,5 +24,7 @@ export default configureStore({
         legalNotices: LegalNotices,
         goodPractices: GoodPractices,
         natureReserve: NatureReserve,
+        beforeLeaving: BeforeLeaving,
+        faq: Faq,
     },
 });

@@ -1,8 +1,11 @@
 {
+    "Tab homepage": "Accueil",
     "Tab impact bivouacs": "Impact of bivouacs",
     "Tab good practices": "Good practices",
     "Tab bivouac declaration": "Bivouac reservation",
     "Tab nature reserves": "Nature reserves in Haute-Savoie",
+    "Tab before leaving": "Before you leave",
+    "Tab faq": "FAQ",
     "Tab contacts": "bivouac@cen-haute-savoie.org",
     "Tab legal notices": "Legal information",
     "languageFrench": "French",
@@ -30,12 +33,19 @@
             "Dans cette zone, le bivouac est déconseillé et les tentes sont interdites avant 19h et après 9 heures le lendemain. Les feux et le survol en drone sont interdits.": "In this zone, bivouacs are not recommended and tents are forbidden before 7pm and after 9am the following day. Fires and drone flights are prohibited.",
             "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de la Pierre à Bérard pour le bivouac. Tél : 04.50.54.62.08.": "In order to preserve the natural environment, bivouacking and swimming are prohibited in this area. Fires and drone flights are prohibited. Contact the Pierre à Bérard refuge for bivouacs. Tel: 07.86.17.47.15."
         },
-        "Legend": {
+        "Legend_desktop": {
             "row1": "Edge of the nature reserve, bivouacs not recommended (except in specific areas).",
             "row2": "Bivouac prohibited, non bookable area",
             "row3": "Bivouacs tolerated, reservable area",
             "row4": "Bivouacs tolerated, complete area for this date",
             "row5": "Small area, zoom in for a better view"
+        },
+        "Legend_mobile": {
+            "row1": "Not recommended",
+            "row2": "Prohibited",
+            "row3": "Tolerated",
+            "row4": "Complete",
+            "row5": "Small area"
         }
     },
     "Next step": "Next Step",
@@ -48,7 +58,7 @@
     "Select site/zone": "Select a site/area",
     "Sites": "Sites",
     "Zones": "Areas",
-    "Point bivouac locations": "Enter your bivouac site in the Aiguilles Rouges, Contamines-Montjoie and Sixt-Fer-à-Cheval/Passy Natural Reserves by clicking on the Add a location button and then on the map.",
+    "Point bivouac locations": "Enter your bivouac site in the Aiguilles Rouges, Contamines-Montjoie and Sixt-Fer-à-Cheval/Passy Natural Reserves by clicking on the map and then on the Add a location button.",
     "Add location": "Add a location",
     "Stop Add location": "Stop adding location",
     "Delete last location": "Delete the last location",

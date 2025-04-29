@@ -113,6 +113,24 @@ export const quizz = createSlice({
                 {
                     "elements": [
                         {
+                            "type": "radiogroup",
+                            "name": "photos",
+                            "title": "Je peux prendre de belles photos pour les…",
+                            "choices": [
+                                "Poster en story, live, photo, mon unique tente face aux montagnes.",
+                                "Publier sur Instagram et lancer ma carrière d’influenceur.se internationale.",
+                                "Partager sur tous les réseaux sociaux pour être sûr d’être encore plus nombreux la prochaine fois.",
+                                "Profiter du moment présent, gardez un souvenir, sans localiser mes photos."
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "Profiter du moment présent, gardez un souvenir, sans localiser mes photos.",
+                            "infos": "La protection des espaces naturels se fait aussi de manière digitale. Vos belles images véhiculent et donnent envie ! Modérez vos partages et gardez précieusement vos souvenirs pour limiter la fréquentation. Un afflux constant et à toutes heures des visiteurs dégrade les milieux et perturbent la faune sauvage."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
                             "type": "text",
                             "name": "Une remarque sur notre outil ?"
                         }
@@ -241,6 +259,24 @@ export const quizz = createSlice({
                 {
                     "elements": [
                         {
+                            "type": "radiogroup",
+                            "name": "photos",
+                            "title": "Je peux prendre de belles photos pour les…",
+                            "choices": [
+                                "Poster en story, live, photo, mon unique tente face aux montagnes.",
+                                "Publier sur Instagram et lancer ma carrière d’influenceur.se internationale.",
+                                "Partager sur tous les réseaux sociaux pour être sûr d’être encore plus nombreux la prochaine fois.",
+                                "Profiter du moment présent, gardez un souvenir, sans localiser mes photos."
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "Profiter du moment présent, gardez un souvenir, sans localiser mes photos.",
+                            "infos": "La protection des espaces naturels se fait aussi de manière digitale. Vos belles images véhiculent et donnent envie ! Modérez vos partages et gardez précieusement vos souvenirs pour limiter la fréquentation. Un afflux constant et à toutes heures des visiteurs dégrade les milieux et perturbent la faune sauvage."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
                             "type": "text",
                             "name": "Do you have a comment on that survey ?"
                         }
@@ -363,6 +399,24 @@ export const quizz = createSlice({
                             "isRequired": true,
                             "correctAnswer": "niente. Non posso usare il mio drone.",
                             "infos": "I droni sono un grande disturbo per la fauna selvatica e un'enorme fonte di stress per tutti gli animali, che li identificano come predatori aerei. Lo stesso vale per gli uccelli che, nel tentativo di proteggere i loro nidi, possono ferirsi o lasciare i loro piccoli incustoditi per troppo tempo. Rispettando il divieto di utilizzo dei droni nelle riserve naturali, si contribuisce a preservare un ambiente fragile e già in pericolo."
+                        }
+                    ]
+                },
+                {
+                    "elements": [
+                        {
+                            "type": "radiogroup",
+                            "name": "photos",
+                            "title": "Je peux prendre de belles photos pour les…",
+                            "choices": [
+                                "Poster en story, live, photo, mon unique tente face aux montagnes.",
+                                "Publier sur Instagram et lancer ma carrière d’influenceur.se internationale.",
+                                "Partager sur tous les réseaux sociaux pour être sûr d’être encore plus nombreux la prochaine fois.",
+                                "Profiter du moment présent, gardez un souvenir, sans localiser mes photos."
+                            ],
+                            "isRequired": true,
+                            "correctAnswer": "Profiter du moment présent, gardez un souvenir, sans localiser mes photos.",
+                            "infos": "La protection des espaces naturels se fait aussi de manière digitale. Vos belles images véhiculent et donnent envie ! Modérez vos partages et gardez précieusement vos souvenirs pour limiter la fréquentation. Un afflux constant et à toutes heures des visiteurs dégrade les milieux et perturbent la faune sauvage."
                         }
                     ]
                 },
