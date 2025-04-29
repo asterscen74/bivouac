@@ -1,16 +1,64 @@
 import { createSlice } from "@reduxjs/toolkit";
+import carteContaFr from '../assets/img/bivouac_conta_fr.webp'
+import carteMarFr from '../assets/img/bivouac_mar_fr.webp'
+import carteContaEn from '../assets/img/bivouac_conta_en.webp'
+import carteMarEn from '../assets/img/bivouac_mar_en.webp'
+import carteContaIt from '../assets/img/bivouac_conta_it.webp'
+import carteMarIt from '../assets/img/bivouac_mar_it.webp'
 
 export const Home = createSlice({
     name: "Home",
     initialState: {
         fr: `
-        <p>Véritables cœurs de nature, les réserves naturelles sont des espaces protégés par décret ministériel en vue de conserver un patrimoine naturel d’exception. Prenons le temps de contempler et de vivre leurs multiples facettes… mais soyons aussi acteur de leur préservation.</p>
+        <p><strong>Envie de dormir à la belle étoile?</strong> </p>
+        <p>Depuis 2023, vous devez réserver votre nuit, pour dormir en réserves naturelles:</p>
+        <li>du Massif des Aiguilles Rouges</li>
+        <li>des Contamines-Montjoie</li>
+        <li>Sixt-Fer-à-Cheval/Passy</li>
+        <p>La réserve naturelle de Passy n’est pas soumise à cette réglementation.</p>
+        <p>Avant de remplir votre réservation, ces cartes résument les zones interdites au bivouac et les zones tolérées. Cette réservation est gratuite! Préservez-vous ensemble la nature!</p>
+        <div class="column">
+        <img src="${carteContaFr}" alt="Conta" style="width:75%">
+        </div>
+        <div class="column">
+        <img src="${carteMarFr}" alt="Mar" style="width:75%">
+        </div>
+        <p><strong>Camping ou Bivouac?</strong></p>
+        <p>Le camping sauvage (plusieurs nuit) est interdit en réserves naturelles, le bivouac est réglementé sur certaines zones ou aires ; pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h.</p>
         `,
         en: `
-        <p>Nature reserves are areas protected by ministerial decree to preserve an exceptional natural heritage. Let's take the time to contemplate and experience their many facets... but let's also play a part in preserving them.</p>
+        <p><strong>Want to sleep under the stars?</strong> </p>
+        <p>Since 2023, you have had to book your night to sleep in nature reserves:</p>
+        <li>du Massif des Aiguilles Rouges</li>
+        <li>des Contamines-Montjoie</li>
+        <li>Sixt-Fer-à-Cheval/Passy</li>
+        <p>The Passy nature reserve is not subject to these regulations.</p>
+        <p>Before completing your booking, this map summarises the areas where bivouacs are prohibited and those where they are permitted. This booking is free! Protect nature together!</p>
+        <div class="column">
+        <img src="${carteContaEn}" alt="Conta" style="width:75%">
+        </div>
+        <div class="column">
+        <img src="${carteMarEn}" alt="Mar" style="width:75%">
+        </div>
+        <p><strong>Camping or Bivouac?</strong> </p>
+        <p>Wild camping (several nights) is forbidden in nature reserves. Bivouacking is regulated in certain zones or areas; for a single night, on the same pitch, with or without shelter, between 7pm and 9am.</p>
         `,
         it: `
-        <p>Le riserve naturali sono aree protette da un decreto ministeriale per preservare un patrimonio naturale eccezionale. Prendiamoci il tempo per contemplare e vivere le loro molteplici sfaccettature... ma facciamo anche la nostra parte per preservarle.</p>
+        <p><strong>Volete dormire sotto le stelle? </strong> </p>
+        <p>Dal 2023, dovrete prenotare la vostra notte per dormire nelle riserve naturali:</p>
+        <li>du Massif des Aiguilles Rouges</li>
+        <li>des Contamines-Montjoie</li>
+        <li>Sixt-Fer-à-Cheval/Passy</li>
+        <p>La riserva naturale di Passy non è soggetta a queste norme.</p>
+        <p>Prima di completare la prenotazione, questa mappa riassume le aree in cui i bivacchi sono vietati e quelle in cui sono consentiti. La prenotazione è gratuita! Proteggiamo la natura insieme!</p>
+        <div class="column">
+        <img src="${carteContaIt}" alt="Conta" style="width:75%">
+        </div>
+        <div class="column">
+        <img src="${carteMarIt}" alt="Mar" style="width:75%">
+        </div>
+        <p><strong>Campeggio o bivacco? </strong> </p>
+        <p>Il campeggio selvaggio (più notti) è vietato nelle riserve naturali. Il bivacco è regolamentato in alcune zone o aree; per una sola notte, sulla stessa piazzola, con o senza riparo, tra le 19 e le 9 del mattino.</p>
         `
     }
 });
