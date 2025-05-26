@@ -66,7 +66,7 @@ export const quizz = createSlice({
                             "name": "eau",
                             "title": "A proximité d'un lac ou d'un cours d'eau, je peux...",
                             "choices": [
-                                "pêcher à la dynamite.",
+                                "me laver, l’eau est gratuite ici, il faut en profiter.",
                                 "nettoyer les Tupperware que je ne rendrai jamais à ma mère.",
                                 "le contempler et ne pas me baigner."
                             ],
@@ -115,16 +115,17 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "photos",
-                            "title": "Je peux prendre de belles photos pour les…",
+                            "title": "Je peux prendre de belles photos pour…",
                             "choices": [
-                                "Poster en story, live, photo, mon unique tente face aux montagnes.",
-                                "Publier sur Instagram et lancer ma carrière d’influenceur.se internationale.",
-                                "Partager sur tous les réseaux sociaux pour être sûr d’être encore plus nombreux la prochaine fois.",
-                                "Profiter du moment présent, gardez un souvenir, sans localiser mes photos."
+
+                                "garder un souvenir pour moi et mes proches",
+                                "publier sur Instagram et lancer ma carrière d’influenceur.se internationale.",
+                                "partager sur tous les réseaux sociaux pour être encore plus nombreux la prochaine fois."
+
                             ],
                             "isRequired": true,
-                            "correctAnswer": "Profiter du moment présent, gardez un souvenir, sans localiser mes photos.",
-                            "infos": "La protection des espaces naturels se fait aussi de manière digitale. Vos belles images véhiculent et donnent envie ! Modérez vos partages et gardez précieusement vos souvenirs pour limiter la fréquentation. Un afflux constant et à toutes heures des visiteurs dégrade les milieux et perturbent la faune sauvage."
+                            "correctAnswer": "garder un souvenir pour moi et mes proches",
+                            "infos": "La protection des espaces naturels se fait aussi de manière digitale. Vos belles images circulent et donnent envie ! Modérez vos partages et gardez précieusement vos souvenirs pour limiter la fréquentation. Un afflux constant et à toutes heures des visiteurs dégrade les milieux et perturbent la faune sauvage."
                         }
                     ]
                 },
@@ -212,9 +213,9 @@ export const quizz = createSlice({
                             "name": "eau",
                             "title": "Near a lake or a stream, I can…",
                             "choices": [
-                                "fish with dynamite.",
+                                "clean the Tupperware I’ll never return to my mom.",
                                 "look at it without taking a dip.",
-                                "fish with dynamite."
+                                "Bathe, the water is free here, let’s take advantage of it!"
                             ],
                             "isRequired": true,
                             "correctAnswer": "look at it without taking a dip.",
@@ -261,16 +262,16 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "photos",
-                            "title": "Je peux prendre de belles photos pour les…",
+                            "title": "I can take beautiful pictures…",
                             "choices": [
-                                "Poster en story, live, photo, mon unique tente face aux montagnes.",
-                                "Publier sur Instagram et lancer ma carrière d’influenceur.se internationale.",
-                                "Partager sur tous les réseaux sociaux pour être sûr d’être encore plus nombreux la prochaine fois.",
-                                "Profiter du moment présent, gardez un souvenir, sans localiser mes photos."
+                                "to keep a souvenir for myself and my loved ones.",
+                                "to publish on Instagram and launch my career as an international influencer.",
+                                "to share on all social networks to be sure to be even more numerous next time."
+
                             ],
                             "isRequired": true,
-                            "correctAnswer": "Profiter du moment présent, gardez un souvenir, sans localiser mes photos.",
-                            "infos": "La protection des espaces naturels se fait aussi de manière digitale. Vos belles images véhiculent et donnent envie ! Modérez vos partages et gardez précieusement vos souvenirs pour limiter la fréquentation. Un afflux constant et à toutes heures des visiteurs dégrade les milieux et perturbent la faune sauvage."
+                            "correctAnswer": "to keep a souvenir for myself and my loved ones.",
+                            "infos": "Protecting natural spaces is also done digitally. Your beautiful images circulate and inspire others! Moderate your sharing and treasure your memories to limit visitor numbers. A constant influx of visitors at all hours degrades the environment and disturbs wildlife."
                         }
                     ]
                 },
@@ -407,16 +408,16 @@ export const quizz = createSlice({
                         {
                             "type": "radiogroup",
                             "name": "photos",
-                            "title": "Je peux prendre de belles photos pour les…",
+                            "title": "Posso scattare foto meravigliose...",
                             "choices": [
-                                "Poster en story, live, photo, mon unique tente face aux montagnes.",
-                                "Publier sur Instagram et lancer ma carrière d’influenceur.se internationale.",
-                                "Partager sur tous les réseaux sociaux pour être sûr d’être encore plus nombreux la prochaine fois.",
-                                "Profiter du moment présent, gardez un souvenir, sans localiser mes photos."
+                                "della vostra tenda singola che si affaccia sulle montagne e pubblicarla su tutti i social",
+                                "da condividere su tutti i social per essere sicuri di essere ancora più numerosi la prossima volta.",
+                                "per godermi il momento, conservare un ricordo senza localizzare le mie foto."
+
                             ],
                             "isRequired": true,
-                            "correctAnswer": "Profiter du moment présent, gardez un souvenir, sans localiser mes photos.",
-                            "infos": "La protection des espaces naturels se fait aussi de manière digitale. Vos belles images véhiculent et donnent envie ! Modérez vos partages et gardez précieusement vos souvenirs pour limiter la fréquentation. Un afflux constant et à toutes heures des visiteurs dégrade les milieux et perturbent la faune sauvage."
+                            "correctAnswer": "per godermi il momento, conservare un ricordo senza localizzare le mie foto.",
+                            "infos": "La protezione degli spazi naturali può essere realizzata anche in digitale. Le vostre belle immagini circolano e fanno venire voglia di vederle! Moderate la condivisione e fate tesoro dei vostri ricordi per limitare il numero di visitatori. Un afflusso costante di visitatori a tutte le ore danneggia l'ambiente e disturba la fauna selvatica."
                         }
                     ]
                 },

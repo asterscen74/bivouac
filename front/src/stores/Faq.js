@@ -23,13 +23,13 @@ export const Faq = createSlice({
         <p>De manière générale, le bivouac doit être le moins impactant possible sur le milieu dans lequel il se trouve. On parle souvent de planter sa tente au coucher du soleil, et la démonter au lever du soleil. En Haute-Savoie, cela se traduit par les horaires de 19h à 9h le lendemain.</p>
 
         <p><strong>Que se passe-t-il si j’installe ma tente en dehors de ces zones tolérées ou en dehors des horaires?</strong></p>
-        <p>En cas de contrôle par des agents du Parc national de la Vanoise, vous risquez une amende de 68 €. Circulation et stationnement des personnes catégorie 3.</p>
+        <p>En cas de contrôle par les gardes des réserves naturelles, vous risquez une amende de 68 €.
 
         <p><strong>Y a-t-il des toilettes à proximité?</strong></p>
-        <p>Dans la réserve naturelle des contamines-Montjoie, des toilettes publiques sont accessibles. Merci de remporter vos déchets pas de poubelles sur place.</p>
+        <p>Dans la réserve naturelle des Contamines-Montjoie, des toilettes publiques sont accessibles. Merci de remporter vos déchets pas de poubelles sur place.</p>
 
-        <p><strong>Est-ce que je dois apporter ma tente?</strong></p>
-        <p>Oui nous parlons ici de bivouac sans services associés comme dans un camping. N’oublier sac de couchage adapté, les nuits étant plus fraîches en altitude : tapis de sol, habits chauds, un petit bonnet et une frontale!</p>
+        <p><strong>Quel matériel apporter lors de mon bivouac?</strong></p>
+        <p>Vous êtes en réserves naturelles, la réservation n'entraîne aucun services associés. Les nuits étant plus fraîches en altitude, n’oubliez pas le sac de couchage adapté, tapis de sol, habits chauds,une frontale...</p>
 
         <p><strong>Est-ce que je peux utiliser mon réchaud sur l’aire de bivouac pour préparer mon repas?</strong></p>
         <p>Oui, le feu est interdit mais les réchauds portatifs sont autorisés.</p>

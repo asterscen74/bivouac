@@ -15,7 +15,7 @@ export default function Quizz() {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const numberAnswersExpected = 6;
+    const numberAnswersExpected = 7;
     const [displayAlert, setDisplayAlert] = useState(
         false
     );

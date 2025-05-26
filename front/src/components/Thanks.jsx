@@ -42,10 +42,12 @@ export default function Thanks() {
         async function submitSurvey(data) {
             const dataInfos = data.infos;
             const dataLocalisation = data.localisation;
+            const dataLocalisationCopy = { ...dataLocalisation };
+            delete dataLocalisationCopy.capturedImages;
             const dataQuizz = data.quizz;
             const dataQuizzLastQuestion = dataQuizz[t("Last question quiz")];
             const bodyInfos = JSON.stringify(dataInfos);
-            const bodyLocalisation = JSON.stringify(dataLocalisation);
+            const bodyLocalisation = JSON.stringify(dataLocalisationCopy);
             const bodyQuizz = JSON.stringify({"quizz_note": dataQuizzLastQuestion});
             let body = JSON.stringify({ ...JSON.parse(bodyInfos), ...JSON.parse(bodyLocalisation), ...JSON.parse(bodyQuizz)});
             const headers = new Headers();

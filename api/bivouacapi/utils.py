@@ -245,10 +245,10 @@ async def generate_pdf(attributes):
         pdf.set_text_color(255, 0, 0)
         alert_text = ""
         if commune == "Chamonix":
-            alert_text = """Le bivouac est réglementé du 1er juillet au 31 Août par arrêté préfectoral."""
+            alert_text = """Le bivouac est réglementé du 1er juin au 31 août par arrêté préfectoral."""
         if commune == "Les Contamines-Montjoie":
             alert_text = """**Zone interdite Plan Jovet et Lacs Jovet pour les Contamines-Montjoie**
-Afin de préserver les milieux naturels, le **bivouac** est interdit sur cette zone du 1er juillet au 31 Août.
+Afin de préserver les milieux naturels, le **bivouac** est interdit sur cette zone du 1er juillet au 31 août.
 La **baignade** et la navigation est interdite aux randonneurs et aux animaux de compagnie tout au long de l'année.
             """
         pdf.multi_cell(
@@ -409,7 +409,7 @@ La **baignade** et la navigation est interdite aux randonneurs et aux animaux de
         pdf.set_text_color(255, 0, 0)
         alert_text = ""
         if commune == "Chamonix":
-            alert_text = """Bivouac is regulated from July 1 to August 31 by prefectoral decree."""
+            alert_text = """Bivouac is regulated from June 1 to August 31 by prefectoral decree."""
         if commune == "Les Contamines-Montjoie":
             alert_text = """**Prohibited zone Plan Jovet and Lacs Jovet for Contamines-Montjoie**
 In order to preserve natural environments, **bivouac** is prohibited in this area from July 1 to August 31.

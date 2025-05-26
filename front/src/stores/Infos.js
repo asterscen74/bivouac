@@ -163,7 +163,7 @@ export const infos = createSlice({
                 {
                     "name": "tmb",
                     "type": "boolean",
-                    "title": "Faites-vous (une partie ou) le tour du Mont-Blanc ?",
+                    "title": "Faites-vous (une partie ou) le tour du Mont-Blanc?",
                     "maxLength": 25,
                     "isRequired": true,
                     "valueTrue": "Yes",
@@ -328,7 +328,7 @@ export const infos = createSlice({
                 {
                     "name": "tmb",
                     "type": "boolean",
-                    "title": "Faites-vous (une partie ou) le tour du Mont-Blanc ?",
+                    "title": "Are you (part of or) touring Mont Blanc?",
                     "maxLength": 25,
                     "isRequired": true,
                     "valueTrue": "Yes",
@@ -493,7 +493,7 @@ export const infos = createSlice({
                 {
                     "name": "tmb",
                     "type": "boolean",
-                    "title": "Faites-vous (une partie ou) le tour du Mont-Blanc ?",
+                    "title": "State facendo (parte o) un tour del Monte Bianco? ?",
                     "maxLength": 25,
                     "isRequired": true,
                     "valueTrue": "Yes",
