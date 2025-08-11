@@ -325,6 +325,9 @@ export default function Localisation() {
                     navigate("/reservation-bivouac/" + nextPage);
                 });
             }
+            else {
+                navigate("/reservation-bivouac/" + nextPage);
+            }
         }
     };
 
@@ -362,6 +365,7 @@ export default function Localisation() {
         const featurePropertiesBivouac = featureProperties["bivouac"];
         const featurePropertiesNom = featureProperties["nom"];
         const featurePropertiesQuotas = featureProperties["quotas"];
+        console.log(nbTentsZoningDate)
         if (featurePropertiesBivouac === "Toléré") {
             let datesReserved = [momentInfoDate.format('YYYY-MM-DD')];
             for (const dateReserved of datesReserved) {

@@ -57,7 +57,7 @@ export default function Informations() {
 
     return (
         <>
-            <CookieConsent 
+            <CookieConsent
                 buttonText={t("I understand")}
                 style={{
                     background: "#007854",
@@ -74,6 +74,7 @@ export default function Informations() {
             <h1>{t("Informations")}</h1>
             <Alert severity="success">
                 <AlertTitle>{t("Step")} 1/4</AlertTitle>
+                <span style={{ fontWeight: 'bold' }}>{t("Enter your informations_bold")}</span>
                 {t("Enter your informations")}
             </Alert>
 
