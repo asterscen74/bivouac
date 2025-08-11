@@ -77,7 +77,7 @@ export const map = createSlice({
                 type: "zone"
             },
             "col_bellachat_brevent": {
-                name: "Col de Bellachat et lac du Brévent",
+                name: "Brévent",
                 center: [45.9271, 6.8290],
                 zoom: 13,
                 type: "zone"
