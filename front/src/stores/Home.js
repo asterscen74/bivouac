@@ -11,12 +11,12 @@ export const Home = createSlice({
     initialState: {
         fr: `
         <p><strong>Envie de dormir à la belle étoile?</strong> </p>
-        <p>Depuis 2023, vous devez réserver votre nuit pour bivouaquer en réserves naturelles:</p>
+        <p>Depuis 2023, vous devez réserver sur la période estivale, <strong>de Juin à fin Août</strong>, votre nuit pour bivouaquer en réserves naturelles :</p>
         <li>du Massif des Aiguilles Rouges</li>
         <li>des Contamines-Montjoie</li>
         <li>Sixt-Fer-à-Cheval/Passy</li>
         <p>La réserve naturelle de Passy n’est pas soumise à cette réglementation.</p>
-        <p>Avant de remplir votre réservation, ces cartes résument les zones interdites au bivouac et les zones tolérées. Cette réservation est gratuite !
+        <p>Avant de remplir votre réservation, ces cartes résument les zones interdites au bivouac et les zones tolérées. Cette réservation est gratuite mais obligatoire!</p>
         </p> Préservons ensemble la nature !</p>
         <div class="column">
         <p><strong>Réserve Naturelle Nationale des Contamines-Montjoie</strong> </p>
@@ -36,10 +36,13 @@ export const Home = createSlice({
         </div>
         <p><strong>Camping ou Bivouac?</strong></p>
         <p>Le camping sauvage (plusieurs nuits) est interdit en réserves naturelles, le bivouac est réglementé sur certaines zones ou aires ; pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h.</p>
+        <p>Plus d'infos : Arrêtés préfectoraux réglementant la pratique du bivouac et de la baignade :</p>
+        <li><a href="https://www.cen-haute-savoie.org/sites/ecrins-parcnational.com/files/files/ARP_DDT-2025_820_BivouacRNN_MAR_signe.pdf">Arrêté préfectoral Réserve Naturelle des Aiguilles Rouges</a></li>
+        <li><a href="https://www.cen-haute-savoie.org/sites/ecrins-parcnational.com/files/files/RNNCM-ARP_DDT-2025_0739_BivouacBaignadeJovet_RNNCM_signe.pdf">Arrêté préfectoral Réserve Naturelle des Contamines-Monjoie</a></li>
         `,
         en: `
         <p><strong>Want to sleep under the stars?</strong> </p>
-        <p>Since 2023, you have had to book your night to sleep in nature reserves:</p>
+        <p>Since 2023, you have had to book, from June to the end of August, your night to sleep in nature reserves:</p>
         <li>du Massif des Aiguilles Rouges</li>
         <li>des Contamines-Montjoie</li>
         <li>Sixt-Fer-à-Cheval/Passy</li>

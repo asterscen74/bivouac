@@ -5,7 +5,7 @@ export const LegalNotices = createSlice({
     initialState: {
         fr: `
         <p class="section-title">Propriétaire du site et éditeur</p>
-        <p>Le site web <a target="_blank" href="https://bivouac.nature-haute-savoie.fr">https://bivouac.nature-haute-savoie.fr</a> est la propriété de ASTERS - Conservatoire d'espaces naturels de Haute-Savoie :</p>
+        <p>Le site web <a target="_blank" href="https://reserve-bivouac74.fr">https://reserve-bivouac74.fr</a> est la propriété de ASTERS - Conservatoire d'espaces naturels de Haute-Savoie :</p>
         <p>ASTERS - Conservatoire d'espaces naturels de Haute-Savoie</p>
         <p>60 avenue de Novel 74000 Annecy</p>
         <p>04 50 66 47 51</p>
@@ -35,7 +35,7 @@ export const LegalNotices = createSlice({
         `,
         en: `
         <p class="section-title">Site owner and publisher</p>
-        <p>The website <a target="_blank" href="https://bivouac.nature-haute-savoie.fr">https://bivouac.nature-haute-savoie.fr</a> is the property of ASTERS - Conservatoire d'espaces naturels de Haute-Savoie :</p>
+        <p>The website <a target="_blank" href="https://reserve-bivouac74.fr">https://reserve-bivouac74.fr</a> is the property of ASTERS - Conservatoire d'espaces naturels de Haute-Savoie :</p>
         <p>ASTERS - Conservatoire d'espaces naturels de Haute-Savoie</p>
         <p>60 avenue de Novel 74000 Annecy</p>
         <p>04 50 66 47 51</p>
@@ -65,7 +65,7 @@ export const LegalNotices = createSlice({
         `,
         it: `
         <p class="section-title">Proprietario ed editore del sito</p>
-        <p>Il sito web <a target="_blank" href="https://bivouac.nature-haute-savoie.fr">https://bivouac.nature-haute-savoie.fr</a> è di proprietà di ASTERS - Conservatoire d'espaces naturels de Haute-Savoie :</p>
+        <p>Il sito web <a target="_blank" href="https://reserve-bivouac74.fr">https://reserve-bivouac74.fr</a> è di proprietà di ASTERS - Conservatoire d'espaces naturels de Haute-Savoie :</p>
         <p>ASTERS - Conservatoire d'espaces naturels de Haute-Savoie</p>
         <p>60 avenue de France 74000 Annecy</p>
         <p>04 50 66 47 51</p>
