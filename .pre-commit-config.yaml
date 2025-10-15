@@ -68,8 +68,8 @@ repos:
         files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
         types: [file]
         additional_dependencies:
-          - eslint@8.18.0
-          - eslint-plugin-react@7.30.0
+          - eslint@8.57.1
+          - eslint-plugin-react@7.37.5
 
   - repo: https://github.com/ansible/ansible-lint
     rev: v24.2.0

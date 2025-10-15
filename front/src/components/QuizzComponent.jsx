@@ -1,7 +1,7 @@
 import { Model } from "survey-core";
 import "survey-core/i18n/french";
 import { Survey } from "survey-react-ui";
-import "survey-core/defaultV2.min.css";
+import "survey-core/survey-core.min.css";
 import * as SurveyTheme from "survey-core/themes";
 import "../styles/QuizzComponent.css";
 import store from "../store";

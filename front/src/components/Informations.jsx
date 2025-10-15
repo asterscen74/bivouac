@@ -8,7 +8,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import store from "../store";
 import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
-import "survey-core/defaultV2.min.css";
+import "survey-core/survey-core.min.css";
 import * as SurveyTheme from "survey-core/themes";
 import { useDispatch } from "react-redux";
 import { updateResults } from "../stores/Results";

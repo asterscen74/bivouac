@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    allowedHosts: ['reserve-bivouac74.fr'],
     port: 3010,
   },
   define: {
