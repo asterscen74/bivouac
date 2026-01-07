@@ -1,0 +1,159 @@
+diff --git a/node_modules/react-scripts/LICENSE b/node_modules/react-scripts/LICENSE
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/README.md b/node_modules/react-scripts/README.md
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/config/env.js b/node_modules/react-scripts/config/env.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/config/getHttpsConfig.js b/node_modules/react-scripts/config/getHttpsConfig.js
+old mode 100644
+new mode 100755
+index 4fec793..2c529c0
+--- a/node_modules/react-scripts/config/getHttpsConfig.js
++++ b/node_modules/react-scripts/config/getHttpsConfig.js
+@@ -60,15 +60,18 @@ function getHttpsConfig() {
+   if (isHttps && SSL_CRT_FILE && SSL_KEY_FILE) {
+     const crtFile = path.resolve(paths.appPath, SSL_CRT_FILE);
+     const keyFile = path.resolve(paths.appPath, SSL_KEY_FILE);
+-    const config = {
++    const options = {
+       cert: readEnvFile(crtFile, 'SSL_CRT_FILE'),
+       key: readEnvFile(keyFile, 'SSL_KEY_FILE'),
+     };
+
+-    validateKeyAndCerts({ ...config, keyFile, crtFile });
+-    return config;
++    validateKeyAndCerts({ ...options, keyFile, crtFile });
++    return {
++      type: 'https',
++      options,
++    };
+   }
+-  return isHttps;
++  return 'http';
+ }
+
+ module.exports = getHttpsConfig;
+diff --git a/node_modules/react-scripts/config/jest/babelTransform.js b/node_modules/react-scripts/config/jest/babelTransform.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/config/jest/cssTransform.js b/node_modules/react-scripts/config/jest/cssTransform.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/config/jest/fileTransform.js b/node_modules/react-scripts/config/jest/fileTransform.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/config/modules.js b/node_modules/react-scripts/config/modules.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/config/paths.js b/node_modules/react-scripts/config/paths.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/config/webpack.config.js b/node_modules/react-scripts/config/webpack.config.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/config/webpack/persistentCache/createEnvironmentHash.js b/node_modules/react-scripts/config/webpack/persistentCache/createEnvironmentHash.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/config/webpackDevServer.config.js b/node_modules/react-scripts/config/webpackDevServer.config.js
+old mode 100644
+new mode 100755
+index 522a81b..0e3e1d0
+--- a/node_modules/react-scripts/config/webpackDevServer.config.js
++++ b/node_modules/react-scripts/config/webpackDevServer.config.js
+@@ -20,7 +20,6 @@ const host = process.env.HOST || '0.0.0.0';
+ const sockHost = process.env.WDS_SOCKET_HOST;
+ const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
+ const sockPort = process.env.WDS_SOCKET_PORT;
+-
+ module.exports = function (proxy, allowedHost) {
+   const disableFirewall =
+     !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true';
+@@ -98,8 +97,7 @@ module.exports = function (proxy, allowedHost) {
+       // remove last slash so user can land on `/test` instead of `/test/`
+       publicPath: paths.publicUrlOrPath.slice(0, -1),
+     },
+-
+-    https: getHttpsConfig(),
++    server: getHttpsConfig(),
+     host,
+     historyApiFallback: {
+       // Paths with dots should still use the history fallback.
+@@ -109,27 +107,29 @@ module.exports = function (proxy, allowedHost) {
+     },
+     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
+     proxy,
+-    onBeforeSetupMiddleware(devServer) {
+-      // Keep `evalSourceMapMiddleware`
+-      // middlewares before `redirectServedPath` otherwise will not have any effect
+-      // This lets us fetch source contents from webpack for the error overlay
+-      devServer.app.use(evalSourceMapMiddleware(devServer));
+-
++    setupMiddlewares(middlewares, devServer) {
+       if (fs.existsSync(paths.proxySetup)) {
+         // This registers user provided middleware for proxy reasons
+         require(paths.proxySetup)(devServer.app);
+       }
+-    },
+-    onAfterSetupMiddleware(devServer) {
+-      // Redirect to `PUBLIC_URL` or `homepage` from `package.json` if url not match
+-      devServer.app.use(redirectServedPath(paths.publicUrlOrPath));
++      middlewares.unshift(
++        // Keep `evalSourceMapMiddleware`
++        // middlewares before `redirectServedPath` otherwise will not have any effect
++        // This lets us fetch source contents from webpack for the error overlay
++        evalSourceMapMiddleware(devServer)
++      );
++
++      middlewares.push(
++        // Redirect to `PUBLIC_URL` or `homepage` from `package.json` if url not match
++        redirectServedPath(paths.publicUrlOrPath),
++        // This service worker file is effectively a 'no-op' that will reset any
++        // previous service worker registered for the same host:port combination.
++        // We do this in development to avoid hitting the production cache if
++        // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
++        noopServiceWorkerMiddleware(paths.publicUrlOrPath)
++      );
+
+-      // This service worker file is effectively a 'no-op' that will reset any
+-      // previous service worker registered for the same host:port combination.
+-      // We do this in development to avoid hitting the production cache if
+-      // it used the same host and port.
+-      // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
+-      devServer.app.use(noopServiceWorkerMiddleware(paths.publicUrlOrPath));
++      return middlewares;
+     },
+   };
+ };
+diff --git a/node_modules/react-scripts/lib/react-app.d.ts b/node_modules/react-scripts/lib/react-app.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/scripts/build.js b/node_modules/react-scripts/scripts/build.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/scripts/eject.js b/node_modules/react-scripts/scripts/eject.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/scripts/init.js b/node_modules/react-scripts/scripts/init.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/scripts/start.js b/node_modules/react-scripts/scripts/start.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/scripts/test.js b/node_modules/react-scripts/scripts/test.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/scripts/utils/createJestConfig.js b/node_modules/react-scripts/scripts/utils/createJestConfig.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/scripts/utils/verifyTypeScriptSetup.js b/node_modules/react-scripts/scripts/utils/verifyTypeScriptSetup.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/template-typescript/README.md b/node_modules/react-scripts/template-typescript/README.md
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-scripts/template/README.md b/node_modules/react-scripts/template/README.md
+old mode 100644
+new mode 100755
