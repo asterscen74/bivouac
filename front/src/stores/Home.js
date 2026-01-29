@@ -37,8 +37,8 @@ export const Home = createSlice({
         <p><strong>Camping ou Bivouac?</strong></p>
         <p>Le camping sauvage (plusieurs nuits) est interdit en réserves naturelles, le bivouac est réglementé sur certaines zones ou aires ; pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h.</p>
         <p>Plus d'infos : Arrêtés préfectoraux réglementant la pratique du bivouac et de la baignade :</p>
-        <li><a href="https://www.cen-haute-savoie.org/sites/ecrins-parcnational.com/files/files/ARP_DDT-2025_820_BivouacRNN_MAR_signe.pdf">Arrêté préfectoral Réserve Naturelle des Aiguilles Rouges</a></li>
-        <li><a href="https://www.cen-haute-savoie.org/sites/ecrins-parcnational.com/files/files/RNNCM-ARP_DDT-2025_0739_BivouacBaignadeJovet_RNNCM_signe.pdf">Arrêté préfectoral Réserve Naturelle des Contamines-Monjoie</a></li>
+        <li><a href="https://www.cen-haute-savoie.org/wp-content/uploads/2025/12/arp_ddt_2024-0856_bivouac-baignade_signe.pdf">Arrêté préfectoral Réserve Naturelle des Aiguilles Rouges</a></li>
+        <li><a href="https://www.cen-haute-savoie.org/wp-content/uploads/2025/12/arp_ddt-2024-0597_rnncm_reglementation_bivouac_baignade-11-1.pdf">Arrêté préfectoral Réserve Naturelle des Contamines-Monjoie</a></li>
         `,
         en: `
         <p><strong>Want to sleep under the stars?</strong> </p>
