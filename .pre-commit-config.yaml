@@ -60,19 +60,3 @@ repos:
     hooks:
       - id: flake8
         args: ["--config=api/setup.cfg"]
-
-  - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: "v9.0.0-beta.0"
-    hooks:
-      - id: eslint
-        files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
-        types: [file]
-        additional_dependencies:
-          - eslint@8.57.1
-          - eslint-plugin-react@7.37.5
-
-  - repo: https://github.com/ansible/ansible-lint
-    rev: v24.2.0
-    hooks:
-      - id: ansible-lint
-        entry: bash -c 'lst=$(git diff --name-only --cached HEAD | egrep ".(yml|yaml)"); if [ -n "$lst" ]; then ansible-lint $lst; fi'

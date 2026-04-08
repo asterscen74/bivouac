@@ -36,7 +36,7 @@ export const map = createSlice({
             {
               name: "OpenStreetMap",
               attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a>OpenStreetMap</a> contributors',
-              url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+              url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
             },
             {
               name: "IGN Scan 25",

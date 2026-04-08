@@ -1,5 +1,6 @@
 import AppBar from "@mui/material/AppBar";
 import "../styles/Header.css";
+import headerPic from '../assets/img/header.webp'
 import Container from "@mui/material/Container";
 import Box from '@mui/material/Box';
 import MenuItem from "@mui/material/MenuItem";
@@ -69,7 +70,7 @@ const Header = () => {
     return (
         <>
         <Box sx={{ bgcolor: '#007854', height: 'auto'}} >
-            <img src="/src/assets/img/header.jpg" alt="img_header" className="img-header"/>
+            <img src={headerPic} alt="img_header" className="img-header"/>
         </Box>
         <AppBar
             className="main-menu"
