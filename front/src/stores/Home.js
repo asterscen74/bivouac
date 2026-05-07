@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import carteContaFr from '../assets/img/bivouac_conta_fr.webp'
-import carteMarFr from '../assets/img/bivouac_mar_fr.webp'
 import carteContaEn from '../assets/img/bivouac_conta_en.webp'
-import carteMarEn from '../assets/img/bivouac_mar_en.webp'
 import carteContaIt from '../assets/img/bivouac_conta_it.webp'
+import carteMarFr from '../assets/img/bivouac_mar_fr.webp'
+import carteMarEn from '../assets/img/bivouac_mar_en.webp'
 import carteMarIt from '../assets/img/bivouac_mar_it.webp'
+import carteSixtFr from '../assets/img/bivouac_sixt_fr.webp'
+import carteSixtEn from '../assets/img/bivouac_sixt_en.webp'
+import carteSixtIt from '../assets/img/bivouac_sixt_it.webp'
+
 
 export const Home = createSlice({
     name: "Home",
@@ -19,20 +23,23 @@ export const Home = createSlice({
         <p>Avant de remplir votre réservation, ces cartes résument les zones interdites au bivouac et les zones tolérées. Cette réservation est gratuite mais obligatoire!</p>
         </p> Préservons ensemble la nature !</p>
         <div class="column">
-        <p><strong>Réserve Naturelle Nationale des Contamines-Montjoie</strong> </p>
         <a href="${carteContaFr}"><img src="${carteContaFr}" alt="Conta" style="width:90%"/></a>
         </div>
         <div class="column">
-        <p><strong>Réserves Naturelles Nationales du Massif des Aiguilles rouges</strong> </p>
         <a href="${carteMarFr}"><img src="${carteMarFr}" alt="Mar" style="width:90%"></a>
         </div>
+        <div class="column">
+        <a href="${carteSixtFr}"><img src="${carteSixtFr}" alt="Sixt" style="width:90%"></a>
+        </div>
         <div class="column2">
-        <p style="text-align:center"><strong>Réserve Naturelle Nationale des Contamines-Montjoie</strong> </p>
         <a href="${carteContaFr}"><img src="${carteContaFr}" alt="Conta" style="width:90%"/></a>
         </div>
         <div class="column2">
-        <p style="text-align:center"><strong>Réserves Naturelles Nationales du Massif des Aiguilles rouges</strong> </p>
         <a href="${carteMarFr}"><img src="${carteMarFr}" alt="Mar" style="width:90%"></a>
+        </div>
+        </div>
+        <div class="column2">
+        <a href="${carteSixtFr}"><img src="${carteSixtFr}" alt="Sixt" style="width:90%"></a>
         </div>
         <p><strong>Camping ou Bivouac?</strong></p>
         <p>Le camping sauvage (plusieurs nuits) est interdit en réserves naturelles, le bivouac est réglementé sur certaines zones ou aires ; pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h.</p>
@@ -49,20 +56,22 @@ export const Home = createSlice({
         <p>The Passy nature reserve is not subject to these regulations.</p>
         <p>Before completing your booking, this map summarises the areas where bivouacs are prohibited and those where they are permitted. This booking is free! Protect nature together!</p>
         <div class="column">
-        <p><strong>National Nature Reserve of Contamines-Montjoie</strong></p>
         <a href="${carteContaEn}"><img src="${carteContaEn}" alt="Conta" style="width:90%"/></a>
         </div>
         <div class="column">
-        <p><strong>Aiguilles Rouges' National Nature Reserves</strong> </p>
+        <a href="${carteMarEn}"><img src="${carteMarEn}" alt="Mar" style="width:90%"></a>
+        </div>
+        <div class="column">
+        <a href="${carteSixtEn}"><img src="${carteSixtEn}" alt="Sixt" style="width:90%"></a>
+        </div>
+        <div class="column2">
+        <a href="${carteContaEn}"><img src="${carteContaEn}" alt="Conta" style="width:90%"/></a>
+        </div>
+        <div class="column2">
         <a href="${carteMarEn}"><img src="${carteMarEn}" alt="Mar" style="width:90%"></a>
         </div>
         <div class="column2">
-        <p style="text-align:center"><strong>National Nature Reserve of Contamines-Montjoie</strong> </p>
-        <a href="${carteContaFr}"><img src="${carteContaFr}" alt="Conta" style="width:90%"/></a>
-        </div>
-        <div class="column2">
-        <p style="text-align:center"><strong>Aiguilles Rouges' National Nature Reserves</strong> </p>
-        <a href="${carteMarFr}"><img src="${carteMarFr}" alt="Mar" style="width:90%"></a>
+        <a href="${carteSixtEn}"><img src="${carteSixtEn}" alt="Sixt" style="width:90%"></a>
         </div>
         <p><strong>Camping or Bivouac?</strong> </p>
         <p>Wild camping (several nights) is forbidden in nature reserves. Bivouacking is regulated in certain zones or areas; for a single night, on the same pitch, with or without shelter, between 7pm and 9am.</p>
@@ -76,20 +85,22 @@ export const Home = createSlice({
         <p>La riserva naturale di Passy non è soggetta a queste norme.</p>
         <p>Prima di completare la prenotazione, questa mappa riassume le aree in cui i bivacchi sono vietati e quelle in cui sono consentiti. La prenotazione è gratuita! Proteggiamo la natura insieme!</p>
         <div class="column">
-        <p><strong>Riserve naturali nazionali di Contamines-Montjoie</strong> </p>
         <a href="${carteContaIt}"><img src="${carteContaIt}" alt="Conta" style="width:90%"/></a>
         </div>
         <div class="column">
-        <p><strong>Riserva Naturale Nazionale delle Aiguilles rouges</strong> </p>
+        <a href="${carteMarIt}"><img src="${carteMarIt}" alt="Mar" style="width:90%"></a>
+        </div>
+        <div class="column">
+        <a href="${carteSixtIt}"><img src="${carteSixtIt}" alt="Sixt" style="width:90%"></a>
+        </div>
+        <div class="column2">
+        <a href="${carteContaIt}"><img src="${carteContaIt}" alt="Conta" style="width:90%"/></a>
+        </div>
+        <div class="column2">
         <a href="${carteMarIt}"><img src="${carteMarIt}" alt="Mar" style="width:90%"></a>
         </div>
         <div class="column2">
-        <p style="text-align:center"><strong>Riserve naturali nazionali di Contamines-Montjoie</strong> </p>
-        <a href="${carteContaFr}"><img src="${carteContaFr}" alt="Conta" style="width:90%"/></a>
-        </div>
-        <div class="column2">
-        <p style="text-align:center"><strong>Riserva Naturale Nazionale delle Aiguilles rouges</strong> </p>
-        <a href="${carteMarFr}"><img src="${carteMarFr}" alt="Mar" style="width:90%"></a>
+        <a href="${carteSixtIt}"><img src="${carteSixtIt}" alt="Sixt" style="width:90%"></a>
         </div>
         <p><strong>Campeggio o bivacco? </strong> </p>
         <p>Il campeggio selvaggio (più notti) è vietato nelle riserve naturali. Il bivacco è regolamentato in alcune zone o aree; per una sola notte, sulla stessa piazzola, con o senza riparo, tra le 19 e le 9 del mattino.</p>
