@@ -245,12 +245,11 @@ async def generate_pdf(attributes):
         pdf.set_text_color(255, 0, 0)
         alert_text = ""
         if commune == "Chamonix":
-            alert_text = """Le bivouac est réglementé du 1er juin au 31 août par arrêté préfectoral."""
+            alert_text = """Le bivouac est réglementé du 01 juin au 30 septembre par arrêté préfectoral."""
         if commune == "Les Contamines-Montjoie":
-            alert_text = """**Zone interdite Plan Jovet et Lacs Jovet pour les Contamines-Montjoie**
-Afin de préserver les milieux naturels, le **bivouac** est interdit sur cette zone du 1er juillet au 31 août.
-La **baignade** et la navigation est interdite aux randonneurs et aux animaux de compagnie tout au long de l'année.
-            """
+            alert_text = """**Bivouac interdit en dehors des aires de bivouac en dessous de 2500m d'altitude.**
+Afin de préserver les milieux naturels, le **bivouac** est interdit dans ces zones du 15 juin au 15 septembre.
+La **baignade** et la navigation dans les lacs et plans d'eau sont interdites aux randonneurs et aux animaux de compagnie tout au long de l'année."""
         pdf.multi_cell(
             w=190,
             h=6,
@@ -411,9 +410,9 @@ La **baignade** et la navigation est interdite aux randonneurs et aux animaux de
         if commune == "Chamonix":
             alert_text = """Bivouac is regulated from June 1 to August 31 by prefectoral decree."""
         if commune == "Les Contamines-Montjoie":
-            alert_text = """**Prohibited zone Plan Jovet and Lacs Jovet for Contamines-Montjoie**
-In order to preserve natural environments, **bivouac** is prohibited in this area from July 1 to August 31.
-**Swimming** in the Jovet Lakes is prohibited for hikers and pets throughout the year.
+            alert_text = """**Bivouaking is prohibited outside of the bivouac area and below 2500m of altitude**
+In order to preserve natural environments, **bivouac** is prohibited in those area from June 15 to September 15.
+**Swimming** in the lakes is prohibited for hikers and pets throughout the year.
             """
         pdf.multi_cell(
             w=190,

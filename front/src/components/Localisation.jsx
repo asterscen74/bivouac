@@ -572,13 +572,36 @@ export default function Localisation() {
 
                             // Quota reached
                             if (finalNbTents >= featurePropertiesQuotas) {
-                                let firstDateAvailable = moment(twoNextAvailableDatesZoning[featurePropertiesNom][0]).format('DD/MM/YYYY');
-                                let secondDateAvailable = moment(twoNextAvailableDatesZoning[featurePropertiesNom][1]).format('DD/MM/YYYY');
+                                if(twoNextAvailableDatesZoning[featurePropertiesNom] === undefined) {
+                                    textNbTentsReserved += `${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")}`;
+                                    textNextAvailableDate += `${t("Localisation Content.No available date")}`;
+                                    textFirstAvailableDate += "";
+                                    textSecondAvailableDate += "";
+                                }
+                                else {
+                                    if (twoNextAvailableDatesZoning[featurePropertiesNom].length == 2){
+                                        let firstDateAvailable = moment(twoNextAvailableDatesZoning[featurePropertiesNom][0]).format('DD/MM/YYYY');
+                                        let secondDateAvailable = moment(twoNextAvailableDatesZoning[featurePropertiesNom][1]).format('DD/MM/YYYY');
 
-                                textNbTentsReserved += `${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")}`;
-                                textNextAvailableDate += `${t("Localisation Content.Next available date")}`;
-                                textFirstAvailableDate += `${firstDateAvailable}`;
-                                textSecondAvailableDate += `${secondDateAvailable}`;
+                                        textNbTentsReserved += `${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")}`;
+                                        textNextAvailableDate += `${t("Localisation Content.Next available date")}`;
+                                        textFirstAvailableDate += `${firstDateAvailable}`;
+                                        textSecondAvailableDate += `${secondDateAvailable}`;
+                                    }
+                                    else if (twoNextAvailableDatesZoning[featurePropertiesNom].length == 1){
+                                        let firstDateAvailable = moment(twoNextAvailableDatesZoning[featurePropertiesNom][0]).format('DD/MM/YYYY');
+                                        textNbTentsReserved += `${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")}`;
+                                        textNextAvailableDate += `${t("Localisation Content.Next available date")}`;
+                                        textFirstAvailableDate += `${firstDateAvailable}`;
+                                        textSecondAvailableDate += `${t("Localisation Content.No second date")}`;
+                                    }
+                                    else if (twoNextAvailableDatesZoning[featurePropertiesNom].length == 0){
+                                        textNbTentsReserved += `${t("Localisation Content.Full booking at")} ${dateReservedFormatted}, ${t("Localisation Content.Postpone your visit")}`;
+                                        textNextAvailableDate += `${t("Localisation Content.No available date")}`;
+                                        textFirstAvailableDate += "";
+                                        textSecondAvailableDate += "";
+                                    }
+                                }
                             }
                             else {
                                 textNbTentsReserved += `${t("Localisation Content.Less than")} ${estimatedTents} ${t("Localisation Content.Bivouacs reserved")} ${dateReservedFormatted}`;

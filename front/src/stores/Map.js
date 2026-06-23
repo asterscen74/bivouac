@@ -64,52 +64,58 @@ export const map = createSlice({
                 zoom: 12,
                 type: "site",
             },
+            "aire_bivouac_contamines": {
+                name: "Aire de bivouac de la base de Loisirs",
+                center: [45.8007, 6.7247],
+                zoom: 14,
+                type: "zone"
+            },
             "aire_bivouac_balme": {
                 name: "Aire de bivouac de la Balme",
                 center: [45.7587, 6.7097],
-                zoom: 15,
+                zoom: 16,
                 type: "zone"
             },
             "aire_bivouac_giettaz": {
                 name: "Aire de bivouac de la Giettaz",
                 center: [45.7735, 6.7175],
-                zoom: 13,
+                zoom: 16,
                 type: "zone"
             },
             "col_bellachat_brevent": {
                 name: "Brévent",
                 center: [45.9271, 6.8290],
-                zoom: 13,
+                zoom: 14,
                 type: "zone"
             },
             "lac_cornu_lacs_noirs": {
                 name: "Lac Cornu et Lacs Noirs",
                 center: [45.9610, 6.8495],
-                zoom: 13,
+                zoom: 14,
                 type: "zone"
             },
             "cheserys": {
                 name: "Les Cheserys",
                 center: [45.9784, 6.8984],
-                zoom: 13,
+                zoom: 14,
                 type: "zone"
             },
             "reserve_naturelle_passy": {
                 name: "Réserve Naturelle Nationale de Passy",
                 center: [45.9780, 6.8038],
-                zoom: 13,
+                zoom: 12,
                 type: "zone"
             },
             "reserve_naturelle_contamines": {
                 name: "Réserve Naturelle Nationale des Contamines-Montjoie",
                 center: [45.7832, 6.7479],
-                zoom: 13,
+                zoom: 11,
                 type: "zone"
             },
             "reserve_naturelle_sixt": {
                 name: "Réserve Naturelle Nationale de Sixt-Fer-à-Cheval Passy",
                 center: [46.0497, 6.8193],
-                zoom: 13,
+                zoom: 11,
                 type: "zone"
             },
             "ruines_arleve": {
@@ -121,7 +127,8 @@ export const map = createSlice({
         },
         centroidesContaminesZonesTolerees: [
             { lat: 45.7587242404128, lon: 6.70966921430888 },
-            { lat: 45.7735225609917, lon: 6.71745227558621 }
+            { lat: 45.7735225609917, lon: 6.71745227558621 },
+            { lat: 45.8007828, lon: 6.7247071 }
         ]
     },
   },

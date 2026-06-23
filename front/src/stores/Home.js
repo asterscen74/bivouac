@@ -15,9 +15,9 @@ export const Home = createSlice({
     initialState: {
         fr: `
         <p><strong>Envie de dormir à la belle étoile?</strong> </p>
-        <p>Depuis 2023, vous devez réserver sur la période estivale, <strong>de Juin à fin Août</strong>, votre nuit pour bivouaquer en réserves naturelles :</p>
-        <li>du Massif des Aiguilles Rouges</li>
-        <li>des Contamines-Montjoie</li>
+        <p>Depuis 2023, vous devez réserver sur la période estivale, <strong>de Juin à Septembre</strong>, votre nuit pour bivouaquer en réserves naturelles :</p>
+        <li>du Massif des Aiguilles Rouges (1er Juin au 30 Septembre)</li>
+        <li>des Contamines-Montjoie (15 Juin au 15 Septembre)</li>
         <li>Sixt-Fer-à-Cheval/Passy</li>
         <p>La réserve naturelle de Passy n’est pas soumise à cette réglementation.</p>
         <p>Avant de remplir votre réservation, ces cartes résument les zones interdites au bivouac et les zones tolérées. Cette réservation est gratuite mais obligatoire!</p>
@@ -49,9 +49,9 @@ export const Home = createSlice({
         `,
         en: `
         <p><strong>Want to sleep under the stars?</strong> </p>
-        <p>Since 2023, you have had to book, from June to the end of August, your night to sleep in nature reserves:</p>
-        <li>du Massif des Aiguilles Rouges</li>
-        <li>des Contamines-Montjoie</li>
+        <p>Since 2023, you have had to book, from June to September, your night to sleep in nature reserves:</p>
+        <li>du Massif des Aiguilles Rouges (June 1st to September 30th)</li>
+        <li>des Contamines-Montjoie (June 15th to September 15th)</li>
         <li>Sixt-Fer-à-Cheval/Passy</li>
         <p>The Passy nature reserve is not subject to these regulations.</p>
         <p>Before completing your booking, this map summarises the areas where bivouacs are prohibited and those where they are permitted. This booking is free! Protect nature together!</p>
@@ -79,8 +79,8 @@ export const Home = createSlice({
         it: `
         <p><strong>Volete dormire sotto le stelle? </strong> </p>
         <p>Dal 2023, dovrete prenotare la vostra notte per dormire nelle riserve naturali:</p>
-        <li>du Massif des Aiguilles Rouges</li>
-        <li>des Contamines-Montjoie</li>
+        <li>du Massif des Aiguilles Rouges (dal 1° giugno al 30 settembre)</li>
+        <li>des Contamines-Montjoie (dal 15 giugno al 15 settembre)</li>
         <li>Sixt-Fer-à-Cheval/Passy</li>
         <p>La riserva naturale di Passy non è soggetta a queste norme.</p>
         <p>Prima di completare la prenotazione, questa mappa riassume le aree in cui i bivacchi sono vietati e quelle in cui sono consentiti. La prenotazione è gratuita! Proteggiamo la natura insieme!</p>
