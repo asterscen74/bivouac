@@ -23,6 +23,11 @@ class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
     POSTGRES_DB: str = Field(..., validation_alias="POSTGRES_DB")
     POSTGRES_HOST: str = Field(..., validation_alias="POSTGRES_HOST")
     POSTGRES_PORT: str = Field(..., validation_alias="POSTGRES_PORT")
+    POSTGRES_SSLMODE: str = Field(..., validation_alias="POSTGRES_SSLMODE")
+    POSTGRES_SSLCERT: str = Field(..., validation_alias="POSTGRES_SSLCERT")
+    POSTGRES_SSLKEY: str = Field(..., validation_alias="POSTGRES_SSLKEY")
+    POSTGRES_SSLROOTCERT: str = Field(..., validation_alias="POSTGRES_SSLROOTCERT")
+
     API_FASTAPI_SERVER_HOST: str = Field(
         ..., validation_alias="API_FASTAPI_SERVER_HOST"
     )
@@ -51,7 +56,7 @@ def get_settings() -> Settings:
 settings = get_settings()
 
 # Static variables
-SQLALCHEMY_DATABASE_URL = f"""postgresql://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"""
+SQLALCHEMY_DATABASE_URL = f"""postgresql://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}?sslmode={settings.POSTGRES_SSLMODE}&sslcert={settings.POSTGRES_SSLCERT}&sslkey={settings.POSTGRES_SSLKEY}&sslrootcert={settings.POSTGRES_SSLROOTCERT}"""
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 MAP_LAYERS_ENUM = Enum(

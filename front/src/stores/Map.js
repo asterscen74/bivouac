@@ -126,9 +126,9 @@ export const map = createSlice({
             },
         },
         centroidesContaminesZonesTolerees: [
-            { lat: 45.7587242404128, lon: 6.70966921430888 },
-            { lat: 45.7735225609917, lon: 6.71745227558621 },
-            { lat: 45.8007828, lon: 6.7247071 }
+            { lat: 45.7587242404128, lon: 6.70966921430888 }, // La Balme
+            // { lat: 45.7735225609917, lon: 6.71745227558621 }, Giettaz
+            { lat: 45.8007828, lon: 6.7247071 } // Parc de loisirs
         ]
     },
   },

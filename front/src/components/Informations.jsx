@@ -13,6 +13,7 @@ import * as SurveyTheme from "survey-core/themes";
 import { useDispatch } from "react-redux";
 import { updateResults } from "../stores/Results";
 import CookieConsent from "react-cookie-consent";
+import BasicModal from './Modal.jsx';
 
 export default function Informations() {
 
@@ -72,6 +73,9 @@ export default function Informations() {
                 {t("This website uses cookies to enhance the user experience")}
             </CookieConsent>
             <h1>{t("Informations")}</h1>
+
+            <BasicModal />
+
             <Alert severity="success">
                 <AlertTitle>{t("Step")} 1/4</AlertTitle>
                 <span style={{ fontWeight: 'bold' }}>{t("Enter your informations_bold")}</span>

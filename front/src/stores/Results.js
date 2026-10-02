@@ -51,6 +51,9 @@ export const general = createSlice({
         const data = props.payload.data;
         state.localisation.capturedImages = data;
     },
+    clearLocalisationPositions: (state) => {
+        state.localisation.locations = [];
+    },
     clearLocalisationCapturedImages: (state) => {
         state.localisation.capturedImages = [];
     },
@@ -71,6 +74,6 @@ export const general = createSlice({
 }
 });
 
-export const { updateResults, updateReservation, updateLocalisationPositions, updateLocalisationCapturedImages, clearLocalisationCapturedImages, updateQuizzCompleted, resetResults } = general.actions;
+export const { updateResults, updateReservation, updateLocalisationPositions, updateLocalisationCapturedImages, clearLocalisationPositions, clearLocalisationCapturedImages, updateQuizzCompleted, resetResults } = general.actions;
 
 export default general.reducer;

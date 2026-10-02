@@ -13,7 +13,7 @@ export const GoodPractices = createSlice({
         <p><strong>Règle n°6 - Déchets et toilettes sauvages -</strong> En montagne, la décomposition des déchets est très lente. Pour éviter la présence de déchets et le risque d’ingestion d'aliments inadaptés pour la faune, remportons tous nos déchets, y compris le papier toilette et les trognons de pomme !</p>
         <p>Pour rappel :</p>
         <p><i>En réserve naturelle, Le camping est interdit dans les réserves naturelles. Seul le bivouac est toléré pour une seule nuit, sur un même emplacement, avec ou sans abri, entre 19h et 9h. Le bivouac consiste à passer une seule nuit sur place alors que le camping sauvage comprend plusieurs nuits au même endroit.</i></p>
-        <p><strong>En savoir plus sur la réglementation en réserve naturelle :</strong> <a target="_blank" href="https://www.cen-haute-savoie.org/reglementation-0">https://www.cen-haute-savoie.org/reglementation-0</a></p>
+        <p><strong><a target="_blank" href="https://www.cen-haute-savoie.org/les-reserves-naturelles/reglementation/">En savoir plus sur la réglementation en réserve naturelle</a></strong></p>
         `,
         en: `
         <p><i>Good bivouac practices</i></p>
@@ -25,7 +25,7 @@ export const GoodPractices = createSlice({
         <p><strong>Rule n°6 - Waste and wild toilets -</strong> Waste and wild toilets - In the mountains, waste decomposes very slowly. To avoid the presence of garbage and the risk of ingesting food unsuitable for wildlife, let's take all our garbage with us, including toilet paper and apple cores!</p>
         <p>A reminder:</p>
         <p><i>Camping is forbidden in the nature reserve; bivouacs are tolerated. A bivouac is a temporary camp, with or without shelter, set up after 7pm and before 9am the following day. Bivouacs involve spending a single night on site, whereas wilderness camping involves spending several nights in the same place.</i></p>
-        <p><strong>Find out more about nature reserve regulations:</strong> <a target="_blank" href="https://www.cen-haute-savoie.org/reglementation-0">https://www.cen-haute-savoie.org/reglementation-0</a></p>
+        <p><strong><a target="_blank" href="https://www.cen-haute-savoie.org/les-reserves-naturelles/reglementation/">Find out more about nature reserve regulations</a></strong></p>
         `,
         it: `
         <p><i>Buone pratiche per il bivacco</i></p>
@@ -37,7 +37,7 @@ export const GoodPractices = createSlice({
         <p><strong>Regola n. 6 - Rifiuti e toilette non autorizzate -</strong> In montagna i rifiuti si decompongono molto lentamente. Per evitare la presenza di rifiuti e il rischio di ingerire cibo inadatto alla fauna selvatica, portate con voi tutti i vostri rifiuti, compresi carta igienica e torsoli di mela!</p>
         <p>Come promemoria:</p>
         <p><i>Il campeggio è vietato nelle riserve naturali. È consentito solo il bivacco per una sola notte, nello stesso luogo, con o senza riparo, tra le 19.00 e le 9.00. Il bivacco consiste nel trascorrere una sola notte sul posto, mentre il campeggio selvaggio consiste nel trascorrere più notti nello stesso luogo.</i></p>
-        <p><strong>Per saperne di più sul regolamento delle riserve naturali :</strong> <a target="_blank" href="https://www.cen-haute-savoie.org/reglementation-0">https://www.cen-haute-savoie.org/reglementation-0</a></p>
+        <p><strong><a target="_blank" href="https://www.cen-haute-savoie.org/les-reserves-naturelles/reglementation/">Per saperne di più sul regolamento delle riserve naturali</a></strong></p>
         `
     }
 });
