@@ -35,7 +35,7 @@ setup(
         "dev": [
             "pytest==9.0.3",
             "pytest-cov==3.0.0",
-            "black==22.3.0",
+            "black==26.3.1",
             "pylint==2.14.3",
             "isort==5.10.1",
         ],
