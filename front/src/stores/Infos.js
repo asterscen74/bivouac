@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const nextYear = new Date().getFullYear() + 1;
-const maxDate = `${nextYear}-12-31`;
+const nextYear = new Date().getFullYear();
+const maxDate = `${nextYear}-09-30`;
 
 const minDate = new Date().toISOString().split("T")[0];
 

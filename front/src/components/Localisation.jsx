@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import store from "../store";
 import api_url from "../settings-server.js";
 import { useDispatch } from "react-redux";
-import { updateLocalisationPositions, updateResults, updateLocalisationCapturedImages, clearLocalisationCapturedImages } from "../stores/Results";
+import { updateLocalisationPositions, updateResults, updateLocalisationCapturedImages, clearLocalisationPositions, clearLocalisationCapturedImages } from "../stores/Results";
 import markerLocation from '../assets/img/marker_location.svg'
 import Select from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
@@ -54,6 +54,7 @@ export default function Localisation() {
     const [nameCurrentAreaSelected, setNameCurrentAreaSelected] = useState("");
     const [twoNextAvailableDatesZoning, setTwoNextAvailableDatesZoning] = useState(resultsTwoNextAvailableDatesZoning);
     const [popupFullBookingNextAvailableDateShow, setPopupFullBookingNextAvailableDateShow] = useState(false);
+    const [popupFullBookingNoAvailableDateShow, setPopupFullBookingNoAvailableDateShow] = useState(false);
     const minTentsReserved = 10;
 
     let mapData = store.getState().map.initialDisplay;
@@ -131,6 +132,7 @@ export default function Localisation() {
         if (infoDate) {
             fetchNbTentsZoningDate(infoDate);
             fetchTwoNextAvailableDatesZoning(infoDate);
+            setLocationData([]);
         }
 
     }, [resultsInfosData]);
@@ -176,23 +178,26 @@ export default function Localisation() {
                     }
                     // Feature reservable : check the quota
                     else {
+
                         if (featurePropertiesNom in nbTentsZoningDate) {
-                            let dateReserved = "";""
-                            if ( locationData.length === 0 ) {
-                                dateReserved = momentInfoDate.format('YYYY-MM-DD');
-                            } else if ( locationData.length === 1) {
-                                dateReserved = momentInfoDate.clone().add(1, 'days').format('YYYY-MM-DD');
-                            } else {
-                                dateReserved = momentInfoDate.clone().add(2, 'days').format('YYYY-MM-DD');
-                            }
+                            let dateReserved = momentInfoDate.format('YYYY-MM-DD');
 
                             // At least one reservation at this date in this bivouac zoning
                             if (Object.keys(nbTentsZoningDate[featurePropertiesNom]).includes(dateReserved)) {
+
                                 let nbTents = nbTentsZoningDate[featurePropertiesNom][dateReserved];
                                 // Quota reached
                                 if (nbTents >= featureQuotas) {
-                                    setPopupFullBookingNextAvailableDateShow(true);
+                                    // TODO
                                     locationReservable = false;
+                                    if (twoNextAvailableDatesZoning[featurePropertiesNom] === undefined) {
+                                        setPopupFullBookingNoAvailableDateShow(true);
+                                        setPopupFullBookingNextAvailableDateShow(false);
+                                    }
+                                    else{
+                                        setPopupFullBookingNextAvailableDateShow(true);
+                                        setPopupFullBookingNoAvailableDateShow(false);
+                                    }
                                 }
                             }
                         }
@@ -217,6 +222,7 @@ export default function Localisation() {
                 }
 
                 updatedLocationData.push(clickCoordinates);
+                console.log(updatedLocationData)
                 setLocationData(updatedLocationData);
 
             }
@@ -237,6 +243,7 @@ export default function Localisation() {
         if (nbLocations === 0) {
             setDisplayAlert(true);
         } else {
+
             setDisplayAlert(false);
 
             // Fix a freeze bug on export
@@ -459,10 +466,12 @@ export default function Localisation() {
                 {nextDate && (
                     <strong>
                     {nextDate}
-                    <ul>
-                        <li>{firstDate}</li>
-                        <li>{secondDate}</li>
-                    </ul>
+                    {firstDate && (
+                        <ul>
+                            <li>{firstDate}</li>
+                            <li>{secondDate}</li>
+                        </ul>
+                    )}
                     </strong>
                 )}
                 </p>
@@ -998,7 +1007,7 @@ export default function Localisation() {
                     >
                         <DialogContent style={{ padding: "0px 15px" }}>
                             <p>{t("Invalid location next date available")}</p>
-                            <p>{twoNextAvailableDatesZoning && nameCurrentAreaSelected !== "" && moment(twoNextAvailableDatesZoning[nameCurrentAreaSelected][locationData.length === 0 ? 0 : 1]).format('DD/MM/YYYY')}</p>
+                            <p>{twoNextAvailableDatesZoning && nameCurrentAreaSelected !== "" && twoNextAvailableDatesZoning[nameCurrentAreaSelected] !== undefined &&  moment(twoNextAvailableDatesZoning[nameCurrentAreaSelected][locationData.length === 0 ? 0 : 1]).format('DD/MM/YYYY')}</p>
                         </DialogContent>
                         <DialogActions style={{ justifyContent: "center" }}>
                             <Button
@@ -1011,6 +1020,35 @@ export default function Localisation() {
                         </DialogActions>
                     </Dialog>
 
+                    {/* Popup when quota reached, no available date */}
+                    <Dialog
+                        open={popupFullBookingNoAvailableDateShow}
+                        onClose={() => setPopupFullBookingNoAvailableDateShow(false)}
+                        maxWidth="xs"
+                        fullWidth={false}
+                        PaperProps={{
+                        style: {
+                            position: 'fixed',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            maxWidth: '250px'
+                        },
+            }}
+                    >
+                        <DialogContent style={{ padding: "0px 15px" }}>
+                            <p>{t("Invalid location no date available")}</p>
+                        </DialogContent>
+                        <DialogActions style={{ justifyContent: "center" }}>
+                            <Button
+                                onClick={() => setPopupFullBookingNoAvailableDateShow(false)}
+                                style={{ backgroundColor: "#007854", color: "#ffffff" }}
+                                variant="contained"
+                            >
+                                OK
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                     {/* Hide legend during the capture phase */}
                     {!displayOverlayCaptureImages && <MapLegend />}
                     <SetMapProperties />

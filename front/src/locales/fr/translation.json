@@ -36,9 +36,11 @@
             "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de Bellachat pour le bivouac. Tél : 07.75.83.02.70": "Afin de préserver les milieux naturels le bivouac et la baignade sont interdits sur cette zone. Les feux et le survol en drone sont interdits. Contacter le refuge de Bellachat pour le bivouac. Tél : 07.75.83.02.70",
             "Afin de préserver les milieux naturels, le bivouac est interdit du 1er juin au 30 septembre dans cette zone. Les feux et le survol en drone sont interdits.": "Afin de préserver les milieux naturels, le bivouac est interdit du 1er juin au 30 septembre dans cette zone sauf pour les alpinistes et grimpeurs. Les feux et le survol en drone sont interdits.",
             "Afin de préserver les milieux naturels, le bivouac est interdit dans cette zone par arrêté municipal": "Afin de préserver les milieux naturels, le bivouac est interdit dans cette zone par arrêté municipal.",
-            "Le refuge de la Pierre à Bérard sera fermé pour travaux en 2026 et 2027. Le bivouac a proximité du refuge ne sera pas possible.": "Le refuge de la Pierre à Bérard sera fermé pour travaux en 2026 et 2027. Quelques places de bivouac à proximité du refuge, sans réservation.",
+            "Le refuge de la Pierre à Bérard sera fermé pour travaux en 2026 et 2027. Le bivouac a proximité du refuge ne sera pas possible.": "En arrivant sur place, se rendre au refuge et s'annoncer. L'équipe du refuge vous indiquera les emplacements de bivouac toléré.",
             "Bivouac interdit sous 1700 m sauf autorisation des propriétaires fonciers. Les feux et le survol en drone sont interdits.": "Bivouac interdit sous 1700 m sauf autorisation des propriétaires fonciers. Les feux et le survol en drone sont interdits.",
-            "Dans cette zone, la réservation du bivouac est obligatoire. Les tentes sont interdites avant 19h et après 9h le lendemain. Les feux et le survol en drone sont interdits. Lac supérieur des Cheserys, le bivouac est interdit aux lacs inférieurs. Ne pas franchir les cordes." : "Dans cette zone, la réservation du bivouac est obligatoire. Les tentes sont interdites avant 19h et après 9h le lendemain. Les feux et le survol en drone sont interdits. Lac supérieur des Cheserys, le bivouac est interdit aux lacs inférieurs. Ne pas franchir les cordes."
+            "Dans cette zone, la réservation du bivouac est obligatoire. Les tentes sont interdites avant 19h et après 9h le lendemain. Les feux et le survol en drone sont interdits. Lac supérieur des Cheserys, le bivouac est interdit aux lacs inférieurs. Ne pas franchir les cordes." : "Dans cette zone, la réservation du bivouac est obligatoire. Les tentes sont interdites avant 19h et après 9h le lendemain. Les feux et le survol en drone sont interdits. Lac supérieur des Cheserys, le bivouac est interdit aux lacs inférieurs. Ne pas franchir les cordes.",
+            "Contacter le refuge de Bellachat pour le bivouac. Tél : 07 75 83 02 70": "Contactez le refuge de Bellachat pour réserver votre bivouac. Tél : 07 75 83 02 70",
+            "L'aire de bivouac est fermée actuellement des suites d'un problème technique avec les sanitaires. Bivouac impossible sur cette zone.": "L'aire de bivouac est fermée actuellement des suites d'un problème technique avec les sanitaires. Bivouac impossible sur cette zone."
         },
         "Legend_desktop": {
             "row1": "Limite de réserve naturelle, le bivouac déconseillé (hors zones spécifiques)",
@@ -77,6 +79,7 @@
     "Maximum number location reached": "Nombre maximum d'emplacements atteint",
     "Incomplete location": "Vous devez indiquer votre emplacement de bivouac",
     "Invalid location next date available": "Zone complète pour cette date. Prochaine date disponible : ",
+    "Invalid location no date available": "Zone complète pour cette date. Aucune date disponible durant les 30 prochains jours.",
     "Thanks": "Merci",
     "The good practices quiz": "Le Quiz des bonnes pratiques",
     "Please answer this little quiz": "Merci de répondre au quiz",
@@ -99,5 +102,14 @@
     "Cancellation confirmed": "Votre réservation a bien été annulée. Vous allez être redirigé sur la page impacts du bivouac.",
     "Reservation not found": "Aucune réservation trouvée avec les informations saisies",
     "This website uses cookies to enhance the user experience": "Nous utilisons des cookies sur notre site pour améliorer votre expérience de navigation. Si vous souhaitez en savoir plus, vous pouvez consulter nos mentions légales.",
-    "I understand": "Je comprends"
+    "I understand": "Je comprends",
+    "Bivouac in Haute-Savoie's Nature Reserves :": "Bivouac en Réserve Naturelle de Haute-Savoie :",
+    "From 1st June to 30th September": "Du 1er juin au 30 septembre",
+    "reservation is required.": "la réservation est obligatoire.",
+    "From 1st October to end of May": "Du 1er octobre à fin mai",
+    "no need to make a reservation.": "pas besoin de réserver.",
+    "Regulations concerning natural areas in Haute-Savoie": "La réglementation concernant les espaces naturels de Haute-Savoie",
+    "We are currently outside of the booking period. Site will reopen in the spring of 2027 : https://reserve-bivouac74.fr/": "Nous sommes actuellement en dehors de la période de réservation. Le site rouvrira au printemps 2027 : https://reserve-bivouac74.fr/",
+    "Regardless of the time period, please respect the Nature Reserve (no litter, no fires, discretion...).": "Quelle que soit la période, merci de respecter la réserve naturelle (pas de déchets, pas de feu, discrétions...).",
+    "Close window": "Avant de planter la tente"
 }
